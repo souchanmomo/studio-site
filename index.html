@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -329,25 +329,27 @@ contact@example.com
 </section>
 
 <footer>
+<footer>
 
 <div class="sns">
 
-<a href="https://twitter.com/あなたのID" target="_blank" class="sns-btn x">
-X
+<a href="https://twitter.com/あなたのID" target="_blank">
+<i class="fa-brands fa-x-twitter"></i>
 </a>
 
-<a href="https://youtube.com/@あなたのID" target="_blank" class="sns-btn yt">
-▶
+<a href="https://youtube.com/@あなたのID" target="_blank">
+<i class="fa-brands fa-youtube"></i>
 </a>
 
-<a href="https://instagram.com/あなたのID" target="_blank" class="sns-btn ig">
-📷
+<a href="https://instagram.com/あなたのID" target="_blank">
+<i class="fa-brands fa-instagram"></i>
 </a>
 
 </div>
 
 <p>© Creative Studio</p>
 
+</footer>
 </footer>
 
 <script>
@@ -416,51 +418,19 @@ behavior:"smooth"
 .sns{
 display:flex;
 justify-content:center;
-gap:20px;
+gap:25px;
 margin-bottom:20px;
 }
 
-.sns-btn{
-width:50px;
-height:50px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:18px;
-text-decoration:none;
+.sns a{
+font-size:28px;
 color:white;
 transition:0.3s;
 }
 
-.sns-btn:hover{
-transform:scale(1.15);
-}
-
-/* X */
-
-.x{
-background:#000;
-border:1px solid #fff;
-}
-
-/* YouTube */
-
-.yt{
-background:#ff0000;
-}
-
-/* Instagram */
-
-.ig{
-background:linear-gradient(
-45deg,
-#f09433,
-#e6683c,
-#dc2743,
-#cc2366,
-#bc1888
-);
+.sns a:hover{
+transform:scale(1.2);
+opacity:0.7;
 }
 </script>
 
