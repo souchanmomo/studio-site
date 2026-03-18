@@ -1,7 +1,15 @@
-<!DOCTYPE html><html lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Creative Studio</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Creative Studio</title>
+
+<style>
+
+/* リセット */
 
 *{
 margin:0;
@@ -10,200 +18,385 @@ box-sizing:border-box;
 }
 
 body{
-font-family:Arial;
-background:black;
-color:white;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+background:#000;
+color:#fff;
 overflow-x:hidden;
 }
 
-/* loader */
+/* スクロールバー */
+
+#progress{
+position:fixed;
+top:0;
+left:0;
+height:4px;
+background:#fff;
+width:0%;
+z-index:9999;
+}
+
+/* カーソル */
+
+.cursor{
+width:20px;
+height:20px;
+border:2px solid #fff;
+border-radius:50%;
+position:fixed;
+pointer-events:none;
+transform:translate(-50%,-50%);
+transition:transform .15s ease;
+z-index:9999;
+}
+
+/* ローディング */
 
 #loader{
 position:fixed;
 width:100%;
-height:100vh;
+height:100%;
+background:#000;
 display:flex;
-justify-content:center;
 align-items:center;
-background:black;
-z-index:999;
-font-size:24px;
-letter-spacing:4px;
-}
-
-/* enter */
-
-#enter{
-position:fixed;
-width:100%;
-height:100vh;
-display:flex;
-flex-direction:column;
 justify-content:center;
-align-items:center;
-background:black;
-z-index:998;
-display:none;
+z-index:9998;
 }
 
-#enter h1{
-font-size:70px;
-letter-spacing:8px;
+.loader{
+font-size:22px;
+letter-spacing:6px;
+animation:blink 1.2s infinite;
 }
 
-#enter button{
-margin-top:30px;
-padding:14px 40px;
-border:none;
-background:white;
-cursor:pointer;
+@keyframes blink{
+0%{opacity:.2}
+50%{opacity:1}
+100%{opacity:.2}
 }
 
-/* particle background */
+/* ナビ */
 
-canvas{
+nav{
 position:fixed;
 top:0;
-left:0;
-z-index:-1;
+width:100%;
+display:flex;
+justify-content:center;
+gap:40px;
+padding:20px;
+transition:.4s;
+z-index:1000;
+}
+
+nav.scrolled{
+background:rgba(0,0,0,.7);
+backdrop-filter:blur(8px);
+}
+
+nav a{
+color:#fff;
+text-decoration:none;
+letter-spacing:2px;
+font-size:14px;
+}
+
+/* hero */
+
+.hero{
+height:100vh;
+background:url("https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=2000") center/cover no-repeat;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+position:relative;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.5);
+}
+
+.hero-inner{
+position:relative;
+z-index:2;
+}
+
+.hero h1{
+font-size:72px;
+letter-spacing:10px;
+margin-bottom:20px;
+animation:fadeUp 1.5s;
+}
+
+.hero p{
+opacity:.8;
+animation:fadeUp 2s;
 }
 
 /* section */
 
-.section{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+section{
+padding:120px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+h2{
 text-align:center;
-padding:80px 20px;
+font-size:36px;
+letter-spacing:6px;
+margin-bottom:60px;
 }
 
-.hero h1{
-font-size:120px;
-line-height:.9;
-}
-
-/* works */
+/* grid */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-max-width:1000px;
-width:100%;
-margin-top:40px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:40px;
 }
+
+/* カード */
 
 .card{
 background:#111;
-height:200px;
-display:flex;
-align-items:center;
-justify-content:center;
+border-radius:12px;
+overflow:hidden;
 transition:.4s;
+transform-style:preserve-3d;
 }
 
 .card:hover{
-transform:scale(1.1);
-background:#222;
+transform:rotateX(5deg) rotateY(-5deg) scale(1.03);
+}
+
+.card img{
+width:100%;
+display:block;
+}
+
+.card p{
+padding:20px;
+}
+
+/* parallax */
+
+.parallax{
+height:60vh;
+background:url("https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2000") center/cover fixed;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:44px;
+letter-spacing:8px;
+}
+
+/* fade */
+
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:1s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
+}
+
+/* footer */
+
+footer{
+padding:40px;
+text-align:center;
+opacity:.6;
 }
 
 /* mobile */
 
-@media(max-width:800px){
+@media(max-width:768px){
 
 .hero h1{
-font-size:60px;
+font-size:42px;
+letter-spacing:4px;
 }
 
-.grid{
-grid-template-columns:1fr;
+nav{
+gap:20px;
+}
+
+section{
+padding:80px 20px;
 }
 
 }
 
-</style></head><body><div id="loader">LOADING</div><div id="enter">
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="progress"></div>
+<div class="cursor"></div>
+
+<div id="loader">
+<div class="loader">LOADING</div>
+</div>
+
+<nav id="nav">
+
+<a href="#">HOME</a>
+<a href="#works">WORKS</a>
+<a href="#about">ABOUT</a>
+<a href="#contact">CONTACT</a>
+
+</nav>
+
+<div class="hero">
+
+<div class="hero-inner">
+
 <h1>STUDIO</h1>
-<button onclick="enterSite()">ENTER</button>
-</div><canvas id="bg"></canvas>
+<p>Creative Sound & Visual Production</p>
 
-<section class="section hero"><h1>CREATIVE<br>STUDIO</h1></section><section class="section"><h2>ABOUT</h2><p>We create immersive digital experiences.</p></section><section class="section"><h2>WORKS</h2><div class="grid"><div class="card">PROJECT</div>
-<div class="card">PROJECT</div>
-<div class="card">PROJECT</div><div class="card">PROJECT</div>
-<div class="card">PROJECT</div>
-<div class="card">PROJECT</div></div></section><script>
+</div>
+
+</div>
+
+<section id="works">
+
+<h2 class="fade">WORKS</h2>
+
+<div class="grid">
+
+<div class="card fade">
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1200">
+<p>Music Production</p>
+</div>
+
+<div class="card fade">
+<img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200">
+<p>Studio Recording</p>
+</div>
+
+<div class="card fade">
+<img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1200">
+<p>Mix & Mastering</p>
+</div>
+
+</div>
+
+</section>
+
+<div class="parallax">
+
+CREATIVE STUDIO
+
+</div>
+
+<section id="about">
+
+<h2 class="fade">ABOUT</h2>
+
+<p class="fade">
+
+Professional music and audio production studio delivering immersive sound experiences.
+
+</p>
+
+</section>
+
+<section id="contact">
+
+<h2 class="fade">CONTACT</h2>
+
+<p class="fade">
+
+contact@example.com
+
+</p>
+
+</section>
+
+<footer>
+
+© Creative Studio
+
+</footer>
+
+<script>
 
 /* loader */
 
-const loader=document.getElementById("loader")
-const enter=document.getElementById("enter")
-
-window.onload=()=>{
-
-setTimeout(()=>{
-
-loader.style.display="none"
-enter.style.display="flex"
-
-},1200)
-
-}
-
-function enterSite(){
-
-enter.style.display="none"
-
-}
-
-/* particles */
-
-const canvas=document.getElementById("bg")
-const ctx=canvas.getContext("2d")
-
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-
-let particles=[]
-
-for(let i=0;i<120;i++){
-
-particles.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-vx:(Math.random()-0.5)*0.4,
-vy:(Math.random()-0.5)*0.4
-
+window.addEventListener("load",()=>{
+document.getElementById("loader").style.display="none"
 })
 
+/* fade */
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show")
 }
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-particles.forEach(p=>{
-
-p.x+=p.vx
-p.y+=p.vy
-
-if(p.x<0||p.x>canvas.width)p.vx*=-1
-if(p.y<0||p.y>canvas.height)p.vy*=-1
-
-ctx.beginPath()
-ctx.arc(p.x,p.y,2,0,Math.PI*2)
-ctx.fillStyle="white"
-ctx.fill()
-
+})
 })
 
-requestAnimationFrame(animate)
+document.querySelectorAll(".fade").forEach(el=>{
+observer.observe(el)
+})
 
+/* nav */
+
+window.addEventListener("scroll",()=>{
+const nav=document.getElementById("nav")
+if(window.scrollY>50){
+nav.classList.add("scrolled")
+}else{
+nav.classList.remove("scrolled")
 }
+})
 
-animate()
+/* progress bar */
 
-</script></body>
+window.addEventListener("scroll",()=>{
+let winScroll=document.body.scrollTop||document.documentElement.scrollTop
+let height=document.documentElement.scrollHeight-document.documentElement.clientHeight
+let scrolled=(winScroll/height)*100
+document.getElementById("progress").style.width=scrolled+"%"
+})
+
+/* cursor */
+
+const cursor=document.querySelector(".cursor")
+
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px"
+cursor.style.top=e.clientY+"px"
+})
+
+/* smooth scroll */
+
+document.querySelectorAll("nav a").forEach(anchor=>{
+anchor.addEventListener("click",function(e){
+e.preventDefault()
+document.querySelector(this.getAttribute("href")).scrollIntoView({
+behavior:"smooth"
+})
+})
+})
+
+</script>
+
+</body>
 </html>
