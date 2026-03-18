@@ -1,0 +1,209 @@
+<!DOCTYPE html><html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Creative Studio</title><style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial;
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+/* loader */
+
+#loader{
+position:fixed;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
+z-index:999;
+font-size:24px;
+letter-spacing:4px;
+}
+
+/* enter */
+
+#enter{
+position:fixed;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+background:black;
+z-index:998;
+display:none;
+}
+
+#enter h1{
+font-size:70px;
+letter-spacing:8px;
+}
+
+#enter button{
+margin-top:30px;
+padding:14px 40px;
+border:none;
+background:white;
+cursor:pointer;
+}
+
+/* particle background */
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+/* section */
+
+.section{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:80px 20px;
+}
+
+.hero h1{
+font-size:120px;
+line-height:.9;
+}
+
+/* works */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+max-width:1000px;
+width:100%;
+margin-top:40px;
+}
+
+.card{
+background:#111;
+height:200px;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.4s;
+}
+
+.card:hover{
+transform:scale(1.1);
+background:#222;
+}
+
+/* mobile */
+
+@media(max-width:800px){
+
+.hero h1{
+font-size:60px;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+</style></head><body><div id="loader">LOADING</div><div id="enter">
+<h1>STUDIO</h1>
+<button onclick="enterSite()">ENTER</button>
+</div><canvas id="bg"></canvas>
+
+<section class="section hero"><h1>CREATIVE<br>STUDIO</h1></section><section class="section"><h2>ABOUT</h2><p>We create immersive digital experiences.</p></section><section class="section"><h2>WORKS</h2><div class="grid"><div class="card">PROJECT</div>
+<div class="card">PROJECT</div>
+<div class="card">PROJECT</div><div class="card">PROJECT</div>
+<div class="card">PROJECT</div>
+<div class="card">PROJECT</div></div></section><script>
+
+/* loader */
+
+const loader=document.getElementById("loader")
+const enter=document.getElementById("enter")
+
+window.onload=()=>{
+
+setTimeout(()=>{
+
+loader.style.display="none"
+enter.style.display="flex"
+
+},1200)
+
+}
+
+function enterSite(){
+
+enter.style.display="none"
+
+}
+
+/* particles */
+
+const canvas=document.getElementById("bg")
+const ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*0.4,
+vy:(Math.random()-0.5)*0.4
+
+})
+
+}
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+p.x+=p.vx
+p.y+=p.vy
+
+if(p.x<0||p.x>canvas.width)p.vx*=-1
+if(p.y<0||p.y>canvas.height)p.vy*=-1
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,2,0,Math.PI*2)
+ctx.fillStyle="white"
+ctx.fill()
+
+})
+
+requestAnimationFrame(animate)
+
+}
+
+animate()
+
+</script></body>
+</html>
