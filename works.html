@@ -13,39 +13,38 @@ body{
   color:#fff;
 }
 
-/* 固定タイトル */
-header {
+/* VIEW WORKS 固定 */
+.page-title {
   position: sticky;
   top: 0;
   background: rgba(0,0,0,0.85);
   padding: 20px 0;
-  text-align: center;
   font-size: 48px;
+  text-align: center;
   z-index: 100;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 6px;
-  color: #fff;
+  letter-spacing:10px;
 }
 
-/* グリッド */
+/* グリッド・カードはトップページと同じ見た目 */
 .grid{
   max-width:1100px;
   margin:auto;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:40px;
   padding:40px 20px;
 }
 
 .card{
   background:#111;
-  border-radius:10px;
+  border-radius:12px;
   overflow:hidden;
   transition:.4s;
+  transform-style:preserve-3d;
 }
 
 .card:hover{
-  transform:scale(1.05);
+  transform:rotateX(5deg) rotateY(-5deg) scale(1.03);
 }
 
 .card img{
@@ -72,25 +71,29 @@ a{
 
 <body>
 
-<header>VIEW WORKS</header>
+<h1 class="page-title">VIEW WORKS</h1>
 
 <div class="grid">
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
-    <p>Music Production</p>
-  </div>
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-    <p>Studio Recording</p>
-  </div>
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
-    <p>Mix & Mastering</p>
-  </div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
+<p>Music Production</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+<p>Studio Recording</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
+<p>Mix & Mastering</p>
+</div>
+
 </div>
 
 <div class="back">
-  <a href="index.html">← HOMEに戻る</a>
+<a href="index.html">← HOMEに戻る</a>
 </div>
 
 </body>
