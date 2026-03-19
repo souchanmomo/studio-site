@@ -15,103 +15,169 @@ box-sizing:border-box;
 }
 
 body{
-font-family:"Inter",sans-serif;
-overflow:hidden;
-color:#111;
+font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+color:#161616;
 background:
-linear-gradient(180deg,#fff8f3,#ffe6d8);
+radial-gradient(circle at 12% 10%, rgba(255,247,238,0.95) 0%, rgba(255,236,221,0.9) 24%, transparent 48%),
+radial-gradient(circle at 88% 12%, rgba(255,243,233,0.95) 0%, rgba(255,220,205,0.75) 22%, transparent 46%),
+linear-gradient(180deg, #fff8f3 0%, #ffece1 42%, #ffdcd2 100%);
 }
 
 /* タイトル */
 .page-title{
-position:fixed;
+position:sticky;
 top:0;
 width:100%;
-padding:18px;
+padding:18px 0;
 text-align:center;
-font-size:13px;
+font-size:14px;
 letter-spacing:2px;
 background:rgba(255,248,243,0.7);
 backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(0,0,0,0.08);
 z-index:1000;
 }
 
-/* 横スクロールコンテナ */
-.wrapper{
-display:flex;
-height:100vh;
-width:300vw; /* 3画面分 */
-transition:transform 0.2s ease;
-}
-
-/* 各ページ */
+/* セクション */
 .section{
-width:100vw;
-height:100vh;
-flex-shrink:0;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
+width:100%;
 }
 
-/* 画像 */
-.section img{
-width:80%;
-height:60vh;
+/* フル幅 */
+.full{
+width:100%;
+height:80vh;
+overflow:hidden;
+}
+
+.full img{
+width:100%;
+height:100%;
 object-fit:cover;
 }
 
 /* テキスト */
 .info{
-margin-top:20px;
-text-align:center;
+padding:24px 28px 40px;
+max-width:900px;
 }
 
 .label{
 font-size:11px;
 letter-spacing:2px;
 opacity:.6;
+margin-bottom:10px;
 }
 
 .title{
-font-size:22px;
-margin-top:10px;
+font-size:24px;
+font-weight:600;
 }
 
 .desc{
-margin-top:8px;
-font-size:13px;
+margin-top:10px;
+font-size:14px;
 opacity:.7;
+line-height:1.6;
 }
 
-/* ナビ */
-.nav{
-position:fixed;
-bottom:30px;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-gap:10px;
+/* 2カラム */
+.split{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:20px;
+padding:20px;
 }
 
-.dot{
-width:10px;
-height:10px;
-border-radius:50%;
-background:#ccc;
+.split.reverse{
+grid-template-columns:.8fr 1.2fr;
 }
 
-.dot.active{
-background:#111;
+.media{
+width:100%;
+height:70vh;
+overflow:hidden;
+}
+
+.media img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* スタック */
+.stack{
+display:grid;
+grid-template-rows:1fr auto;
+gap:20px;
+}
+
+/* モザイク */
+.mosaic{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.mosaic-left{
+display:grid;
+grid-template-rows:1.2fr .8fr;
+gap:20px;
+}
+
+.mosaic-left img:first-child{
+height:50vh;
+}
+
+.mosaic-left img:last-child{
+height:30vh;
+}
+
+.mosaic-right img{
+height:82vh;
+}
+
+/* 戻る */
+.back{
+text-align:center;
+padding:40px 0 60px;
+}
+
+.back a{
+font-size:13px;
+letter-spacing:1.5px;
+color:#111;
+text-decoration:none;
+border-bottom:1px solid rgba(0,0,0,0.4);
 }
 
 /* モバイル */
 @media(max-width:768px){
-.section img{
-width:90%;
+
+.full{
 height:50vh;
 }
+
+.media{
+height:45vh;
+}
+
+.split,
+.split.reverse,
+.mosaic{
+grid-template-columns:1fr;
+padding:14px;
+}
+
+.info{
+padding:18px;
+}
+
+.title{
+font-size:18px;
+}
+
 }
 </style>
 </head>
@@ -120,97 +186,77 @@ height:50vh;
 
 <div class="page-title">VIEW WORKS</div>
 
-<div class="wrapper" id="slider">
-
-<!-- 1 -->
+<!-- ① フル幅 -->
 <section class="section">
-<img src="https://images.unsplash.com/photo-1506157786151-b8491531f063">
+<div class="full">
+<img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?q=80&w=2000">
+</div>
 <div class="info">
-<div class="label">MUSIC</div>
-<div class="title">Creative Direction</div>
-<div class="desc">横スクロールのメインビジュアル</div>
+<div class="label">MUSIC PRODUCTION</div>
+<div class="title">Creative Sound Direction</div>
+<div class="desc">大きな1枚で世界観を見せるセクション。ここが一番重要。</div>
 </div>
 </section>
 
-<!-- 2 -->
+<!-- ② 左大 -->
 <section class="section">
+<div class="split">
+<div class="media">
 <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+</div>
+<div class="stack">
+<div class="media">
+<img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
+</div>
 <div class="info">
 <div class="label">RECORDING</div>
-<div class="title">Studio Work</div>
-<div class="desc">ドラッグで移動できます</div>
+<div class="title">Studio Session</div>
+<div class="desc">大と小を混ぜてリズムを作る。</div>
+</div>
+</div>
 </div>
 </section>
 
-<!-- 3 -->
+<!-- ③ 右大 -->
 <section class="section">
-<img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
+<div class="split reverse">
+<div class="stack">
 <div class="info">
-<div class="label">MIX</div>
-<div class="title">Sound Design</div>
-<div class="desc">スマホはスワイプ対応</div>
+<div class="label">MIXING</div>
+<div class="title">Mix & Master</div>
+<div class="desc">左右を入れ替えるだけで一気にプロっぽくなる。</div>
+</div>
+<div class="media">
+<img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
+</div>
+</div>
+<div class="media">
+<img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81">
+</div>
 </div>
 </section>
 
+<!-- ④ モザイク -->
+<section class="section">
+<div class="mosaic">
+<div class="mosaic-left">
+<img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f">
+<img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a">
 </div>
-
-<div class="nav">
-<div class="dot active"></div>
-<div class="dot"></div>
-<div class="dot"></div>
+<div class="mosaic-right">
+<img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf">
 </div>
+</div>
+<div class="info">
+<div class="label">VISUAL</div>
+<div class="title">Live & Performance</div>
+<div class="desc">最後は情報量多めで締める。</div>
+</div>
+</section>
 
-<script>
-
-const slider = document.getElementById("slider");
-const dots = document.querySelectorAll(".dot");
-
-let current = 0;
-let startX = 0;
-let isDown = false;
-
-/* スライド更新 */
-function update(){
-slider.style.transform = `translateX(-${current * 100}vw)`;
-
-dots.forEach(d=>d.classList.remove("active"));
-dots[current].classList.add("active");
-}
-
-/* マウス */
-document.addEventListener("mousedown",(e)=>{
-isDown = true;
-startX = e.clientX;
-});
-
-document.addEventListener("mouseup",(e)=>{
-if(!isDown) return;
-isDown = false;
-
-let diff = e.clientX - startX;
-
-if(diff < -50 && current < 2) current++;
-if(diff > 50 && current > 0) current--;
-
-update();
-});
-
-/* タッチ */
-document.addEventListener("touchstart",(e)=>{
-startX = e.touches[0].clientX;
-});
-
-document.addEventListener("touchend",(e)=>{
-let endX = e.changedTouches[0].clientX;
-let diff = endX - startX;
-
-if(diff < -50 && current < 2) current++;
-if(diff > 50 && current > 0) current--;
-
-update();
-});
-
-</script>
+<div class="back">
+<a href="index.html">← HOME</a>
+</div>
 
 </body>
 </html>
