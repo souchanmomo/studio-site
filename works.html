@@ -20,21 +20,51 @@ html,body{
   min-height:100%;
 }
 
-
 body{
   font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  color:#161616;
-
-  /* ワンランク濃い・高級感寄りグラデーション */
+  color:#f3eee9;
   background:
-    radial-gradient(circle at 8% 8%, #ffe4d6 0%, #ffcbb7 40%, transparent 70%),
-    radial-gradient(circle at 92% 15%, #ffdacc 0%, #ffbfa8 35%, transparent 65%),
-    linear-gradient(180deg, #fff1e8 0%, #ffd2c0 50%, #ffb8a6 100%);
-
+    radial-gradient(circle at 10% 10%, #4a2f2b 0%, #2a1d1b 35%, transparent 60%),
+    radial-gradient(circle at 90% 20%, #5b3a33 0%, #2f201d 30%, transparent 55%),
+    linear-gradient(180deg, #1a1514 0%, #241917 45%, #140f0e 100%);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
+  overflow-x:hidden;
+  position:relative;
 }
+
+/* 背景の粒 */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(255,220,200,0.08) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1.5px);
+  background-size: 180px 180px, 260px 260px, 320px 320px;
+  background-position: 0 0, 40px 80px, 120px 30px;
+  animation: floatDust 18s linear infinite;
+  opacity:.9;
+}
+
+@keyframes floatDust{
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-18px);}
+  100%{transform:translateY(0);}
+}
+
+/* 前面 */
+.page-title,
+.works-wrap,
+.back{
+  position:relative;
+  z-index:1;
+}
+
 /* 上部固定タイトル */
 .page-title{
   position:sticky;
@@ -47,11 +77,11 @@ body{
   font-size:14px;
   font-weight:500;
   letter-spacing:2px;
-  color:#1a1a1a;
-  background:rgba(255,248,243,0.72);
+  color:#f6eee8;
+  background:rgba(20,15,14,0.55);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(26,26,26,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 /* 全体 */
@@ -59,7 +89,6 @@ body{
   width:100%;
 }
 
-/* セクション */
 .work-section{
   width:100%;
 }
@@ -69,14 +98,14 @@ body{
   width:100%;
   max-width:980px;
   padding:18px 22px 42px;
-  color:#111;
+  color:#f1e8e1;
 }
 
 .work-label{
   font-size:11px;
   letter-spacing:1.8px;
   text-transform:uppercase;
-  opacity:.62;
+  opacity:.68;
   margin-bottom:8px;
 }
 
@@ -90,31 +119,33 @@ body{
   margin-top:10px;
   font-size:14px;
   line-height:1.65;
-  opacity:.72;
+  opacity:.78;
 }
 
 /* 画像共通 */
 .media{
   width:100%;
   overflow:hidden;
-  background:#ddd;
+  background:#2a2220;
 }
 
 .media img{
   width:100%;
   height:100%;
   display:block;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center;
+  max-width:100%;
 }
 
 /* 1枚目: フル幅 */
 .full-bleed{
   width:100%;
-  height:78vh;
+  height:min(78vh, 900px);
 }
 
 .full-bleed img{
-  height:78vh;
+  height:100%;
 }
 
 /* 2カラム */
@@ -131,11 +162,11 @@ body{
 }
 
 .split > .media{
-  height:70vh;
+  height:min(70vh, 760px);
 }
 
 .split > .media img{
-  height:70vh;
+  height:100%;
 }
 
 /* 縦積み */
@@ -146,11 +177,11 @@ body{
 }
 
 .stack .media{
-  height:44vh;
+  height:min(44vh, 460px);
 }
 
 .stack .media img{
-  height:44vh;
+  height:100%;
 }
 
 .stack .work-info{
@@ -169,27 +200,42 @@ body{
 
 .mosaic-left{
   display:grid;
-  grid-template-rows:52vh 28vh;
+  grid-template-rows:min(52vh, 560px) min(28vh, 300px);
   gap:18px;
 }
 
 .mosaic-right{
-  height:82vh;
+  height:min(82vh, 880px);
 }
 
 .mosaic-left .media:first-child,
 .mosaic-left .media:first-child img{
-  height:52vh;
+  height:100%;
 }
 
 .mosaic-left .media:last-child,
 .mosaic-left .media:last-child img{
-  height:28vh;
+  height:100%;
 }
 
 .mosaic-right .media,
 .mosaic-right .media img{
-  height:82vh;
+  height:100%;
+}
+
+/* ふわっと出る */
+.reveal{
+  opacity:0;
+  transform:translateY(38px) scale(0.985);
+  transition:
+    opacity 1s ease,
+    transform 1.1s ease;
+  will-change:opacity, transform;
+}
+
+.reveal.show{
+  opacity:1;
+  transform:translateY(0) scale(1);
 }
 
 /* 軽いホバー */
@@ -198,7 +244,7 @@ body{
 }
 
 .media:hover img{
-  transform:scale(1.03);
+  transform:scale(1.02);
 }
 
 /* 戻る */
@@ -208,11 +254,11 @@ body{
 }
 
 .back a{
-  color:#161616;
+  color:#f3e9e2;
   text-decoration:none;
   font-size:13px;
   letter-spacing:1.3px;
-  border-bottom:1px solid rgba(17,17,17,0.38);
+  border-bottom:1px solid rgba(255,255,255,0.35);
   padding-bottom:4px;
 }
 
@@ -225,7 +271,7 @@ body{
 
   .full-bleed,
   .full-bleed img{
-    height:50vh;
+    height:42vh;
   }
 
   .split,
@@ -236,23 +282,25 @@ body{
     padding:14px;
   }
 
-.split > .media,
-.split > .media img,
-.stack .media,
-.stack .media img,
-.mosaic-left .media:first-child,
-.mosaic-left .media:first-child img,
-.mosaic-left .media:last-child,
-.mosaic-left .media:last-child img,
-.mosaic-right .media,
-.mosaic-right .media img{
-  height:40vh;
-}
+  .split > .media,
+  .split > .media img,
+  .stack .media,
+  .stack .media img,
+  .mosaic-left .media:first-child,
+  .mosaic-left .media:first-child img,
+  .mosaic-left .media:last-child,
+  .mosaic-left .media:last-child img,
+  .mosaic-right .media,
+  .mosaic-right .media img{
+    height:34vh;
+  }
 
-.mosaic-left,
-.mosaic-right{
-  height:auto;
-}
+  .mosaic-left,
+  .mosaic-right{
+    height:auto;
+    grid-template-rows:none;
+  }
+
   .work-info{
     padding:16px 18px 30px;
   }
@@ -276,10 +324,10 @@ body{
 
   <!-- 01 -->
   <section class="work-section">
-    <div class="media full-bleed">
+    <div class="media full-bleed reveal">
       <img src="images/20260319_155621.jpg" alt="シグリカ">
     </div>
-    <div class="work-info">
+    <div class="work-info reveal">
       <div class="work-label">Music Production</div>
       <div class="work-title">Creative Direction / Sound Production</div>
       <div class="work-sub">最初に大きな面を置いて、一覧ページの世界観を一発で見せる構成です。均等カードではなく、最初は大胆に見せる方が参考サイト寄りになります。</div>
@@ -289,14 +337,14 @@ body{
   <!-- 02 -->
   <section class="work-section">
     <div class="split">
-      <div class="media">
+      <div class="media reveal">
         <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1600&auto=format&fit=crop" alt="Studio Recording">
       </div>
       <div class="stack">
-        <div class="media">
+        <div class="media reveal">
           <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop" alt="Recording Session">
         </div>
-        <div class="work-info">
+        <div class="work-info reveal">
           <div class="work-label">Recording</div>
           <div class="work-title">Studio Session / Editorial Balance</div>
           <div class="work-sub">大きい画像と小さい画像を同居させて、均一ではないリズムを作ります。これが“適当な並び”と“デザインされた配置”の差になります。</div>
@@ -309,16 +357,16 @@ body{
   <section class="work-section">
     <div class="split reverse">
       <div class="stack">
-        <div class="work-info">
+        <div class="work-info reveal">
           <div class="work-label">Mix &amp; Mastering</div>
           <div class="work-title">Asymmetrical Layout / Direction</div>
           <div class="work-sub">左右を毎回変えることで単調さを防ぎ、スクロールした時の気持ちよさを作ります。参考サイトの“流れが変わる感じ”に寄せた部分です。</div>
         </div>
-        <div class="media">
+        <div class="media reveal">
           <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop" alt="Mix Design">
         </div>
       </div>
-      <div class="media">
+      <div class="media reveal">
         <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop" alt="Sound Visual">
       </div>
     </div>
@@ -326,24 +374,22 @@ body{
 
   <!-- 04 -->
   <section class="work-section">
-
-<div class="mosaic">
-  <div class="mosaic-left">
-    <div class="media">
-      <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop" alt="Live Setup">
+    <div class="mosaic">
+      <div class="mosaic-left">
+        <div class="media reveal">
+          <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop" alt="Live Setup">
+        </div>
+        <div class="media reveal">
+          <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="Audience View">
+        </div>
+      </div>
+      <div class="mosaic-right">
+        <div class="media reveal">
+          <img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop" alt="Performance Visual">
+        </div>
+      </div>
     </div>
-    <div class="media">
-      <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="Audience View">
-    </div>
-  </div>
-  <div class="mosaic-right">
-    <div class="media">
-      <img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop" alt="Performance Visual">
-    </div>
-  </div>
-</div>
-    
-    <div class="work-info">
+    <div class="work-info reveal">
       <div class="work-label">Visual Direction</div>
       <div class="work-title">Full-Bleed / Split / Mosaic</div>
       <div class="work-sub">最後は情報量を少し増やして締めています。参考サイトの一覧ページのように、ただ同じ箱を並べるのではなく、面の変化で見せる設計です。</div>
@@ -355,6 +401,22 @@ body{
 <div class="back">
   <a href="index.html">← HOME</a>
 </div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+    }
+  });
+}, {
+  threshold: 0.18
+});
+
+document.querySelectorAll(".reveal").forEach((el) => {
+  observer.observe(el);
+});
+</script>
 
 </body>
 </html>
