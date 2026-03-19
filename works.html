@@ -14,17 +14,20 @@
   color:#fff;
 }
 
-/* VIEW WORKS 固定タイトル */
+
+  /* VIEW WORKS 固定タイトルをナビ風に揃える */
 .page-title {
-  position: sticky;
+  position: sticky;           /* 上に固定 */
   top: 0;
-  background: rgba(0,0,0,0.5); /* 半透明で背景を透けさせる */
-  padding: 10px 0;               /* INDEXと同じくらいの余白に調整 */
-  font-size: 14px;               /* INDEXのナビリンクと同じサイズ */
+  width: 100%;               /* 横幅いっぱい */
+  background: rgba(0,0,0,0.7); /* INDEXナビと同じ半透明黒 */
+  padding: 20px 0;           /* 上下の余白をナビと同じに */
   text-align: center;
-  z-index: 100;
-  letter-spacing: 2px;           /* INDEXリンクと同じ間隔 */
-  text-transform: uppercase;     /* INDEXの大文字表示に揃える */
+  font-size: 14px;           /* INDEXリンクと同じ */
+  letter-spacing: 2px;       /* INDEXと同じ */
+  color: #fff;
+  z-index: 1000;             /* ナビと同じ重なり順 */
+  margin: 0;                 /* 上の余白リセット */
 }
 
 /* グリッド・カードはトップページと同じ見た目 */
