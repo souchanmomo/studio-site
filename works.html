@@ -33,7 +33,40 @@ body{
   overflow-x:hidden;
   position:relative;
 }
-/* 背景の粒 */
+
+/* ローディング */
+#loader{
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(7,17,31,0.96), rgba(9,19,31,0.96));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+
+#loader.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.loader-text{
+  color:#eef4ff;
+  font-size:13px;
+  letter-spacing:4px;
+  opacity:.85;
+  animation:loaderPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes loaderPulse{
+  0%{opacity:.35; transform:translateY(0);}
+  50%{opacity:1; transform:translateY(-2px);}
+  100%{opacity:.35; transform:translateY(0);}
+}
+
+/* 星空 */
 body::before{
   content:"";
   position:fixed;
@@ -42,14 +75,15 @@ body::before{
   z-index:0;
   background:
     radial-gradient(circle, rgba(255,255,255,0.95) 0 1.2px, transparent 2.2px) 0 0 / 180px 180px,
-    radial-gradient(circle, rgba(170,210,255,0.9) 0 1.8px, transparent 3px) 60px 90px / 240px 240px,
-    radial-gradient(circle, rgba(210,235,255,0.8) 0 1px, transparent 2px) 120px 40px / 320px 320px,
+    radial-gradient(circle, rgba(170,210,255,0.90) 0 1.8px, transparent 3px) 60px 90px / 240px 240px,
+    radial-gradient(circle, rgba(210,235,255,0.80) 0 1px, transparent 2px) 120px 40px / 320px 320px,
     radial-gradient(circle, rgba(120,200,255,0.55) 0 2.2px, transparent 3.8px) 30px 140px / 420px 420px;
   animation:
     floatStars 22s ease-in-out infinite,
     twinkleStars 4.6s ease-in-out infinite alternate;
-  opacity:1;
+  opacity:.95;
 }
+
 body::after{
   content:"";
   position:fixed;
@@ -65,89 +99,38 @@ body::after{
     twinkleGlow 5.2s ease-in-out infinite alternate;
   mix-blend-mode:screen;
 }
-@keyframes floatDust{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-18px);}
-  100%{transform:translateY(0);}
-}
-@keyframes floatDustX{
-  0%{
-    transform:translateY(0) translateX(0);
-  }
-  25%{
-    transform:translateY(-10px) translateX(6px);
-  }
-  50%{
-    transform:translateY(-18px) translateX(-4px);
-  }
-  75%{
-    transform:translateY(-8px) translateX(8px);
-  }
-  100%{
-    transform:translateY(0) translateX(0);
-  }
-}
 
 @keyframes floatStars{
-  0%{
-    transform:translateY(0) translateX(0) scale(1);
-  }
-  25%{
-    transform:translateY(-8px) translateX(6px) scale(1.01);
-  }
-  50%{
-    transform:translateY(-16px) translateX(-4px) scale(1.02);
-  }
-  75%{
-    transform:translateY(-7px) translateX(8px) scale(1.01);
-  }
-  100%{
-    transform:translateY(0) translateX(0) scale(1);
-  }
+  0%{transform:translateY(0) translateX(0) scale(1);}
+  25%{transform:translateY(-8px) translateX(6px) scale(1.01);}
+  50%{transform:translateY(-16px) translateX(-4px) scale(1.02);}
+  75%{transform:translateY(-7px) translateX(8px) scale(1.01);}
+  100%{transform:translateY(0) translateX(0) scale(1);}
 }
 
-  @keyframes twinkleStars{
-  0%{
-    opacity:.55;
-    filter:brightness(.95);
-  }
-  50%{
-    opacity:1;
-    filter:brightness(1.25);
-  }
-  100%{
-    opacity:.7;
-    filter:brightness(1.05);
-  }
+@keyframes twinkleStars{
+  0%{opacity:.55; filter:brightness(.95);}
+  50%{opacity:1; filter:brightness(1.25);}
+  100%{opacity:.7; filter:brightness(1.05);}
 }
 
 @keyframes sparkleShift{
-  0%{
-    transform:translateX(0) translateY(0) scale(1);
-  }
-  50%{
-    transform:translateX(8px) translateY(-6px) scale(1.02);
-  }
-  100%{
-    transform:translateX(0) translateY(0) scale(1);
-  }
+  0%{transform:translateX(0) translateY(0) scale(1);}
+  50%{transform:translateX(8px) translateY(-6px) scale(1.02);}
+  100%{transform:translateX(0) translateY(0) scale(1);}
 }
 
 @keyframes twinkleGlow{
-  0%{
-    opacity:.25;
-  }
-  50%{
-    opacity:.5;
-  }
-  100%{
-    opacity:.3;
-  }
+  0%{opacity:.25;}
+  50%{opacity:.5;}
+  100%{opacity:.3;}
 }
+
 /* 前面 */
 .page-title,
 .works-wrap,
-.back{
+.back,
+.modal{
   position:relative;
   z-index:1;
 }
@@ -164,8 +147,8 @@ body::after{
   font-size:14px;
   font-weight:500;
   letter-spacing:2px;
-  color:#f6eee8;
-  background:rgba(20,15,14,0.55);
+  color:#eef4ff;
+  background:rgba(7,17,31,0.45);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(255,255,255,0.08);
@@ -185,14 +168,14 @@ body::after{
   width:100%;
   max-width:980px;
   padding:18px 22px 42px;
-  color:#f1e8e1;
+  color:#eef4ff;
 }
 
 .work-label{
   font-size:11px;
   letter-spacing:1.8px;
   text-transform:uppercase;
-  opacity:.68;
+  opacity:.62;
   margin-bottom:8px;
 }
 
@@ -209,25 +192,83 @@ body::after{
   opacity:.78;
 }
 
+/* 画像共通 */
 .media{
+  position:relative;
   width:100%;
   overflow:hidden;
+  background:transparent;
+  cursor:pointer;
 }
 
 .media img{
   width:100%;
   height:auto;
   display:block;
+  transition:transform .7s ease, filter .7s ease;
 }
 
-/* 1枚目: フル幅 */
+.media:hover img{
+  transform:scale(1.04);
+  filter:brightness(1.03);
+}
+
+/* オーバーレイ */
+.media-overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:flex-end;
+  padding:24px;
+  background:linear-gradient(
+    to top,
+    rgba(5,10,18,0.78) 0%,
+    rgba(5,10,18,0.42) 26%,
+    rgba(5,10,18,0.10) 54%,
+    rgba(5,10,18,0) 100%
+  );
+  transition:background .45s ease;
+}
+
+.media:hover .media-overlay{
+  background:linear-gradient(
+    to top,
+    rgba(5,10,18,0.86) 0%,
+    rgba(5,10,18,0.48) 28%,
+    rgba(5,10,18,0.12) 56%,
+    rgba(5,10,18,0) 100%
+  );
+}
+
+.overlay-text{
+  color:#eef4ff;
+  transform:translateY(10px);
+  opacity:.92;
+  transition:transform .45s ease, opacity .45s ease;
+}
+
+.media:hover .overlay-text{
+  transform:translateY(0);
+  opacity:1;
+}
+
+.overlay-label{
+  font-size:11px;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+  opacity:.72;
+  margin-bottom:8px;
+}
+
+.overlay-title{
+  font-size:22px;
+  line-height:1.2;
+  font-weight:600;
+}
+
+/* 1枚目 */
 .full-bleed{
   width:100%;
-  height:min(78vh, 900px);
-}
-
-.full-bleed img{
-  height:100%;
 }
 
 /* 2カラム */
@@ -243,27 +284,10 @@ body::after{
   grid-template-columns:.8fr 1.2fr;
 }
 
-.split > .media{
-  height:min(70vh, 760px);
-}
-
-.split > .media img{
-  height:100%;
-}
-
-/* 縦積み */
 .stack{
   display:grid;
   grid-template-rows:auto auto;
   gap:18px;
-}
-
-.stack .media{
-  height:min(44vh, 460px);
-}
-
-.stack .media img{
-  height:100%;
 }
 
 .stack .work-info{
@@ -282,30 +306,14 @@ body::after{
 
 .mosaic-left{
   display:grid;
-  grid-template-rows:min(52vh, 560px) min(28vh, 300px);
   gap:18px;
 }
 
 .mosaic-right{
-  height:min(82vh, 880px);
+  display:block;
 }
 
-.mosaic-left .media:first-child,
-.mosaic-left .media:first-child img{
-  height:100%;
-}
-
-.mosaic-left .media:last-child,
-.mosaic-left .media:last-child img{
-  height:100%;
-}
-
-.mosaic-right .media,
-.mosaic-right .media img{
-  height:100%;
-}
-
-/* ふわっと出る */
+/* reveal */
 .reveal{
   opacity:0;
   transform:translateY(42px) scale(0.985);
@@ -320,15 +328,6 @@ body::after{
   transform:translateY(0) scale(1);
 }
 
-/* 軽いホバー */
-.media img{
-  transition:transform .55s ease;
-}
-
-.media:hover img{
-  transform:scale(1.02);
-}
-
 /* 戻る */
 .back{
   padding:22px 22px 58px;
@@ -336,12 +335,89 @@ body::after{
 }
 
 .back a{
-  color:#f3e9e2;
+  color:#eef4ff;
   text-decoration:none;
   font-size:13px;
   letter-spacing:1.3px;
   border-bottom:1px solid rgba(255,255,255,0.35);
   padding-bottom:4px;
+}
+
+/* モーダル */
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(4,8,15,0.82);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s ease;
+  z-index:3000;
+  padding:24px;
+}
+
+.modal.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal-panel{
+  width:min(920px, 100%);
+  max-height:90vh;
+  overflow:auto;
+  background:rgba(11,20,34,0.72);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 20px 80px rgba(0,0,0,0.35);
+}
+
+.modal-img{
+  width:100%;
+  display:block;
+}
+
+.modal-body{
+  padding:22px 22px 26px;
+}
+
+.modal-label{
+  font-size:11px;
+  letter-spacing:1.8px;
+  text-transform:uppercase;
+  opacity:.68;
+  margin-bottom:10px;
+}
+
+.modal-title{
+  font-size:26px;
+  line-height:1.2;
+  font-weight:600;
+  margin-bottom:12px;
+}
+
+.modal-desc{
+  font-size:14px;
+  line-height:1.7;
+  opacity:.82;
+}
+
+.modal-close{
+  position:absolute;
+  top:14px;
+  right:16px;
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.06);
+  color:#eef4ff;
+  cursor:pointer;
+  font-size:18px;
 }
 
 /* スマホ */
@@ -351,36 +427,12 @@ body::after{
     font-size:13px;
   }
 
-  .full-bleed,
-  .full-bleed img{
-    height:42vh;
-  }
-
   .split,
   .split.reverse,
   .mosaic{
     grid-template-columns:1fr;
     gap:14px;
     padding:14px;
-  }
-
-  .split > .media,
-  .split > .media img,
-  .stack .media,
-  .stack .media img,
-  .mosaic-left .media:first-child,
-  .mosaic-left .media:first-child img,
-  .mosaic-left .media:last-child,
-  .mosaic-left .media:last-child img,
-  .mosaic-right .media,
-  .mosaic-right .media img{
-    height:34vh;
-  }
-
-  .mosaic-left,
-  .mosaic-right{
-    height:auto;
-    grid-template-rows:none;
   }
 
   .work-info{
@@ -394,11 +446,31 @@ body::after{
   .work-sub{
     font-size:13px;
   }
+
+  .media-overlay{
+    padding:18px;
+  }
+
+  .overlay-title{
+    font-size:18px;
+  }
+
+  .modal{
+    padding:14px;
+  }
+
+  .modal-title{
+    font-size:20px;
+  }
 }
 </style>
 </head>
 
 <body>
+
+<div id="loader">
+  <div class="loader-text">LOADING WORKS</div>
+</div>
 
 <div class="page-title">VIEW WORKS</div>
 
@@ -406,8 +478,20 @@ body::after{
 
   <!-- 01 -->
   <section class="work-section">
-    <div class="media full-bleed reveal">
+    <div
+      class="media full-bleed reveal work-item"
+      data-label="Music Production"
+      data-title="Creative Direction / Sound Production"
+      data-desc="最初に大きな面を置いて、一覧ページの世界観を一発で見せる構成です。均等カードではなく、最初は大胆に見せる方が参考サイト寄りになります。"
+      data-image="images/20260319_155621.jpg"
+    >
       <img src="images/20260319_155621.jpg" alt="シグリカ">
+      <div class="media-overlay">
+        <div class="overlay-text">
+          <div class="overlay-label">Music Production</div>
+          <div class="overlay-title">Creative Direction / Sound Production</div>
+        </div>
+      </div>
     </div>
     <div class="work-info reveal">
       <div class="work-label">Music Production</div>
@@ -419,13 +503,39 @@ body::after{
   <!-- 02 -->
   <section class="work-section">
     <div class="split">
-      <div class="media reveal">
+      <div
+        class="media reveal work-item"
+        data-label="Recording"
+        data-title="Studio Session / Editorial Balance"
+        data-desc="大きい画像と小さい画像を同居させて、均一ではないリズムを作ります。これが“適当な並び”と“デザインされた配置”の差になります。"
+        data-image="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1600&auto=format&fit=crop"
+      >
         <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1600&auto=format&fit=crop" alt="Studio Recording">
-      </div>
-      <div class="stack">
-        <div class="media reveal">
-          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop" alt="Recording Session">
+        <div class="media-overlay">
+          <div class="overlay-text">
+            <div class="overlay-label">Recording</div>
+            <div class="overlay-title">Studio Session / Editorial Balance</div>
+          </div>
         </div>
+      </div>
+
+      <div class="stack">
+        <div
+          class="media reveal work-item"
+          data-label="Recording"
+          data-title="Session Detail"
+          data-desc="小さい面を組み合わせることで、一覧ページに流れと緊張感を作れます。"
+          data-image="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop"
+        >
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop" alt="Recording Session">
+          <div class="media-overlay">
+            <div class="overlay-text">
+              <div class="overlay-label">Recording</div>
+              <div class="overlay-title">Session Detail</div>
+            </div>
+          </div>
+        </div>
+
         <div class="work-info reveal">
           <div class="work-label">Recording</div>
           <div class="work-title">Studio Session / Editorial Balance</div>
@@ -444,12 +554,38 @@ body::after{
           <div class="work-title">Asymmetrical Layout / Direction</div>
           <div class="work-sub">左右を毎回変えることで単調さを防ぎ、スクロールした時の気持ちよさを作ります。参考サイトの“流れが変わる感じ”に寄せた部分です。</div>
         </div>
-        <div class="media reveal">
+
+        <div
+          class="media reveal work-item"
+          data-label="Mix & Mastering"
+          data-title="Mix Design"
+          data-desc="左右を切り替えながら見せることで、同じ構成の繰り返し感を抑えています。"
+          data-image="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop"
+        >
           <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop" alt="Mix Design">
+          <div class="media-overlay">
+            <div class="overlay-text">
+              <div class="overlay-label">Mix &amp; Mastering</div>
+              <div class="overlay-title">Mix Design</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="media reveal">
+
+      <div
+        class="media reveal work-item"
+        data-label="Sound Visual"
+        data-title="Asymmetrical Visual Balance"
+        data-desc="大きい面を反対側に置くことで、一覧の視線誘導が自然に変わります。"
+        data-image="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop"
+      >
         <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop" alt="Sound Visual">
+        <div class="media-overlay">
+          <div class="overlay-text">
+            <div class="overlay-label">Sound Visual</div>
+            <div class="overlay-title">Asymmetrical Visual Balance</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -458,19 +594,58 @@ body::after{
   <section class="work-section">
     <div class="mosaic">
       <div class="mosaic-left">
-        <div class="media reveal">
+        <div
+          class="media reveal work-item"
+          data-label="Visual Direction"
+          data-title="Live Setup"
+          data-desc="最後は情報量を少し増やしながら、動きのある面構成で締めています。"
+          data-image="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop"
+        >
           <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop" alt="Live Setup">
+          <div class="media-overlay">
+            <div class="overlay-text">
+              <div class="overlay-label">Visual Direction</div>
+              <div class="overlay-title">Live Setup</div>
+            </div>
+          </div>
         </div>
-        <div class="media reveal">
+
+        <div
+          class="media reveal work-item"
+          data-label="Audience View"
+          data-title="Crowd Perspective"
+          data-desc="大きい面のあとに小さい面を置くことで、スクロールのリズムが出ます。"
+          data-image="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop"
+        >
           <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="Audience View">
+          <div class="media-overlay">
+            <div class="overlay-text">
+              <div class="overlay-label">Audience View</div>
+              <div class="overlay-title">Crowd Perspective</div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="mosaic-right">
-        <div class="media reveal">
+        <div
+          class="media reveal work-item"
+          data-label="Performance Visual"
+          data-title="Stage & Performance"
+          data-desc="最後の大きな面で余韻を残しながらページを締めます。"
+          data-image="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop"
+        >
           <img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop" alt="Performance Visual">
+          <div class="media-overlay">
+            <div class="overlay-text">
+              <div class="overlay-label">Performance Visual</div>
+              <div class="overlay-title">Stage & Performance</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
     <div class="work-info reveal">
       <div class="work-label">Visual Direction</div>
       <div class="work-title">Full-Bleed / Split / Mosaic</div>
@@ -484,7 +659,28 @@ body::after{
   <a href="index.html">← HOME</a>
 </div>
 
+<!-- モーダル -->
+<div class="modal" id="workModal">
+  <div class="modal-close" id="modalClose">✕</div>
+  <div class="modal-panel">
+    <img class="modal-img" id="modalImg" src="" alt="">
+    <div class="modal-body">
+      <div class="modal-label" id="modalLabel"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+    </div>
+  </div>
+</div>
+
 <script>
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.classList.add("hide");
+  }, 700);
+});
+
+/* reveal: 下に行く時も上に戻る時も発動 */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -500,8 +696,45 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(".reveal").forEach((el) => {
   observer.observe(el);
 });
+
+/* モーダル */
+const modal = document.getElementById("workModal");
+const modalImg = document.getElementById("modalImg");
+const modalLabel = document.getElementById("modalLabel");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const modalClose = document.getElementById("modalClose");
+
+document.querySelectorAll(".work-item").forEach((item) => {
+  item.addEventListener("click", () => {
+    modalImg.src = item.dataset.image;
+    modalLabel.textContent = item.dataset.label;
+    modalTitle.textContent = item.dataset.title;
+    modalDesc.textContent = item.dataset.desc;
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+function closeModal(){
+  modal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+modalClose.addEventListener("click", closeModal);
+
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeModal();
+  }
+});
 </script>
-  
 
 </body>
 </html>
