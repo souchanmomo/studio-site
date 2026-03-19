@@ -1,107 +1,96 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Works | Creative Studio</title>
 
 <style>
-
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
-background:#000;
-color:#fff;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background:#000;
+  color:#fff;
 }
 
-header{
-padding:40px;
-text-align:center;
-font-size:28px;
-letter-spacing:4px;
-}
-h1.page-title {
-  position: sticky;  /* 上に固定 */
+/* 固定タイトル */
+header {
+  position: sticky;
   top: 0;
-  background: rgba(255,255,255,0.8); /* 背景を少し透過で浮かせる */
-  padding: 20px;
-  font-size: 48px;
+  background: rgba(0,0,0,0.85);
+  padding: 20px 0;
   text-align: center;
-  z-index: 10;
-  font-family: 'Roboto', sans-serif; /* 参考サイト風フォント */
+  font-size: 48px;
+  z-index: 100;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 6px;
+  color: #fff;
 }
+
+/* グリッド */
 .grid{
-max-width:1100px;
-margin:auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-padding:40px;
+  max-width:1100px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+  padding:40px 20px;
 }
 
 .card{
-background:#111;
-border-radius:10px;
-overflow:hidden;
-transition:.4s;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
+  transition:.4s;
 }
 
 .card:hover{
-transform:scale(1.05);
+  transform:scale(1.05);
 }
 
 .card img{
-width:100%;
-display:block;
+  width:100%;
+  display:block;
 }
 
 .card p{
-padding:20px;
+  padding:20px;
+  text-align:center;
 }
 
 a{
-color:white;
-text-decoration:none;
+  color:white;
+  text-decoration:none;
 }
 
 .back{
-text-align:center;
-margin:40px;
+  text-align:center;
+  margin:40px;
 }
-
 </style>
-
 </head>
 
 <body>
 
-<header>WORKS</header>
-<h1 class="page-title">VIEW WORKS</h1>
+<header>VIEW WORKS</header>
+
 <div class="grid">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
-<p>Music Production</p>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-<p>Studio Recording</p>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
-<p>Mix & Mastering</p>
-</div>
-
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4">
+    <p>Music Production</p>
+  </div>
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
+    <p>Studio Recording</p>
+  </div>
+  <div class="card">
+    <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae">
+    <p>Mix & Mastering</p>
+  </div>
 </div>
 
 <div class="back">
-
-<a href="index.html">← HOMEに戻る</a>
-
+  <a href="index.html">← HOMEに戻る</a>
 </div>
 
 </body>
