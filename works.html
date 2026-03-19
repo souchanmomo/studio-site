@@ -24,12 +24,12 @@ body{
   font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   color:#f3eee9;
   background:
-    radial-gradient(circle at 10% 10%, #4a2f2b 0%, #2a1d1b 35%, transparent 60%),
-    radial-gradient(circle at 90% 20%, #5b3a33 0%, #2f201d 30%, transparent 55%),
-    linear-gradient(180deg, #1a1514 0%, #241917 45%, #140f0e 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
+    radial-gradient(circle at 12% 14%, rgba(255,191,170,0.38) 0%, rgba(255,191,170,0.12) 22%, transparent 48%),
+    radial-gradient(circle at 86% 18%, rgba(255,170,145,0.34) 0%, rgba(255,170,145,0.10) 20%, transparent 44%),
+    radial-gradient(circle at 50% 80%, rgba(255,210,190,0.16) 0%, rgba(255,210,190,0.06) 18%, transparent 40%),
+    linear-gradient(180deg, #2a1d1b 0%, #3a2723 38%, #241816 100%);
+  background-repeat:no-repeat;
+  background-size:cover;
   overflow-x:hidden;
   position:relative;
 }
@@ -41,22 +41,44 @@ body::before{
   inset:0;
   pointer-events:none;
   z-index:0;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,220,200,0.08) 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1.5px);
-  background-size: 180px 180px, 260px 260px, 320px 320px;
-  background-position: 0 0, 40px 80px, 120px 30px;
-  animation: floatDust 18s linear infinite;
-  opacity:.9;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.16) 0 2px, transparent 3px) 0 0 / 180px 180px,
+    radial-gradient(circle, rgba(255,220,205,0.14) 0 2.5px, transparent 3.5px) 60px 90px / 240px 240px,
+    radial-gradient(circle, rgba(255,245,238,0.10) 0 1.5px, transparent 2.5px) 120px 40px / 320px 320px;
+  animation: floatDustX 18s ease-in-out infinite;
+  opacity:1;
 }
-
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    linear-gradient(180deg, rgba(255,230,220,0.08), rgba(255,200,185,0.05));
+}
 @keyframes floatDust{
   0%{transform:translateY(0);}
   50%{transform:translateY(-18px);}
   100%{transform:translateY(0);}
 }
-
+@keyframes floatDustX{
+  0%{
+    transform:translateY(0) translateX(0);
+  }
+  25%{
+    transform:translateY(-10px) translateX(6px);
+  }
+  50%{
+    transform:translateY(-18px) translateX(-4px);
+  }
+  75%{
+    transform:translateY(-8px) translateX(8px);
+  }
+  100%{
+    transform:translateY(0) translateX(0);
+  }
+}
 /* 前面 */
 .page-title,
 .works-wrap,
