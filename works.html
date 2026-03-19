@@ -23,10 +23,19 @@ html,body{
 body{
   font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   color:#161616;
+
+  /* 背景グラデーション */
   background:
-    radial-gradient(circle at 12% 10%, rgba(255,247,238,0.95) 0%, rgba(255,236,221,0.90) 24%, rgba(255,236,221,0) 48%),
-    radial-gradient(circle at 88% 12%, rgba(255,243,233,0.95) 0%, rgba(255,220,205,0.78) 22%, rgba(255,220,205,0) 46%),
-    linear-gradient(180deg, #fff8f3 0%, #ffece1 42%, #ffdcd2 100%);
+    radial-gradient(circle at 10% 10%, #fff6ee 0%, #ffe9dc 30%, transparent 60%),
+    radial-gradient(circle at 90% 20%, #fff2e8 0%, #ffdccc 25%, transparent 55%),
+    linear-gradient(180deg, #fff8f3 0%, #ffece1 40%, #ffdcd2 100%);
+
+  /* ここが重要：背景固定 */
+  background-attachment: fixed;
+
+  /* スクロール時のチラつき防止 */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* 上部固定タイトル */
