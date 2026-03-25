@@ -38,8 +38,7 @@ body{
 #loader{
   position:fixed;
   inset:0;
-  background:
-    linear-gradient(180deg, rgba(7,17,31,0.96), rgba(9,19,31,0.96));
+  background:linear-gradient(180deg, rgba(7,17,31,0.96), rgba(9,19,31,0.96));
   display:flex;
   align-items:center;
   justify-content:center;
@@ -66,7 +65,7 @@ body{
   100%{opacity:.35; transform:translateY(0);}
 }
 
-/* 星空 */
+/* 星空・粒 */
 body::before{
   content:"";
   position:fixed;
@@ -194,17 +193,21 @@ body::after{
 
 /* 画像共通 */
 .media{
+  position:relative;
   width:100%;
   overflow:hidden;
+  background:transparent;
+  cursor:pointer;
 }
 
-.media img{
+.media img.main-image{
   width:100%;
   height:auto;
   display:block;
+  transition:transform .7s ease, filter .7s ease;
 }
 
-.media:hover img{
+.media:hover img.main-image{
   transform:scale(1.04);
   filter:brightness(1.03);
 }
@@ -262,12 +265,79 @@ body::after{
   font-weight:600;
 }
 
-/* 1枚目 */
+/* スタンプ */
+.stamp{
+  position:absolute;
+  z-index:6;
+  width:120px;
+  height:auto;
+  pointer-events:none;
+  opacity:.98;
+  filter:
+    drop-shadow(0 12px 24px rgba(0,0,0,0.35))
+    drop-shadow(0 2px 6px rgba(255,255,255,0.2));
+}
+
+.stamp-1{
+  right:6%;
+  bottom:6%;
+  transform:rotate(-12deg);
+  animation:float1 4.5s ease-in-out infinite;
+}
+
+.stamp-2{
+  left:5%;
+  bottom:8%;
+  width:110px;
+  transform:rotate(8deg);
+  animation:float2 5s ease-in-out infinite;
+}
+
+.stamp-3{
+  right:4%;
+  top:6%;
+  width:105px;
+  transform:rotate(14deg);
+  animation:float3 4.8s ease-in-out infinite;
+}
+
+.stamp-4{
+  left:6%;
+  top:8%;
+  width:110px;
+  transform:rotate(-8deg);
+  animation:float4 5.2s ease-in-out infinite;
+}
+
+@keyframes float1{
+  0%{transform:translateY(0) rotate(-12deg);}
+  50%{transform:translateY(-10px) rotate(-10deg);}
+  100%{transform:translateY(0) rotate(-12deg);}
+}
+
+@keyframes float2{
+  0%{transform:translateY(0) rotate(8deg);}
+  50%{transform:translateY(-8px) rotate(10deg);}
+  100%{transform:translateY(0) rotate(8deg);}
+}
+
+@keyframes float3{
+  0%{transform:translateY(0) rotate(14deg);}
+  50%{transform:translateY(-7px) rotate(12deg);}
+  100%{transform:translateY(0) rotate(14deg);}
+}
+
+@keyframes float4{
+  0%{transform:translateY(0) rotate(-8deg);}
+  50%{transform:translateY(-9px) rotate(-6deg);}
+  100%{transform:translateY(0) rotate(-8deg);}
+}
+
+/* レイアウト */
 .full-bleed{
   width:100%;
 }
 
-/* 2カラム */
 .split{
   display:grid;
   grid-template-columns:1.2fr .8fr;
@@ -291,7 +361,6 @@ body::after{
   max-width:none;
 }
 
-/* モザイク */
 .mosaic{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -451,6 +520,16 @@ body::after{
     font-size:18px;
   }
 
+  .stamp{
+    width:70px;
+  }
+
+  .stamp-2,
+  .stamp-3,
+  .stamp-4{
+    width:68px;
+  }
+
   .modal{
     padding:14px;
   }
@@ -476,16 +555,17 @@ body::after{
   <section class="work-section">
     <div
       class="media full-bleed reveal work-item"
-      data-label="Music Production"
-      data-title="Creative Direction / Sound Production"
-      data-desc="最初に大きな面を置いて、一覧ページの世界観を一発で見せる構成です。均等カードではなく、最初は大胆に見せる方が参考サイト寄りになります。"
-      data-image="images/20260319_155621.jpg"
+      data-label="エンドフィールド名刺"
+      data-title="最推し：タンタン"
+      data-desc="まだまだこれから探索頑張ります🔥"
+      data-image="images/Screenshot_エンドフィールド_20260324_074442~2.jpg"
     >
-      <img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺">
+      <img class="main-image" src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺">
+      <img class="stamp stamp-1" src="images/stamp-1.png" alt="">
       <div class="media-overlay">
         <div class="overlay-text">
           <div class="overlay-label">エンドフィールド名刺</div>
-          <div class="overlay-title">最推し:タンタン</div>
+          <div class="overlay-title">最推し：タンタン</div>
         </div>
       </div>
     </div>
@@ -504,9 +584,10 @@ body::after{
         data-label="Recording"
         data-title="Studio Session / Editorial Balance"
         data-desc="大きい画像と小さい画像を同居させて、均一ではないリズムを作ります。これが“適当な並び”と“デザインされた配置”の差になります。"
-        data-image="https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1600&auto=format&fit=crop"
+        data-image="images/Screenshot_エンドフィールド_20260324_074442~2.jpg"
       >
-        <img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺">
+        <img class="main-image" src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺">
+        <img class="stamp stamp-2" src="images/stamp-2.png" alt="">
         <div class="media-overlay">
           <div class="overlay-text">
             <div class="overlay-label">Recording</div>
@@ -523,7 +604,8 @@ body::after{
           data-desc="小さい面を組み合わせることで、一覧ページに流れと緊張感を作れます。"
           data-image="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop"
         >
-          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop" alt="Recording Session">
+          <img class="main-image" src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1400&auto=format&fit=crop" alt="Recording Session">
+          <img class="stamp stamp-3" src="images/stamp-3.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
               <div class="overlay-label">Recording</div>
@@ -558,7 +640,8 @@ body::after{
           data-desc="左右を切り替えながら見せることで、同じ構成の繰り返し感を抑えています。"
           data-image="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop"
         >
-          <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop" alt="Mix Design">
+          <img class="main-image" src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop" alt="Mix Design">
+          <img class="stamp stamp-4" src="images/stamp-4.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
               <div class="overlay-label">Mix &amp; Mastering</div>
@@ -575,7 +658,8 @@ body::after{
         data-desc="大きい面を反対側に置くことで、一覧の視線誘導が自然に変わります。"
         data-image="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop"
       >
-        <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop" alt="Sound Visual">
+        <img class="main-image" src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1600&auto=format&fit=crop" alt="Sound Visual">
+        <img class="stamp stamp-2" src="images/stamp-2.png" alt="">
         <div class="media-overlay">
           <div class="overlay-text">
             <div class="overlay-label">Sound Visual</div>
@@ -597,7 +681,8 @@ body::after{
           data-desc="最後は情報量を少し増やしながら、動きのある面構成で締めています。"
           data-image="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop"
         >
-          <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop" alt="Live Setup">
+          <img class="main-image" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1600&auto=format&fit=crop" alt="Live Setup">
+          <img class="stamp stamp-1" src="images/stamp-1.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
               <div class="overlay-label">Visual Direction</div>
@@ -613,7 +698,8 @@ body::after{
           data-desc="大きい面のあとに小さい面を置くことで、スクロールのリズムが出ます。"
           data-image="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop"
         >
-          <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="Audience View">
+          <img class="main-image" src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop" alt="Audience View">
+          <img class="stamp stamp-3" src="images/stamp-3.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
               <div class="overlay-label">Audience View</div>
@@ -631,7 +717,8 @@ body::after{
           data-desc="最後の大きな面で余韻を残しながらページを締めます。"
           data-image="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop"
         >
-          <img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop" alt="Performance Visual">
+          <img class="main-image" src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1600&auto=format&fit=crop" alt="Performance Visual">
+          <img class="stamp stamp-4" src="images/stamp-4.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
               <div class="overlay-label">Performance Visual</div>
@@ -655,7 +742,6 @@ body::after{
   <a href="index.html">← HOME</a>
 </div>
 
-<!-- モーダル -->
 <div class="modal" id="workModal">
   <div class="modal-close" id="modalClose">✕</div>
   <div class="modal-panel">
@@ -676,7 +762,6 @@ window.addEventListener("load", () => {
   }, 700);
 });
 
-/* reveal: 下に行く時も上に戻る時も発動 */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -693,7 +778,6 @@ document.querySelectorAll(".reveal").forEach((el) => {
   observer.observe(el);
 });
 
-/* モーダル */
 const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
 const modalLabel = document.getElementById("modalLabel");
