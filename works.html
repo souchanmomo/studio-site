@@ -350,24 +350,28 @@ body::after{
   line-height:1;
   letter-spacing:0.04em;
   opacity:0;
-  transform:translate3d(-24px,0,0);
+  transform:translate3d(-34px,0,0);
   transition:opacity .25s ease, transform .25s ease;
   white-space:nowrap;
 }
 
 .fullscreen-menu.open .menu-kicker{
-  animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards;
-  animation-delay:.02s;
+  animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:.04s;
 }
 
-.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards; animation-delay:.08s;}
-.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards; animation-delay:.15s;}
-.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards; animation-delay:.22s;}
-.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards; animation-delay:.29s;}
+.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.10s;}
+.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.20s;}
+.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.30s;}
+.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.40s;}
 
 @keyframes menuTextIn{
-  to{
-    opacity:.9;
+  0%{
+    opacity:0;
+    transform:translate3d(-34px,0,0);
+  }
+  100%{
+    opacity:.95;
     transform:translate3d(0,0,0);
   }
 }
@@ -377,7 +381,7 @@ body::after{
   transform:translate3d(8px,0,0) !important;
 }
 
-/* 下半分5枚横並び */
+/* 下半分5枚横並び・横長 */
 .menu-bottom{
   min-height:0;
   display:grid;
@@ -388,28 +392,38 @@ body::after{
 
 .menu-card{
   position:relative;
-  height:100%;
-  min-height:128px;
+  width:100%;
+  aspect-ratio:1.7 / 1;
   overflow:hidden;
   text-decoration:none;
   color:#eef4ff;
   background:rgba(255,255,255,0.04);
   opacity:0;
-  transform:translate3d(0,16px,0);
+}
+
+.menu-card:nth-child(odd){
+  transform:translate3d(-58px,0,0);
+}
+
+.menu-card:nth-child(even){
+  transform:translate3d(58px,0,0);
 }
 
 .fullscreen-menu.open .menu-card{
-  animation:menuCardIn .72s cubic-bezier(.16,.84,.24,1) forwards;
+  animation:menuCardSlide .95s cubic-bezier(.22,1,.36,1) forwards;
 }
 
-.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.10s;}
-.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.16s;}
-.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.22s;}
-.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.28s;}
-.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.34s;}
+.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.14s;}
+.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.24s;}
+.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.34s;}
+.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.44s;}
+.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.54s;}
 
-@keyframes menuCardIn{
-  to{
+@keyframes menuCardSlide{
+  0%{
+    opacity:0;
+  }
+  100%{
     opacity:1;
     transform:translate3d(0,0,0);
   }
@@ -420,7 +434,7 @@ body::after{
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .55s ease, filter .55s ease;
+  transition:transform .7s ease, filter .7s ease;
 }
 
 .menu-card::after{
@@ -483,15 +497,15 @@ body::after{
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-/* HOMEボタン 改良 */
+/* HOMEボタン */
 .fixed-home-btn{
   position:fixed;
   left:14px;
   bottom:14px;
   z-index:1200;
-  min-width:132px;
-  height:46px;
-  padding:0 16px;
+  min-width:148px;
+  height:48px;
+  padding:0 18px;
   display:inline-flex;
   align-items:center;
   justify-content:center;
@@ -501,30 +515,36 @@ body::after{
   font-family:"Space Grotesk",sans-serif;
   font-size:11px;
   letter-spacing:0.18em;
-  background:rgba(9,19,31,0.52);
-  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(9,19,31,0.66);
+  border:1px solid rgba(255,255,255,0.14);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
   box-shadow:
-    0 12px 24px rgba(0,0,0,0.22),
+    0 14px 28px rgba(0,0,0,0.24),
+    0 0 20px rgba(120,190,255,0.08),
     inset 0 0 0 1px rgba(255,255,255,0.02);
-  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
 }
 
 .fixed-home-btn::before{
   content:"←";
   font-size:14px;
   letter-spacing:0;
-  opacity:.92;
+  opacity:.95;
 }
 
 .fixed-home-btn:hover{
   transform:translateY(-2px);
-  background:rgba(12,24,40,0.66);
-  border-color:rgba(180,220,255,0.22);
+  background:rgba(12,24,40,0.78);
+  border-color:rgba(180,220,255,0.24);
   box-shadow:
-    0 16px 30px rgba(0,0,0,0.26),
-    0 0 24px rgba(120,190,255,0.10);
+    0 18px 34px rgba(0,0,0,0.28),
+    0 0 28px rgba(120,190,255,0.12);
+}
+
+.fullscreen-menu.open ~ .fixed-home-btn{
+  opacity:.18;
+  pointer-events:none;
 }
 
 /* Works本体 */
@@ -855,8 +875,8 @@ body::after{
   }
 
   .menu-inner{
-    width:min(calc(100% - 16px), 100%);
-    padding:68px 0 16px;
+    width:min(calc(100% - 14px), 100%);
+    padding:68px 0 14px;
     gap:18px;
   }
 
@@ -874,33 +894,33 @@ body::after{
   }
 
   .menu-bottom{
-    gap:4px;
+    gap:3px;
   }
 
   .menu-card{
-    min-height:94px;
+    aspect-ratio:1.6 / 1;
   }
 
   .menu-card-text{
-    left:8px;
-    right:8px;
-    bottom:8px;
+    left:6px;
+    right:6px;
+    bottom:6px;
   }
 
   .menu-card-label{
-    font-size:7px;
-    margin-bottom:3px;
+    font-size:6px;
+    margin-bottom:2px;
   }
 
   .menu-card-title{
-    font-size:10px;
-    line-height:1.1;
+    font-size:9px;
+    line-height:1.05;
   }
 
   .fixed-home-btn{
     left:10px;
     bottom:10px;
-    min-width:118px;
+    min-width:126px;
     height:42px;
     padding:0 13px;
     font-size:10px;
@@ -976,8 +996,6 @@ body::after{
   </div>
 </button>
 
-<a class="fixed-home-btn" href="index.html">BACK HOME</a>
-
 <div class="fullscreen-menu" id="fullscreenMenu">
   <div class="menu-inner">
     <div class="menu-top">
@@ -1033,6 +1051,8 @@ body::after{
     </div>
   </div>
 </div>
+
+<a class="fixed-home-btn" href="index.html">BACK HOME</a>
 
 <div class="page-title">Arknights: Endfield</div>
 
