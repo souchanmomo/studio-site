@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -21,9 +21,9 @@ html,body{
 }
 
 body{
-  font-family:"Inter","Space Grotesk",sans-serif;
+  font-family:"Manrope",sans-serif;
   color:#eef4ff;
-  letter-spacing:0.02em;
+  letter-spacing:0.01em;
   -webkit-font-smoothing:antialiased;
   background:
     radial-gradient(circle at 18% 12%, rgba(120,200,255,0.18), transparent 40%),
@@ -38,66 +38,6 @@ body{
   animation:bgMove 18s ease-in-out infinite;
 }
 
-  body{
-  font-family:"Manrope",sans-serif;
-  letter-spacing:0.01em;
-  -webkit-font-smoothing:antialiased;
-}
-
-.page-title{
-  font-family:"Manrope",sans-serif;
-  font-weight:600;
-  letter-spacing:0.22em;
-  font-size:11px;
-}
-
-.overlay-label,
-.work-label,
-.modal-label{
-  font-family:"Manrope",sans-serif;
-  font-size:10px;
-  font-weight:500;
-  letter-spacing:0.22em;
-  opacity:0.62;
-}
-
-.overlay-title{
-  font-family:"Manrope",sans-serif;
-  font-size:21px;
-  font-weight:500;
-  letter-spacing:0.01em;
-}
-
-.work-title{
-  font-family:"Manrope",sans-serif;
-  font-size:23px;
-  font-weight:500;
-  letter-spacing:0.01em;
-}
-
-.work-sub,
-.modal-desc{
-  font-family:"Manrope",sans-serif;
-  font-size:13px;
-  line-height:1.75;
-  letter-spacing:0.02em;
-  opacity:0.78;
-}
-
-.modal-title{
-  font-family:"Manrope",sans-serif;
-  font-size:24px;
-  font-weight:500;
-  letter-spacing:0.01em;
-}
-
-.back a{
-  font-family:"Manrope",sans-serif;
-  font-size:11px;
-  font-weight:500;
-  letter-spacing:0.18em;
-  opacity:0.82;
-}
 /* ローディング */
 #loader{
   position:fixed;
@@ -117,8 +57,9 @@ body{
 
 .loader-text{
   color:#eef4ff;
+  font-family:"Space Grotesk",sans-serif;
   font-size:13px;
-  letter-spacing:4px;
+  letter-spacing:0.28em;
   opacity:.85;
   animation:loaderPulse 1.6s ease-in-out infinite;
 }
@@ -146,6 +87,7 @@ body::before{
   opacity:.9;
 }
 
+/* ビーム */
 body::after{
   content:"";
   position:fixed;
@@ -203,7 +145,7 @@ body::after{
   filter:blur(0.5px);
 }
 
-/* 粒専用レイヤー */
+/* 粒 */
 .bg-particles{
   position:fixed;
   inset:0;
@@ -240,7 +182,7 @@ body::after{
   font-family:"Space Grotesk",sans-serif;
   font-size:12px;
   font-weight:500;
-  letter-spacing:0.18em;
+  letter-spacing:0.22em;
   color:#eef4ff;
   background:rgba(7,17,31,0.45);
   backdrop-filter:blur(10px);
@@ -270,25 +212,38 @@ body::after{
 .modal-label{
   font-family:"Space Grotesk",sans-serif;
   font-size:10px;
-  letter-spacing:0.2em;
+  font-weight:500;
+  letter-spacing:0.20em;
   text-transform:uppercase;
   opacity:.62;
   margin-bottom:8px;
 }
 
+.work-title,
+.overlay-title,
+.modal-title{
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:500;
+  letter-spacing:0.04em;
+}
+
 .work-title{
   font-size:22px;
   line-height:1.2;
-  font-weight:500;
-  letter-spacing:0.01em;
+}
+
+.overlay-title{
+  font-size:20px;
+  line-height:1.2;
 }
 
 .work-sub,
 .modal-desc{
   margin-top:10px;
+  font-family:"Manrope",sans-serif;
   font-size:13px;
-  line-height:1.7;
-  letter-spacing:0.03em;
+  line-height:1.75;
+  letter-spacing:0.02em;
   opacity:.78;
 }
 
@@ -350,14 +305,6 @@ body::after{
 .media:hover .overlay-text{
   transform:translateY(0);
   opacity:1;
-}
-
-.overlay-title{
-  font-family:"Inter",sans-serif;
-  font-size:20px;
-  line-height:1.2;
-  font-weight:500;
-  letter-spacing:0.01em;
 }
 
 /* スタンプ */
@@ -544,10 +491,7 @@ body::after{
 
 .modal-title{
   font-size:24px;
-  line-height:1.2;
-  font-weight:500;
   margin-bottom:12px;
-  letter-spacing:0.01em;
 }
 
 .modal-close{
