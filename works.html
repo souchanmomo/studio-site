@@ -141,7 +141,7 @@ body{
   100%{left:100%;}
 }
 
-/* 背景は“動かさない” */
+/* 背景は動かさない */
 body::before{
   content:"";
   position:fixed;
@@ -217,7 +217,7 @@ body::after{
 .modal,
 .menu-toggle,
 .fullscreen-menu,
-.fixed-home-btn{
+.fixed-home-link{
   position:relative;
   z-index:2;
 }
@@ -308,23 +308,22 @@ body::after{
 }
 
 .menu-inner{
-  width:min(1240px, calc(100% - 36px));
+  width:min(1240px, calc(100% - 28px));
   height:100dvh;
   margin:0 auto;
   padding:74px 0 20px;
   display:grid;
-  grid-template-columns:minmax(180px, 1fr) 145px;
-  justify-content:space-between;
-  gap:18px;
+  grid-template-rows:auto 1fr;
+  gap:22px;
   position:relative;
   z-index:1;
 }
 
-.menu-left{
+.menu-top{
   display:flex;
   flex-direction:column;
+  align-items:flex-start;
   justify-content:flex-start;
-  padding-top:2px;
   min-width:0;
 }
 
@@ -333,7 +332,7 @@ body::after{
   font-size:10px;
   letter-spacing:0.20em;
   opacity:0;
-  margin-bottom:12px;
+  margin-bottom:14px;
   transform:translate3d(-18px,0,0);
 }
 
@@ -347,7 +346,7 @@ body::after{
   color:#eef4ff;
   text-decoration:none;
   font-family:"Space Grotesk",sans-serif;
-  font-size:clamp(24px, 7vw, 44px);
+  font-size:clamp(28px, 7vw, 46px);
   line-height:1;
   letter-spacing:0.04em;
   opacity:0;
@@ -378,33 +377,36 @@ body::after{
   transform:translate3d(8px,0,0) !important;
 }
 
-.menu-right{
+.menu-bottom{
   display:grid;
-  grid-template-rows:repeat(5, 58px);
-  gap:8px;
-  align-content:start;
-  padding-top:2px;
+  grid-template-columns:repeat(5, 1fr);
+  gap:10px;
+  align-items:end;
+  min-width:0;
+  min-height:0;
 }
 
 .menu-card{
   position:relative;
+  height:100%;
+  min-height:140px;
   overflow:hidden;
   text-decoration:none;
   color:#eef4ff;
   background:rgba(255,255,255,0.04);
   opacity:0;
-  transform:translate3d(20px,0,0);
+  transform:translate3d(0,16px,0);
 }
 
 .fullscreen-menu.open .menu-card{
   animation:menuCardIn .72s cubic-bezier(.16,.84,.24,1) forwards;
 }
 
-.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.08s;}
+.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.10s;}
 .fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.16s;}
-.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.24s;}
-.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.32s;}
-.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.40s;}
+.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.22s;}
+.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.28s;}
+.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.34s;}
 
 @keyframes menuCardIn{
   to{
@@ -425,20 +427,19 @@ body::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to right, rgba(5,10,18,0.84), rgba(5,10,18,0.18));
+  background:linear-gradient(to top, rgba(5,10,18,0.80), rgba(5,10,18,0.10));
 }
 
 .menu-card:hover img{
-  transform:scale(1.05);
-  filter:brightness(1.06);
+  transform:scale(1.04);
+  filter:brightness(1.05);
 }
 
 .menu-card-text{
   position:absolute;
   left:12px;
   right:12px;
-  top:50%;
-  transform:translateY(-50%);
+  bottom:12px;
   z-index:1;
 }
 
@@ -483,40 +484,47 @@ body::after{
 }
 
 /* 左下固定HOME */
-.fixed-home-btn{
+.fixed-home-link{
   position:fixed;
   left:16px;
   bottom:16px;
   z-index:1200;
-  height:46px;
-  padding:0 18px;
-  display:flex;
+  display:inline-flex;
   align-items:center;
   gap:10px;
   text-decoration:none;
-  color:#eef4ff;
+  color:rgba(238,244,255,0.92);
   font-family:"Space Grotesk",sans-serif;
   font-size:11px;
   letter-spacing:0.18em;
-  background:rgba(7,17,31,0.44);
-  border:1px solid rgba(255,255,255,0.10);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  box-shadow:0 12px 28px rgba(0,0,0,0.24);
-  transition:transform .25s ease, background .25s ease, border-color .25s ease;
+  padding:10px 0;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  transition:opacity .25s ease, transform .25s ease;
 }
 
-.fixed-home-btn::before{
+.fixed-home-link::before{
   content:"←";
   font-size:14px;
   letter-spacing:0;
-  opacity:.9;
+  opacity:.85;
 }
 
-.fixed-home-btn:hover{
-  transform:translateY(-2px);
-  background:rgba(12,24,40,0.56);
-  border-color:rgba(255,255,255,0.16);
+.fixed-home-link::after{
+  content:"";
+  position:absolute;
+  left:20px;
+  right:0;
+  bottom:6px;
+  height:1px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.42), rgba(255,255,255,0));
+  opacity:.7;
+}
+
+.fixed-home-link:hover{
+  opacity:1;
+  transform:translateY(-1px);
 }
 
 /* 全体 */
@@ -835,7 +843,6 @@ body::after{
   font-size:18px;
 }
 
-/* スマホ */
 @media (max-width: 820px){
   :root{
     --topbar-h:56px;
@@ -856,33 +863,36 @@ body::after{
   }
 
   .menu-inner{
-    width:min(calc(100% - 24px), 100%);
-    padding:72px 0 18px;
-    grid-template-columns:minmax(0, 1fr) 132px;
-    gap:14px;
+    width:min(calc(100% - 20px), 100%);
+    padding:70px 0 18px;
+    gap:18px;
   }
 
   .menu-kicker{
     font-size:9px;
-    margin-bottom:10px;
+    margin-bottom:12px;
   }
 
   .menu-links{
-    gap:9px;
+    gap:10px;
   }
 
   .menu-link{
-    font-size:26px;
+    font-size:28px;
   }
 
-  .menu-right{
-    grid-template-rows:repeat(5, 54px);
-    gap:7px;
+  .menu-bottom{
+    gap:6px;
+  }
+
+  .menu-card{
+    min-height:108px;
   }
 
   .menu-card-text{
     left:10px;
     right:10px;
+    bottom:10px;
   }
 
   .menu-card-label{
@@ -894,11 +904,9 @@ body::after{
     font-size:11px;
   }
 
-  .fixed-home-btn{
+  .fixed-home-link{
     left:12px;
     bottom:12px;
-    height:42px;
-    padding:0 15px;
     font-size:10px;
   }
 
@@ -972,13 +980,12 @@ body::after{
   </div>
 </button>
 
-<a class="fixed-home-btn" href="index.html">HOME</a>
+<a class="fixed-home-link" href="index.html">HOME</a>
 
 <div class="fullscreen-menu" id="fullscreenMenu">
   <div class="menu-inner">
-    <div class="menu-left">
+    <div class="menu-top">
       <div class="menu-kicker">NAVIGATION</div>
-
       <div class="menu-links">
         <a class="menu-link" href="index.html">HOME</a>
         <a class="menu-link" href="works.html">WORKS</a>
@@ -987,7 +994,7 @@ body::after{
       </div>
     </div>
 
-    <div class="menu-right">
+    <div class="menu-bottom">
       <a class="menu-card" href="index.html">
         <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1400&auto=format&fit=crop" alt="home preview">
         <div class="menu-card-text">
