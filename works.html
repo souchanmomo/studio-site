@@ -300,11 +300,11 @@ body::after{
   transform:rotate(-45deg);
 }
 
-/* フルスクリーンメニュー */
+/* メニュー */
 .fullscreen-menu{
   position:fixed;
   inset:0;
-  background:rgba(7,17,31,0.34);
+  background:rgba(7,17,31,0.30);
   backdrop-filter:blur(18px) saturate(110%);
   -webkit-backdrop-filter:blur(18px) saturate(110%);
   opacity:0;
@@ -319,7 +319,7 @@ body::after{
   inset:0;
   background:
     radial-gradient(circle at 18% 18%, rgba(120,200,255,0.10), transparent 28%),
-    linear-gradient(180deg, rgba(4,10,18,0.38), rgba(4,10,18,0.26));
+    linear-gradient(180deg, rgba(4,10,18,0.28), rgba(4,10,18,0.16));
   pointer-events:none;
 }
 
@@ -330,8 +330,9 @@ body::after{
 
 .menu-inner{
   width:min(1240px, calc(100% - 48px));
+  height:100dvh;
   margin:0 auto;
-  padding:104px 0 40px;
+  padding:86px 0 28px;
   display:grid;
   grid-template-columns:minmax(260px, 420px) 360px;
   justify-content:space-between;
@@ -344,15 +345,15 @@ body::after{
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
+  padding-top:6px;
 }
 
 .menu-kicker{
   font-family:"Space Grotesk",sans-serif;
   font-size:11px;
   letter-spacing:0.22em;
-  opacity:.54;
-  margin-bottom:14px;
   opacity:0;
+  margin-bottom:14px;
   transform:translate3d(-22px,0,0);
 }
 
@@ -396,33 +397,21 @@ body::after{
   transform:translate3d(8px,0,0) !important;
 }
 
-.menu-note{
-  margin-top:22px;
-  max-width:420px;
-  font-size:13px;
-  line-height:1.8;
-  opacity:0;
-  transform:translate3d(-18px,0,0);
-}
-
-.fullscreen-menu.open .menu-note{
-  animation:menuTextIn .72s cubic-bezier(.16,.84,.24,1) forwards;
-  animation-delay:.38s;
-}
-
 .menu-right{
-  display:flex;
-  flex-direction:column;
+  display:grid;
+  grid-template-rows:repeat(5, 1fr);
   gap:12px;
+  min-height:0;
+  align-self:stretch;
 }
 
 .menu-card{
   position:relative;
-  height:90px;
   overflow:hidden;
   text-decoration:none;
   color:#eef4ff;
   background:rgba(255,255,255,0.04);
+  min-height:0;
   opacity:0;
   transform:translate3d(28px,0,0);
 }
@@ -740,20 +729,19 @@ body::after{
   display:block;
 }
 
-/* reveal: 一度出たら消さない */
+/* reveal */
 .reveal{
   opacity:0;
-  transform:translate3d(0,28px,0);
+  transform:translateY(18px);
   transition:
-    opacity .95s cubic-bezier(.16,.84,.24,1),
-    transform 1.05s cubic-bezier(.16,.84,.24,1);
-  will-change:opacity, transform;
+    opacity .72s ease-out,
+    transform .72s ease-out;
   backface-visibility:hidden;
 }
 
 .reveal.show{
   opacity:1;
-  transform:translate3d(0,0,0);
+  transform:translateY(0);
 }
 
 /* 戻る */
@@ -896,10 +884,17 @@ body::after{
 @media (max-width: 980px){
   .menu-inner{
     grid-template-columns:1fr;
+    height:auto;
+    min-height:100dvh;
   }
 
   .menu-right{
-    width:100%;
+    grid-template-rows:none;
+    gap:10px;
+  }
+
+  .menu-card{
+    min-height:84px;
   }
 }
 
@@ -920,7 +915,7 @@ body::after{
 
   .menu-inner{
     width:min(calc(100% - 28px), 100%);
-    padding:88px 0 24px;
+    padding:82px 0 22px;
     gap:18px;
   }
 
@@ -929,7 +924,7 @@ body::after{
   }
 
   .menu-card{
-    height:82px;
+    min-height:78px;
   }
 
   .split,
@@ -1012,10 +1007,6 @@ body::after{
         <a class="menu-link" href="works.html">WORKS</a>
         <a class="menu-link" href="index.html#about">ABOUT</a>
         <a class="menu-link" href="index.html#contact">CONTACT</a>
-      </div>
-
-      <div class="menu-note">
-        メニューの文字は左から、画像カードは右から入るようにしています。背景は真っ黒ではなく、今の works ページがうっすら透けて見える感じにしています。
       </div>
     </div>
 
@@ -1285,8 +1276,8 @@ const observer = new IntersectionObserver((entries, obs) => {
     }
   });
 }, {
-  threshold: 0.16,
-  rootMargin: "0px 0px -6% 0px"
+  threshold: 0.08,
+  rootMargin: "0px 0px -10% 0px"
 });
 
 document.querySelectorAll(".reveal").forEach((el) => {
