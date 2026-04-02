@@ -65,7 +65,7 @@ body{
   100%{opacity:.35; transform:translateY(0);}
 }
 
-/* 星空・粒 */
+/* 星空 */
 body::before{
   content:"";
   position:fixed;
@@ -83,6 +83,7 @@ body::before{
   opacity:.95;
 }
 
+/* 光源1箇所のビーム */
 body::after{
   content:"";
   position:fixed;
@@ -90,13 +91,27 @@ body::after{
   pointer-events:none;
   z-index:0;
   background:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.10), transparent 20%),
-    radial-gradient(circle at 75% 20%, rgba(120,220,255,0.08), transparent 18%),
-    radial-gradient(circle at 60% 75%, rgba(255,255,255,0.06), transparent 22%);
-  animation:
-    sparkleShift 9s ease-in-out infinite,
-    twinkleGlow 5.2s ease-in-out infinite alternate;
+    linear-gradient(
+      120deg,
+      rgba(150,220,255,0.00) 0%,
+      rgba(150,220,255,0.00) 32%,
+      rgba(150,220,255,0.05) 42%,
+      rgba(170,235,255,0.16) 50%,
+      rgba(150,220,255,0.05) 58%,
+      rgba(150,220,255,0.00) 68%,
+      rgba(150,220,255,0.00) 100%
+    ),
+    radial-gradient(
+      circle at 12% 10%,
+      rgba(180,235,255,0.18) 0%,
+      rgba(180,235,255,0.08) 16%,
+      rgba(180,235,255,0.00) 38%
+    );
   mix-blend-mode:screen;
+  animation:
+    singleBeamMove 14s ease-in-out infinite,
+    singleBeamGlow 6s ease-in-out infinite alternate;
+  opacity:.72;
 }
 
 @keyframes floatStars{
@@ -125,6 +140,33 @@ body::after{
   100%{opacity:.3;}
 }
 
+@keyframes singleBeamMove{
+  0%{
+    transform:translateX(0) translateY(0) rotate(0deg);
+  }
+  50%{
+    transform:translateX(8px) translateY(-10px) rotate(0.6deg);
+  }
+  100%{
+    transform:translateX(0) translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes singleBeamGlow{
+  0%{
+    opacity:.52;
+    filter:blur(0px);
+  }
+  50%{
+    opacity:.82;
+    filter:blur(1px);
+  }
+  100%{
+    opacity:.62;
+    filter:blur(0px);
+  }
+}
+  
 /* 前面 */
 .page-title,
 .works-wrap,
