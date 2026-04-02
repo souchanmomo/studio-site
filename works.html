@@ -311,12 +311,21 @@ body::after{
   width:min(1240px, calc(100% - 24px));
   height:100dvh;
   margin:0 auto;
-  padding:74px 0 18px;
+  padding:74px 0 28px;
   display:grid;
   grid-template-rows:auto 1fr;
-  gap:22px;
+  gap:28px;
   position:relative;
   z-index:1;
+}
+
+.menu-bottom{
+  min-height:0;
+  display:grid;
+  grid-template-columns:repeat(5, 1fr);
+  gap:10px;
+  align-items:end;
+  padding-bottom:8px;
 }
 
 .menu-top{
@@ -382,13 +391,7 @@ body::after{
 }
 
 /* 下半分5枚横並び・横長 */
-.menu-bottom{
-  min-height:0;
-  display:grid;
-  grid-template-columns:repeat(5, 1fr);
-  gap:8px;
-  align-items:end;
-}
+
 
 .menu-card{
   position:relative;
@@ -451,26 +454,26 @@ body::after{
 
 .menu-card-text{
   position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
+  left:14px;
+  right:14px;
+  bottom:14px;
   z-index:1;
 }
 
 .menu-card-label{
   font-family:"Space Grotesk",sans-serif;
-  font-size:8px;
+  font-size:9px;
   letter-spacing:0.18em;
   text-transform:uppercase;
-  opacity:.62;
-  margin-bottom:4px;
+  opacity:.68;
+  margin-bottom:5px;
 }
 
 .menu-card-title{
   font-family:"Space Grotesk",sans-serif;
-  font-size:12px;
-  line-height:1.15;
-  letter-spacing:0.03em;
+  font-size:14px;
+  line-height:1.2;
+  letter-spacing:0.035em;
 }
 
 /* タイトル */
@@ -901,21 +904,21 @@ body::after{
     aspect-ratio:1.6 / 1;
   }
 
-  .menu-card-text{
-    left:6px;
-    right:6px;
-    bottom:6px;
-  }
+ .menu-card-text{
+  left:8px;
+  right:8px;
+  bottom:8px;
+}
 
-  .menu-card-label{
-    font-size:6px;
-    margin-bottom:2px;
-  }
+.menu-card-label{
+  font-size:7px;
+  margin-bottom:3px;
+}
 
-  .menu-card-title{
-    font-size:9px;
-    line-height:1.05;
-  }
+.menu-card-title{
+  font-size:10px;
+  line-height:1.1;
+}
 
   .fixed-home-btn{
     left:10px;
@@ -1297,6 +1300,8 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       entry.target.classList.add("show");
+    } else {
+      entry.target.classList.remove("show");
     }
   });
 },{
