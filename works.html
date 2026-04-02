@@ -465,18 +465,24 @@ body::after{
 
 .menu-card-label{
   font-family:"Space Grotesk",sans-serif;
-  font-size:11px;
-  letter-spacing:0.14em;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:0.12em;
   text-transform:uppercase;
-  opacity:.78;
-  margin-bottom:6px;
+  opacity:.88;
+  margin-bottom:7px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.28);
 }
 
 .menu-card-title{
   font-family:"Space Grotesk",sans-serif;
-  font-size:20px;
-  line-height:1.18;
-  letter-spacing:0.01em;
+  font-size:24px;
+  font-weight:500;
+  line-height:1.16;
+  letter-spacing:0.005em;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.30),
+    0 1px 2px rgba(0,0,0,0.22);
 }
 
 /* タイトル */
@@ -494,14 +500,17 @@ body::after{
   text-align:center;
   font-family:"Space Grotesk",sans-serif;
   font-size:12px;
-  font-weight:500;
+  font-weight:600;
   letter-spacing:0.22em;
-  color:#f7fffb;
-  background:rgba(67,135,128,0.34);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(255,255,255,0.10);
+  color:#123c39;
+  text-shadow:0 1px 0 rgba(255,255,255,0.18);
+  background:rgba(244,255,250,0.22);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.18);
 }
+
+  
 
 /* HOMEボタン */
 .fixed-home-btn{
@@ -574,10 +583,11 @@ body::after{
 .modal-label{
   font-family:"Space Grotesk",sans-serif;
   font-size:10px;
-  font-weight:500;
-  letter-spacing:0.20em;
+  font-weight:600;
+  letter-spacing:0.18em;
   text-transform:uppercase;
-  opacity:.68;
+  color:#1b4d49;
+  opacity:.88;
   margin-bottom:8px;
 }
 
@@ -587,6 +597,8 @@ body::after{
   font-family:"Space Grotesk",sans-serif;
   font-weight:500;
   letter-spacing:0.04em;
+  color:#143f3c;
+  text-shadow:0 1px 0 rgba(255,255,255,0.16);
 }
 
 .work-title{
@@ -606,7 +618,8 @@ body::after{
   font-size:13px;
   line-height:1.75;
   letter-spacing:0.02em;
-  opacity:.82;
+  color:#204c49;
+  opacity:.92;
 }
 
 .media{
@@ -924,15 +937,15 @@ body::after{
     bottom:8px;
   }
 
-  .menu-card-label{
-    font-size:8px;
-    margin-bottom:4px;
-  }
+.menu-card-label{
+  font-size:9px;
+  margin-bottom:4px;
+}
 
-  .menu-card-title{
-    font-size:12px;
-    line-height:1.14;
-  }
+.menu-card-title{
+  font-size:15px;
+  line-height:1.14;
+}
 
   .fixed-home-btn{
     left:10px;
@@ -988,6 +1001,14 @@ body::after{
   .modal-title{
     font-size:20px;
   }
+}
+
+  .media-overlay .overlay-label,
+.media-overlay .overlay-title{
+  color:#f8fffc;
+  text-shadow:
+    0 2px 10px rgba(0,0,0,0.30),
+    0 1px 2px rgba(0,0,0,0.24);
 }
 </style>
 </head>
