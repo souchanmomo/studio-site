@@ -141,7 +141,7 @@ body{
   100%{left:100%;}
 }
 
-/* 背景は動かさない */
+/* 背景固定 */
 body::before{
   content:"";
   position:fixed;
@@ -217,12 +217,12 @@ body::after{
 .modal,
 .menu-toggle,
 .fullscreen-menu,
-.fixed-home-link{
+.fixed-home-btn{
   position:relative;
   z-index:2;
 }
 
-/* 右上ハンバーガー */
+/* ハンバーガー */
 .menu-toggle{
   position:fixed;
   top:0;
@@ -308,10 +308,10 @@ body::after{
 }
 
 .menu-inner{
-  width:min(1240px, calc(100% - 28px));
+  width:min(1240px, calc(100% - 24px));
   height:100dvh;
   margin:0 auto;
-  padding:74px 0 20px;
+  padding:74px 0 18px;
   display:grid;
   grid-template-rows:auto 1fr;
   gap:22px;
@@ -377,19 +377,19 @@ body::after{
   transform:translate3d(8px,0,0) !important;
 }
 
+/* 下半分5枚横並び */
 .menu-bottom{
+  min-height:0;
   display:grid;
   grid-template-columns:repeat(5, 1fr);
-  gap:10px;
+  gap:8px;
   align-items:end;
-  min-width:0;
-  min-height:0;
 }
 
 .menu-card{
   position:relative;
   height:100%;
-  min-height:140px;
+  min-height:128px;
   overflow:hidden;
   text-decoration:none;
   color:#eef4ff;
@@ -427,7 +427,7 @@ body::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(5,10,18,0.80), rgba(5,10,18,0.10));
+  background:linear-gradient(to top, rgba(5,10,18,0.82), rgba(5,10,18,0.10));
 }
 
 .menu-card:hover img{
@@ -459,7 +459,7 @@ body::after{
   letter-spacing:0.03em;
 }
 
-/* 上部固定タイトル */
+/* タイトル */
 .page-title{
   position:sticky;
   top:0;
@@ -483,51 +483,51 @@ body::after{
   border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-/* 左下固定HOME */
-.fixed-home-link{
+/* HOMEボタン 改良 */
+.fixed-home-btn{
   position:fixed;
-  left:16px;
-  bottom:16px;
+  left:14px;
+  bottom:14px;
   z-index:1200;
+  min-width:132px;
+  height:46px;
+  padding:0 16px;
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:10px;
   text-decoration:none;
-  color:rgba(238,244,255,0.92);
+  color:#eef4ff;
   font-family:"Space Grotesk",sans-serif;
   font-size:11px;
   letter-spacing:0.18em;
-  padding:10px 0;
-  background:transparent;
-  border:none;
-  box-shadow:none;
-  transition:opacity .25s ease, transform .25s ease;
+  background:rgba(9,19,31,0.52);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.22),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 
-.fixed-home-link::before{
+.fixed-home-btn::before{
   content:"←";
   font-size:14px;
   letter-spacing:0;
-  opacity:.85;
+  opacity:.92;
 }
 
-.fixed-home-link::after{
-  content:"";
-  position:absolute;
-  left:20px;
-  right:0;
-  bottom:6px;
-  height:1px;
-  background:linear-gradient(90deg, rgba(255,255,255,0.42), rgba(255,255,255,0));
-  opacity:.7;
+.fixed-home-btn:hover{
+  transform:translateY(-2px);
+  background:rgba(12,24,40,0.66);
+  border-color:rgba(180,220,255,0.22);
+  box-shadow:
+    0 16px 30px rgba(0,0,0,0.26),
+    0 0 24px rgba(120,190,255,0.10);
 }
 
-.fixed-home-link:hover{
-  opacity:1;
-  transform:translateY(-1px);
-}
-
-/* 全体 */
+/* Works本体 */
 .works-wrap{
   width:100%;
 }
@@ -536,7 +536,6 @@ body::after{
   width:100%;
 }
 
-/* テキスト */
 .work-info{
   width:100%;
   max-width:980px;
@@ -584,7 +583,6 @@ body::after{
   opacity:.78;
 }
 
-/* 画像共通 */
 .media{
   position:relative;
   width:100%;
@@ -606,7 +604,6 @@ body::after{
   filter:brightness(1.03);
 }
 
-/* オーバーレイ */
 .media-overlay{
   position:absolute;
   inset:0;
@@ -645,7 +642,6 @@ body::after{
   opacity:1;
 }
 
-/* スタンプ */
 .stamp{
   position:absolute;
   z-index:6;
@@ -710,7 +706,6 @@ body::after{
   100%{transform:translateY(0);}
 }
 
-/* レイアウト */
 .full-bleed{
   width:100%;
 }
@@ -755,7 +750,6 @@ body::after{
   display:block;
 }
 
-/* reveal */
 .reveal{
   opacity:0;
   transition:opacity .55s ease-out;
@@ -765,7 +759,6 @@ body::after{
   opacity:1;
 }
 
-/* 戻る */
 .back{
   padding:22px 22px 58px;
   text-align:center;
@@ -782,7 +775,6 @@ body::after{
   padding-bottom:4px;
 }
 
-/* モーダル */
 .modal{
   position:fixed;
   inset:0;
@@ -863,8 +855,8 @@ body::after{
   }
 
   .menu-inner{
-    width:min(calc(100% - 20px), 100%);
-    padding:70px 0 18px;
+    width:min(calc(100% - 16px), 100%);
+    padding:68px 0 16px;
     gap:18px;
   }
 
@@ -874,25 +866,25 @@ body::after{
   }
 
   .menu-links{
-    gap:10px;
+    gap:9px;
   }
 
   .menu-link{
-    font-size:28px;
+    font-size:26px;
   }
 
   .menu-bottom{
-    gap:6px;
+    gap:4px;
   }
 
   .menu-card{
-    min-height:108px;
+    min-height:94px;
   }
 
   .menu-card-text{
-    left:10px;
-    right:10px;
-    bottom:10px;
+    left:8px;
+    right:8px;
+    bottom:8px;
   }
 
   .menu-card-label{
@@ -901,12 +893,16 @@ body::after{
   }
 
   .menu-card-title{
-    font-size:11px;
+    font-size:10px;
+    line-height:1.1;
   }
 
-  .fixed-home-link{
-    left:12px;
-    bottom:12px;
+  .fixed-home-btn{
+    left:10px;
+    bottom:10px;
+    min-width:118px;
+    height:42px;
+    padding:0 13px;
     font-size:10px;
   }
 
@@ -980,7 +976,7 @@ body::after{
   </div>
 </button>
 
-<a class="fixed-home-link" href="index.html">HOME</a>
+<a class="fixed-home-btn" href="index.html">BACK HOME</a>
 
 <div class="fullscreen-menu" id="fullscreenMenu">
   <div class="menu-inner">
