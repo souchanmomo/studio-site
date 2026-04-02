@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>【2025年9月最新版】最強双剣ランキング | モンハンNow</title>
+  <meta name="description" content="モンハンNowの最強双剣ランキングを、おすすめ装備構成つきで属性別に徹底解説。火・雷・龍・氷・水・無属性・爆破・睡眠まで、実データ入りで見やすくまとめた特集ページです。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#07090d;
+      --bg-soft:#0c1017;
+      --panel:rgba(255,255,255,.05);
+      --panel-strong:rgba(255,255,255,.08);
+      --line:rgba(255,255,255,.09);
+      --text:#f5f7fb;
+      --muted:#aeb6c7;
+      --gold:#d8b775;
+      --gold-soft:rgba(216,183,117,.15);
+      --blue:#89a9ff;
+      --danger:#ef7575;
+      --shadow:0 22px 60px rgba(0,0,0,.42);
+      --radius:28px;
+      --radius-sm:18px;
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Inter","Noto Sans JP",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(216,183,117,.15), transparent 32%),
+        radial-gradient(circle at 85% 5%, rgba(137,169,255,.10), transparent 25%),
+        linear-gradient(180deg,#06070b 0%, #0b1017 46%, #07090d 100%);
+      line-height:1.75;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+
+    a{text-decoration:none;color:inherit}
+    img{display:block;width:100%}
+    .container{width:min(var(--max), calc(100% - 28px)); margin-inline:auto}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:9999;
+      border-bottom:1px solid rgba(255,255,255,.06);
+      background:rgba(7,9,13,.7);
+      backdrop-filter:blur(16px);
+    }
+    .topbar-inner{
+      width:min(var(--max), calc(100% - 28px));
+      margin:auto;
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .brand-mark{
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--gold), #fff3ce);
+      box-shadow:0 0 30px rgba(216,183,117,.35);
+      flex-shrink:0;
+    }
+    .brand small{
+      display:block;
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .brand strong{
+      display:block;
+      font-size:14px;
+      font-weight:800;
+      letter-spacing:.04em;
+    }
+    .nav{
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .nav a{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      transition:.25s;
+    }
+    .nav a:hover{color:#fff}
+
+    .hero{
+      padding:54px 0 34px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .hero-copy,
+    .hero-visual{
+      border:1px solid var(--line);
+      border-radius:34px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+      position:relative;
+    }
+    .hero-copy{
+      padding:34px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:560px;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#f7e0a8;
+      background:var(--gold-soft);
+      border:1px solid rgba(216,183,117,.26);
+      margin-bottom:18px;
+    }
+    .hero h1{
+      font-size:clamp(30px, 5vw, 62px);
+      line-height:1.05;
+      letter-spacing:-.04em;
+      margin-bottom:16px;
+      font-weight:800;
+    }
+    .hero-lead{
+      color:var(--muted);
+      font-size:15px;
+      max-width:60ch;
+      margin-bottom:24px;
+    }
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:24px;
+    }
+    .chip{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#dde3ee;
+      font-size:13px;
+    }
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 18px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:700;
+      transition:.25s ease;
+      border:1px solid transparent;
+    }
+    .btn-primary{
+      color:#101114;
+      background:linear-gradient(135deg, var(--gold), #f3ddb0);
+      box-shadow:0 10px 30px rgba(216,183,117,.22);
+    }
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-ghost{
+      color:#fff;
+      background:rgba(255,255,255,.04);
+      border-color:rgba(255,255,255,.08);
+    }
+    .btn-ghost:hover{background:rgba(255,255,255,.08)}
+
+    .hero-visual{
+      min-height:560px;
+      background:
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,.08), transparent 26%),
+        linear-gradient(180deg,#151922 0%, #0c1017 100%);
+    }
+    .hero-pattern{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(135deg, rgba(216,183,117,.12), transparent 34%),
+        radial-gradient(circle at 80% 18%, rgba(137,169,255,.12), transparent 20%);
+      pointer-events:none;
+    }
+    .hero-panel{
+      position:absolute;
+      inset:auto 24px 24px 24px;
+      background:rgba(10,12,18,.72);
+      border:1px solid rgba(255,255,255,.09);
+      backdrop-filter:blur(14px);
+      border-radius:24px;
+      padding:22px;
+    }
+    .hero-panel h2{
+      font-size:18px;
+      margin-bottom:10px;
+    }
+    .hero-panel p{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+    .hero-panel ul{
+      list-style:none;
+      display:grid;
+      gap:8px;
+    }
+    .hero-panel li{
+      font-size:13px;
+      color:#e4e9f3;
+      padding-left:14px;
+      position:relative;
+    }
+    .hero-panel li::before{
+      content:"";
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--gold);
+      position:absolute;
+      left:0;
+      top:.7em;
+    }
+
+    .stats{
+      padding:10px 0 26px;
+    }
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+    .stat-card{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .stat-card small{
+      display:block;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .stat-card strong{
+      display:block;
+      font-size:30px;
+      line-height:1.1;
+      margin-bottom:6px;
+    }
+    .stat-card span{
+      font-size:13px;
+      color:#d9dfeb;
+    }
+
+    .section{
+      padding:28px 0;
+    }
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .section-head h2{
+      font-size:clamp(24px, 3vw, 40px);
+      line-height:1.08;
+      letter-spacing:-.03em;
+    }
+    .section-head p{
+      max-width:62ch;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .summary-wrap{
+      display:grid;
+      grid-template-columns:1fr .95fr;
+      gap:18px;
+    }
+    .summary-card,
+    .toc-card{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      border-radius:26px;
+      padding:24px;
+      box-shadow:var(--shadow);
+    }
+    .summary-card h3,
+    .toc-card h3{
+      font-size:21px;
+      margin-bottom:14px;
+    }
+    .summary-list{
+      display:grid;
+      gap:12px;
+      list-style:none;
+    }
+    .summary-list li{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      font-size:14px;
+    }
+    .summary-list strong{
+      display:block;
+      font-size:15px;
+    }
+    .summary-list span{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .toc-links{
+      display:grid;
+      gap:10px;
+      list-style:none;
+    }
+    .toc-links a{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      padding:13px 15px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.03);
+      transition:.2s ease;
+      font-size:14px;
+    }
+    .toc-links a:hover{
+      background:rgba(255,255,255,.08);
+      transform:translateX(4px);
+    }
+
+    .weapon-section{
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:32px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin-bottom:24px;
+    }
+    .weapon-head{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      min-height:320px;
+    }
+    .weapon-copy{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .weapon-kicker{
+      color:#f1d79f;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:10px;
+    }
+    .weapon-copy h3{
+      font-size:clamp(28px,3vw,42px);
+      line-height:1.08;
+      letter-spacing:-.03em;
+      margin-bottom:12px;
+    }
+    .weapon-desc{
+      font-size:15px;
+      color:var(--muted);
+      margin-bottom:16px;
+    }
+    .weapon-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:18px;
+    }
+    .weapon-tags span{
+      font-size:12px;
+      padding:9px 11px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#e5ebf6;
+    }
+    .weapon-note{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(216,183,117,.16);
+      background:rgba(216,183,117,.09);
+      color:#f4f6fb;
+      font-size:14px;
+    }
+    .weapon-visual{
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.12)),
+        radial-gradient(circle at 75% 20%, rgba(255,255,255,.08), transparent 18%),
+        linear-gradient(135deg, #161b24 0%, #0c1017 100%);
+      min-height:320px;
+    }
+    .weapon-visual::before{
+      content:attr(data-label);
+      position:absolute;
+      right:22px;
+      bottom:18px;
+      font-size:48px;
+      line-height:1;
+      font-weight:800;
+      color:rgba(255,255,255,.07);
+      letter-spacing:.04em;
+    }
+    .weapon-visual-inner{
+      position:absolute;
+      inset:22px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(135deg, rgba(216,183,117,.12), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      display:flex;
+      align-items:end;
+      padding:24px;
+    }
+    .weapon-visual-card{
+      max-width:340px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(9,11,17,.74);
+      backdrop-filter:blur(14px);
+      padding:18px;
+    }
+    .weapon-visual-card strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:18px;
+    }
+    .weapon-visual-card p{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .build-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      padding:0 30px 30px;
+    }
+    .build-card{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03);
+      border-radius:24px;
+      padding:22px;
+    }
+    .build-card h4{
+      font-size:17px;
+      margin-bottom:14px;
+    }
+    .equip-list{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .equip-list li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding-bottom:10px;
+      border-bottom:1px dashed rgba(255,255,255,.08);
+      color:#e3e8f3;
+      font-size:14px;
+    }
+    .equip-list li:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+    .label{
+      min-width:44px;
+      color:#f1d79f;
+      font-weight:800;
+    }
+
+    .mini-section{
+      margin-top:14px;
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .mini-section strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:14px;
+    }
+    .mini-section p{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .related{
+      padding:8px 0 72px;
+    }
+    .related-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .related-card{
+      min-height:220px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02)),
+        linear-gradient(135deg, rgba(216,183,117,.12), transparent 32%),
+        #0d121a;
+      box-shadow:var(--shadow);
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+    }
+    .related-card small{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:8px;
+    }
+    .related-card h4{
+      font-size:22px;
+      line-height:1.22;
+      margin-bottom:10px;
+    }
+    .related-card p{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .footer{
+      padding:0 0 34px;
+      text-align:center;
+      color:#97a0b0;
+      font-size:13px;
+    }
+
+    .fade-up{
+      opacity:0;
+      transform:translateY(28px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+    .fade-up.show{
+      opacity:1;
+      transform:none;
+    }
+
+    @media (max-width: 1080px){
+      .hero-grid,
+      .summary-wrap,
+      .weapon-head,
+      .build-grid{
+        grid-template-columns:1fr;
+      }
+      .stats-grid,
+      .related-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .hero-copy,
+      .hero-visual{
+        min-height:auto;
+      }
+      .hero-visual{
+        min-height:420px;
+      }
+    }
+
+    @media (max-width: 720px){
+      .topbar-inner{
+        padding:14px 0;
+        align-items:flex-start;
+        min-height:auto;
+        flex-direction:column;
+      }
+      .nav{
+        gap:10px 14px;
+      }
+      .hero{
+        padding-top:34px;
+      }
+      .hero-copy,
+      .summary-card,
+      .toc-card,
+      .stat-card,
+      .build-card{
+        padding:20px;
+      }
+      .stats-grid,
+      .related-grid{
+        grid-template-columns:1fr;
+      }
+      .weapon-copy{
+        padding:22px;
+      }
+      .build-grid{
+        padding:0 22px 22px;
+      }
+      .weapon-visual{
+        min-height:260px;
+      }
+      .weapon-visual::before{
+        font-size:36px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#" class="brand">
+        <div class="brand-mark"></div>
+        <div>
+          <small>Monster Hunter Now</small>
+          <strong>Dual Blades Special Feature</strong>
+        </div>
+      </a>
+
+      <nav class="nav">
+        <a href="#summary">Summary</a>
+        <a href="#contents">Contents</a>
+        <a href="#fire">Fire</a>
+        <a href="#thunder">Thunder</a>
+        <a href="#dragon">Dragon</a>
+        <a href="#ice">Ice</a>
+        <a href="#water">Water</a>
+        <a href="#raw">Raw</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy fade-up">
+          <div class="eyebrow">2025 September Update</div>
+          <h1>最強双剣ランキングを、<br>“読まれる記事”から<br>“魅せる特集ページ”へ。</h1>
+          <p class="hero-lead">
+            モンハンNowの双剣を、火・雷・龍・氷・水・無属性・爆破・睡眠まで属性別に整理。
+            ただのブログ記事ではなく、結論の見やすさ・滞在時間・回遊率まで意識した構成で、
+            実データ入りの特集ページとしてそのまま組み込める形に再構築しています。
+          </p>
+
+          <div class="meta-row">
+            <div class="chip">最終更新：2025.09.30</div>
+            <div class="chip">双剣ランキング特集</div>
+            <div class="chip">装備構成あり</div>
+            <div class="chip">スマホ最適化済み</div>
+          </div>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#summary">結論から見る</a>
+            <a class="btn btn-ghost" href="#contents">目次へ</a>
+          </div>
+        </div>
+
+        <div class="hero-visual fade-up">
+          <div class="hero-pattern"></div>
+          <div class="hero-panel">
+            <h2>このページの見どころ</h2>
+            <p>元記事の実データをもとに、ランキング性と高級感を両立するよう再設計。</p>
+            <ul>
+              <li>火・雷・龍・氷・水・無属性・爆破・睡眠の8カテゴリ対応</li>
+              <li>おすすめ装備構成をカードUIで視認性アップ</li>
+              <li>スマホでも一瞬で要点が伝わる比較重視レイアウト</li>
+              <li>関連記事導線を追加し、回遊しやすい構造に最適化</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat-card fade-up">
+          <small>Categories</small>
+          <strong>8</strong>
+          <span>属性・状態異常ごとに整理</span>
+        </div>
+        <div class="stat-card fade-up">
+          <small>Builds</small>
+          <strong>10+</strong>
+          <span>構成データを見やすく掲載</span>
+        </div>
+        <div class="stat-card fade-up">
+          <small>Updated</small>
+          <strong>09.30</strong>
+          <span>更新感の見せ方も強化</span>
+        </div>
+        <div class="stat-card fade-up">
+          <small>Mobile</small>
+          <strong>100%</strong>
+          <span>縦スクロールで映える設計</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="summary">
+      <div class="container">
+        <div class="section-head fade-up">
+          <div>
+            <h2>まず結論だけ見たい人向け</h2>
+          </div>
+          <p>
+            先に注目武器を見せることで、検索から来たユーザーの離脱を減らしやすくなります。
+          </p>
+        </div>
+
+        <div class="summary-wrap">
+          <div class="summary-card fade-up">
+            <h3>注目の双剣まとめ</h3>
+            <ul class="summary-list">
+              <li>
+                <div>
+                  <strong>火属性：ゲキリュウノツガイ</strong>
+                  <span>会心率30％＋会心撃〖属性〗構成で高火力</span>
+                </div>
+                <div>S</div>
+              </li>
+              <li>
+                <div>
+                  <strong>雷属性：迅雷・トルネ＝ジャナール</strong>
+                  <span>コスパ・流用・火力のバランスが優秀</span>
+                </div>
+                <div>S</div>
+              </li>
+              <li>
+                <div>
+                  <strong>龍属性：死罪〖デスロウ〗</strong>
+                  <span>待望の龍属性会心武器として個性も強い</span>
+                </div>
+                <div>A+</div>
+              </li>
+              <li>
+                <div>
+                  <strong>氷属性：冷たき月の爪</strong>
+                  <span>現状の氷属性双剣で最も火力を出しやすい枠</span>
+                </div>
+                <div>A+</div>
+              </li>
+              <li>
+                <div>
+                  <strong>無属性：レックスチェーン / ヒドゥントマホーク</strong>
+                  <span>ティガは凶会心、ナルガは死中に活で方向性が明確</span>
+                </div>
+                <div>A</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="toc-card fade-up" id="contents">
+            <h3>Contents</h3>
+            <ul class="toc-links">
+              <li><a href="#fire"><span>01 火属性：ゲキリュウノツガイ</span><span>→</span></a></li>
+              <li><a href="#thunder"><span>02 雷属性：迅雷・トルネ＝ジャナール</span><span>→</span></a></li>
+              <li><a href="#dragon"><span>03 龍属性：死罪〖デスロウ〗</span><span>→</span></a></li>
+              <li><a href="#ice"><span>04 氷属性：冷たき月の爪</span><span>→</span></a></li>
+              <li><a href="#water"><span>05 水属性：つるぎたち研刃の刹那</span><span>→</span></a></li>
+              <li><a href="#raw"><span>06 無属性：レックスチェーン / ヒドゥントマホーク</span><span>→</span></a></li>
+              <li><a href="#blast"><span>07 爆破属性：禍ツ刃ノ幽鬼イステヤ / バゼルホーク</span><span>→</span></a></li>
+              <li><a href="#sleep"><span>08 睡眠属性：夢幻のメロウクロウ</span><span>→</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+
+        <article class="weapon-section fade-up" id="fire">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Fire Attribute</div>
+              <h3>ゲキリュウノツガイ</h3>
+              <div class="weapon-tags">
+                <span>攻撃力 1258</span>
+                <span>属性値 1082</span>
+                <span>会心率 30％</span>
+                <span>火属性双剣</span>
+              </div>
+              <p class="weapon-desc">
+                リオレウス希少種の武器。武器スキルが非常に強く、高火力が期待できる一本。
+                会心率85％を狙える構成が組め、今後の錬成による伸びしろまで見込めるのが魅力です。
+              </p>
+              <div class="weapon-note">
+                武器30％＋見切り15％＋弱点特効20％＋力の解放20％で、条件つきながら会心率85％に到達。
+                マルチでは追い打ち〖毒〗も期待できます。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="FIRE">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>高会心 × 会心撃〖属性〗</strong>
+                  <p>火属性双剣の中でも伸びしろ込みで評価しやすい、主力候補の一本。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>ゲキリュウ：会心撃〖属性〗Lv.2・追い打ち〖毒〗</span></li>
+                <li><span class="label">頭</span><span>レウス希少種：会心撃〖属性〗Lv.2</span></li>
+                <li><span class="label">胴</span><span>ガロン亜種：会心撃〖属性〗・力の解放</span></li>
+                <li><span class="label">腕</span><span>リオレイア：連撃Lv.2・ロックオン</span></li>
+                <li><span class="label">腰</span><span>レイア亜種：見切りLv.2</span></li>
+                <li><span class="label">脚</span><span>プケ亜種：弱点特効・強化持続</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">火力</span><span>高会心と属性火力が噛み合い、手数武器として強い</span></li>
+                <li><span class="label">将来性</span><span>錬成で見切りや弱特を伸ばせるとさらに評価上昇</span></li>
+                <li><span class="label">マルチ</span><span>追い打ち〖毒〗の発動も期待でき、構成に独自性がある</span></li>
+                <li><span class="label">総評</span><span>“作って後悔しにくい火属性双剣”として非常に優秀</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="thunder">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Thunder Attribute</div>
+              <h3>迅雷・トルネ＝ジャナール</h3>
+              <div class="weapon-tags">
+                <span>雷属性双剣</span>
+                <span>会心撃〖属性〗構成</span>
+                <span>コスパ良好</span>
+                <span>流用しやすい</span>
+              </div>
+              <p class="weapon-desc">
+                雷属性はキリン武器とジャナフ亜種武器の2軸。キリン側は力の解放で会心率を補い、
+                ジャナフ亜種側は現環境でも強力な会心撃〖属性〗構成を組めるのが強みです。
+              </p>
+              <div class="weapon-note">
+                総合的には、防具の使い回しや作成難易度まで含めて、ジャナフ亜種双剣のコスパが特に優秀。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="THUNDER">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>2系統の強さを両立</strong>
+                  <p>キリンとジャナフ亜種で方向性が分かれるが、どちらも雷双剣の強候補。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>キリン武器寄りの装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>キリン：力の解放</span></li>
+                <li><span class="label">頭</span><span>キリン：幻獣疾雷・ロックオン・闘気活性</span></li>
+                <li><span class="label">胴</span><span>ジャナフ亜種：ハイチャ〖雷〗・体力増強</span></li>
+                <li><span class="label">腕</span><span>ジャナフ亜種：ハイチャ〖雷〗Lv.2</span></li>
+                <li><span class="label">腰</span><span>ルナガロン：体力増強Lv.3</span></li>
+                <li><span class="label">脚</span><span>ディノバルド：連撃Lv.2・ジャ回強化</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>ジャナフ亜種武器寄りの装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>ジャナフ亜種：会心撃〖属性〗</span></li>
+                <li><span class="label">頭</span><span>レウス希少種：会心撃〖属性〗Lv.2</span></li>
+                <li><span class="label">胴</span><span>ガロン亜種：会心撃〖属性〗・力の解放</span></li>
+                <li><span class="label">腕</span><span>リオレイア：連撃Lv.2・ロックオン</span></li>
+                <li><span class="label">腰</span><span>レイア亜種：見切りLv.2</span></li>
+                <li><span class="label">脚</span><span>レウス希少種：会心撃〖属性〗・弱特</span></li>
+              </ul>
+              <div class="mini-section">
+                <strong>総評</strong>
+                <p>どちらも強いですが、記事の評価軸では防具流用と作成難易度の面からジャナフ亜種双剣推しです。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="dragon">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Dragon Attribute</div>
+              <h3>死罪〖デスロウ〗</h3>
+              <div class="weapon-tags">
+                <span>龍属性</span>
+                <span>会心運用</span>
+                <span>唯一無二</span>
+                <span>オドガロン亜種</span>
+              </div>
+              <p class="weapon-desc">
+                待望の龍属性会心武器として、双剣の中でも独自性が高い一本。
+                レイア希少種と少し役割は被るものの、双剣武器としての存在感は非常に強いです。
+              </p>
+              <div class="weapon-note">
+                会心撃〖属性〗ビルドが安定。双剣の手数と会心系スキルの相性の良さがそのまま出ます。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="DRAGON">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>待望の龍属性会心武器</strong>
+                  <p>“強いだけでなく面白い”という見せ方ができる、記事映えする一本。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>デスロウ：超会心Lv.1</span></li>
+                <li><span class="label">頭</span><span>レウス希少種：会心撃〖属性〗Lv.2</span></li>
+                <li><span class="label">胴</span><span>ガロン亜種：会心撃〖属性〗Lv.1・力の解放Lv.1</span></li>
+                <li><span class="label">腕</span><span>リオレイア：連撃Lv.2・ロックオン</span></li>
+                <li><span class="label">腰</span><span>レイア亜種：見切りLv.2</span></li>
+                <li><span class="label">脚</span><span>レウス希少種：会心撃〖属性〗Lv.1・弱点特効Lv.1</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">特徴</span><span>龍属性の会心武器として立ち位置が明確</span></li>
+                <li><span class="label">相性</span><span>双剣の手数で会心系スキルを活かしやすい</span></li>
+                <li><span class="label">魅力</span><span>“待望感”と“唯一性”がそのまま訴求になる</span></li>
+                <li><span class="label">総評</span><span>火力だけでなく話題性もある、優秀な龍双剣</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="ice">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Ice Attribute</div>
+              <h3>冷たき月の爪</h3>
+              <div class="weapon-tags">
+                <span>氷属性双剣</span>
+                <span>ハイチャ〖氷〗</span>
+                <span>ルナガロン</span>
+                <span>高火力枠</span>
+              </div>
+              <p class="weapon-desc">
+                ルナガロン武器。装備構成はハイチャ〖氷〗が中心となり、
+                現状では氷属性双剣の中で最も火力を出せる武器として紹介されています。
+              </p>
+              <div class="weapon-note">
+                双剣使いなら必須級になりそう、と言えるレベルで評価の高い氷属性候補です。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="ICE">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>現状の氷属性本命</strong>
+                  <p>火力の出しやすさが明確で、氷弱点相手に採用しやすい構成です。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>ルナガロン：ハイチャ〖氷〗</span></li>
+                <li><span class="label">頭</span><span>プケ亜種：ロックオン・弱特Lv.2</span></li>
+                <li><span class="label">胴</span><span>ルナガロン：ハイチャ〖氷〗Lv.2</span></li>
+                <li><span class="label">腕</span><span>ディノ：弱特Lv.2</span></li>
+                <li><span class="label">腰</span><span>ルナガロン：体力増強Lv.3</span></li>
+                <li><span class="label">脚</span><span>リオレイア：体力増強Lv.2</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">軸</span><span>ハイチャ〖氷〗を活かした氷属性特化</span></li>
+                <li><span class="label">火力</span><span>現状の氷属性で最も火力を出しやすい枠</span></li>
+                <li><span class="label">優先度</span><span>双剣使いなら要注目の必須候補</span></li>
+                <li><span class="label">総評</span><span>氷属性環境ではかなり強く推せる一本</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="water">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Water Attribute</div>
+              <h3>つるぎたち研刃の刹那</h3>
+              <div class="weapon-tags">
+                <span>水属性双剣</span>
+                <span>タマミツネ系</span>
+                <span>ネロ防具採用</span>
+                <span>将来更新余地あり</span>
+              </div>
+              <p class="weapon-desc">
+                水属性では双剣にネロミェール武器の追加がなかったため、現状最強はタマミツネ武器という扱い。
+                一方で、防具側はネロミェール装備が優秀で、構成全体としては十分に強い評価です。
+              </p>
+              <div class="weapon-note">
+                将来的にハイチャ〖水〗が実装されれば更新候補になる可能性あり、という含みも持たせられます。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="WATER">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>現状の水属性主力</strong>
+                  <p>武器追加の都合で最適解が限られるぶん、記事内での整理価値が高いカテゴリです。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>つるぎたち研刃の刹那 ※原記事の装備欄では武器表記が空欄</span></li>
+                <li><span class="label">頭</span><span>プケ亜種：ロックオン・弱特Lv.2</span></li>
+                <li><span class="label">胴</span><span>ネロ：冥龍波雷・力の解放・超会心</span></li>
+                <li><span class="label">腕</span><span>ネロ：冥龍波雷・見切り・弱特</span></li>
+                <li><span class="label">腰</span><span>ネロ：冥龍波雷・水属性強化Lv.2</span></li>
+                <li><span class="label">脚</span><span>ドスジャグ：水属性強化Lv.2</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">現状</span><span>ネロ武器不在のためタマミツネ武器が主力枠</span></li>
+                <li><span class="label">防具</span><span>ネロミェール防具が優秀で構成強度は高い</span></li>
+                <li><span class="label">将来性</span><span>ハイチャ〖水〗実装で更新される可能性あり</span></li>
+                <li><span class="label">総評</span><span>今の水属性環境を整理する意味で価値の高いセクション</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="raw">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Raw Attribute</div>
+              <h3>レックスチェーン / ヒドゥントマホーク</h3>
+              <div class="weapon-tags">
+                <span>ティガ：攻撃力2198 / 会心率-40％</span>
+                <span>ナルガ：攻撃力1738 / 会心率40％</span>
+                <span>凶会心</span>
+                <span>死中に活</span>
+              </div>
+              <p class="weapon-desc">
+                ティガレックスとナルガクルガ武器の中では、双剣が最も強いのではないかという評価。
+                ティガは凶会心運用、ナルガは死中に活運用と、武器ごとに方向性が真逆なのが面白いポイントです。
+              </p>
+              <div class="weapon-note">
+                ティガ構成では会心率-90％、凶会心Lv.5で稀にマイナス会心時の会心ダメージ250％。
+                ナルガ構成では裂傷状態時に会心率90％まで狙えます。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="RAW">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>真逆の2ビルド</strong>
+                  <p>ティガは凶会心、ナルガは死中に活。無属性双剣の魅力が分かりやすい枠です。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>ティガレックス武器：凶会心構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>ティガ：凶会心</span></li>
+                <li><span class="label">頭</span><span>ガランゴルム：凶会心Lv.2</span></li>
+                <li><span class="label">胴</span><span>ディノバルド：ロックオン・力任せLv.2</span></li>
+                <li><span class="label">腕</span><span>バゼルギウス：凶会心Lv.2</span></li>
+                <li><span class="label">腰</span><span>エスピナス：追撃Lv.2・破壊王</span></li>
+                <li><span class="label">脚</span><span>ジャナフ亜種：SP加速Lv.2・力任せ</span></li>
+              </ul>
+              <div class="mini-section">
+                <strong>参考</strong>
+                <p>凶会心Lv.1～5で会心率低下と引き換えに、マイナス会心時の会心ダメージが150％～250％に強化されます。</p>
+              </div>
+            </div>
+            <div class="build-card">
+              <h4>ナルガクルガ武器：死中に活構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>ナルガクルガ：死中に活Lv.2</span></li>
+                <li><span class="label">頭</span><span>ガロン亜種：堅忍不抜・死中に活</span></li>
+                <li><span class="label">胴</span><span>エスピナス：追撃Lv.3</span></li>
+                <li><span class="label">腕</span><span>ガロン亜種：堅忍不抜Lv.2</span></li>
+                <li><span class="label">腰</span><span>エスピナス：追撃Lv.2</span></li>
+                <li><span class="label">脚</span><span>タマミツネ：死中に活Lv.2</span></li>
+              </ul>
+              <div class="mini-section">
+                <strong>評価</strong>
+                <p>死中に活Lv.5を確保しつつ、裂傷状態で会心率90％。部位破壊後は追撃でさらにダメージを伸ばせます。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="blast">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Blast Attribute</div>
+              <h3>禍ツ刃ノ幽鬼イステヤ / バゼルホーク</h3>
+              <div class="weapon-tags">
+                <span>爆破属性</span>
+                <span>テオ防具</span>
+                <span>趣味寄り</span>
+                <span>作成優先度低め</span>
+              </div>
+              <p class="weapon-desc">
+                双剣に爆破属性という個性はあるものの、記事の結論としては状態異常と双剣の相性はそこまで良くなく、
+                作成優先度は高くないという評価です。
+              </p>
+              <div class="weapon-note">
+                現状では爆破属性値の高いマガド武器のほうが、バゼル武器より強い印象とされています。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="BLAST">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>好きな人向けの一本</strong>
+                  <p>個性は強いが、汎用的な最優先枠ではないという整理が分かりやすいセクション。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>爆破双剣 ※原記事では武器欄の表記が簡略化</span></li>
+                <li><span class="label">頭</span><span>テオ：炎王龍の爆塵・力の解放・根性</span></li>
+                <li><span class="label">胴</span><span>イビルジョー：力の解放Lv.2</span></li>
+                <li><span class="label">腕</span><span>リオレイア：ロックオン・連撃Lv.2</span></li>
+                <li><span class="label">腰</span><span>テオ：炎王龍の爆塵・連撃・強化持続</span></li>
+                <li><span class="label">脚</span><span>テオ：炎王龍の爆塵・超会心・回避距離UP</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">構成</span><span>テオ防具で固める方向が基本</span></li>
+                <li><span class="label">火力</span><span>力の解放・連撃をLv.3まで積めて火力自体は出せる</span></li>
+                <li><span class="label">比較</span><span>マガド武器のほうが強い印象とされる</span></li>
+                <li><span class="label">総評</span><span>作成優先度は低く、趣味寄りのカテゴリ</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="weapon-section fade-up" id="sleep">
+          <div class="weapon-head">
+            <div class="weapon-copy">
+              <div class="weapon-kicker">Sleep Attribute</div>
+              <h3>夢幻のメロウクロウ</h3>
+              <div class="weapon-tags">
+                <span>睡眠属性</span>
+                <span>マルチ向け</span>
+                <span>目覚めの一撃</span>
+                <span>普段使い非推奨</span>
+              </div>
+              <p class="weapon-desc">
+                双剣×睡眠は、双剣×爆破と同様に刺さる人には刺さる武器。
+                真価を発揮しやすいのは特にマルチプレイで、ソロだと火力不足感が出やすいと整理されています。
+              </p>
+              <div class="weapon-note">
+                目覚めの一撃を使ったSP高火力型。見切りLv.2で武器のマイナス会心も打ち消し可能です。
+              </div>
+            </div>
+            <div class="weapon-visual" data-label="SLEEP">
+              <div class="weapon-visual-inner">
+                <div class="weapon-visual-card">
+                  <strong>マルチ特化型</strong>
+                  <p>普段使いではなく、役割を持って採用するタイプの睡眠双剣です。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="build-grid">
+            <div class="build-card">
+              <h4>おすすめ装備構成</h4>
+              <ul class="equip-list">
+                <li><span class="label">武</span><span>メロウクロウ：回避距離UPLv.1</span></li>
+                <li><span class="label">頭</span><span>パオ亜種：目覚めの一撃Lv.2</span></li>
+                <li><span class="label">胴</span><span>カーニバル：ロックオン・見切りLv.2</span></li>
+                <li><span class="label">腕</span><span>ツィツィ：闇討ち〖状態異常〗Lv.2</span></li>
+                <li><span class="label">腰</span><span>イソネミクニ：睡眠属性強化Lv.1・目覚めの一撃Lv.1</span></li>
+                <li><span class="label">脚</span><span>イソネミクニ：闇討ち〖状態異常〗Lv.2</span></li>
+              </ul>
+            </div>
+            <div class="build-card">
+              <h4>評価ポイント</h4>
+              <ul class="equip-list">
+                <li><span class="label">用途</span><span>マルチプレイ専用の睡眠特化型として運用しやすい</span></li>
+                <li><span class="label">強み</span><span>目覚めの一撃を使ったSP高火力に寄せられる</span></li>
+                <li><span class="label">補正</span><span>見切りLv.2でマイナス会心を打ち消せる</span></li>
+                <li><span class="label">総評</span><span>普段使いより役割特化で採用する武器</span></li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="related">
+      <div class="container">
+        <div class="section-head fade-up">
+          <div>
+            <h2>関連記事導線も一緒に入れる</h2>
+          </div>
+          <p>
+            記事単体の完成度だけでなく、回遊してもらえる導線まで組み込むとPVは伸びやすいです。
+          </p>
+        </div>
+
+        <div class="related-grid">
+          <a class="related-card fade-up" href="#">
+            <small>Related Article</small>
+            <h4>最強防具ランキング</h4>
+            <p>双剣記事のあとに読まれやすい、防具側の最適解を案内する導線に最適。</p>
+          </a>
+          <a class="related-card fade-up" href="#">
+            <small>Related Article</small>
+            <h4>最強太刀ランキング</h4>
+            <p>同ゲーム内の武器種比較系に飛ばして、別記事回遊を増やす定番パターン。</p>
+          </a>
+          <a class="related-card fade-up" href="#">
+            <small>Related Article</small>
+            <h4>最強片手剣ランキング</h4>
+            <p>同じ近接系ユーザーに刺さる導線として、相性のいい関連記事枠です。</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © pichi_blog / Monster Hunter Now Dual Blades Feature
+  </footer>
+
+  <script>
+    const fadeTargets = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeTargets.forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
