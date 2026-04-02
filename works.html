@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -538,6 +538,83 @@ body::after{
     font-size:20px;
   }
 }
+
+/* ===== フォント全体調整（S5寄せ） ===== */
+
+body{
+  font-family:"Inter","Space Grotesk",sans-serif;
+  letter-spacing:0.02em;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 上部ナビ（超重要） */
+.page-title{
+  font-family:"Space Grotesk",sans-serif;
+  font-weight:500;
+  letter-spacing:0.18em;
+  font-size:12px;
+}
+
+/* ラベル（小さい英字） */
+.overlay-label,
+.work-label,
+.modal-label{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:10px;
+  letter-spacing:0.2em;
+  opacity:0.6;
+}
+
+/* タイトル（メイン） */
+.overlay-title{
+  font-family:"Inter",sans-serif;
+  font-size:20px;
+  font-weight:500;
+  letter-spacing:0.01em;
+}
+
+/* セクションタイトル */
+.work-title{
+  font-size:22px;
+  font-weight:500;
+  letter-spacing:0.01em;
+}
+
+/* 本文 */
+.work-sub,
+.modal-desc{
+  font-size:13px;
+  line-height:1.7;
+  letter-spacing:0.03em;
+  opacity:0.75;
+}
+
+/* モーダルタイトル */
+.modal-title{
+  font-size:24px;
+  font-weight:500;
+  letter-spacing:0.01em;
+}
+
+/* 戻るリンク */
+.back a{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:12px;
+  letter-spacing:0.15em;
+  opacity:0.8;
+}
+
+/* ホバーで少し上品に */
+.media:hover .overlay-title{
+  transform:translateY(-2px);
+}
+
+/* 全体の文字を少し締める */
+h1,h2,h3{
+  letter-spacing:0.02em;
+}
+
+  
 </style>
 </head>
 
