@@ -323,7 +323,7 @@ body::after{
   margin:0 auto;
   padding:104px 0 40px;
   display:grid;
-  grid-template-columns:minmax(260px, 420px) minmax(280px, 420px);
+  grid-template-columns:minmax(260px, 420px) 360px;
   justify-content:space-between;
   gap:42px;
 }
@@ -374,38 +374,36 @@ body::after{
 }
 
 .menu-right{
-  display:grid;
-  grid-template-columns:1fr;
-  grid-template-rows:repeat(5, minmax(88px, 1fr));
-  gap:14px;
-  align-content:start;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
 .menu-card{
   position:relative;
+  height:90px;
   overflow:hidden;
   text-decoration:none;
   color:#eef4ff;
   background:rgba(255,255,255,0.04);
-  min-height:88px;
   opacity:0;
-  transform:translateY(22px);
+  transform:translate3d(0,22px,0);
 }
 
 .fullscreen-menu.open .menu-card{
-  animation:menuCardIn .7s cubic-bezier(.2,.8,.2,1) forwards;
+  animation:menuCardIn .78s cubic-bezier(.16,.84,.24,1) forwards;
 }
 
-.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.06s;}
-.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.14s;}
-.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.22s;}
-.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.30s;}
-.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.38s;}
+.fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.05s;}
+.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.13s;}
+.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.21s;}
+.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.29s;}
+.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.37s;}
 
 @keyframes menuCardIn{
   to{
     opacity:1;
-    transform:translateY(0);
+    transform:translate3d(0,0,0);
   }
 }
 
@@ -421,7 +419,7 @@ body::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to right, rgba(5,10,18,0.84), rgba(5,10,18,0.18));
+  background:linear-gradient(to right, rgba(5,10,18,0.84), rgba(5,10,18,0.16));
 }
 
 .menu-card:hover img{
@@ -705,19 +703,20 @@ body::after{
   display:block;
 }
 
-/* reveal */
+/* reveal 修正：scaleを消してガックン感を無くす */
 .reveal{
   opacity:0;
-  transform:translateY(42px) scale(0.985);
+  transform:translate3d(0,28px,0);
   transition:
-    opacity .9s ease,
-    transform 1s ease;
+    opacity .95s cubic-bezier(.16,.84,.24,1),
+    transform 1.05s cubic-bezier(.16,.84,.24,1);
   will-change:opacity, transform;
+  backface-visibility:hidden;
 }
 
 .reveal.show{
   opacity:1;
-  transform:translateY(0) scale(1);
+  transform:translate3d(0,0,0);
 }
 
 /* 戻る */
@@ -863,8 +862,7 @@ body::after{
   }
 
   .menu-right{
-    grid-template-rows:none;
-    grid-template-columns:1fr;
+    width:100%;
   }
 }
 
@@ -894,7 +892,7 @@ body::after{
   }
 
   .menu-card{
-    min-height:92px;
+    height:82px;
   }
 
   .split,
@@ -980,13 +978,13 @@ body::after{
       </div>
 
       <div class="menu-note">
-        右側は縦並び5枚で、少しずつ遅れて出るようにしています。上のバーの高さとハンバーガーも揃えて、飛び出して見えないように整えています。
+        右側はS5寄せで縦に5枚並ぶ細長いカードにしています。作品ページ本体の画像パスはそのまま維持しています。
       </div>
     </div>
 
     <div class="menu-right">
       <a class="menu-card" href="index.html">
-        <img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="home preview">
+        <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1400&auto=format&fit=crop" alt="home preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Home</div>
           <div class="menu-card-title">Main Entrance</div>
@@ -994,7 +992,7 @@ body::after{
       </a>
 
       <a class="menu-card" href="works.html">
-        <img src="images/Screenshot_エンドフィールド_20260324_082014~2.jpg" alt="works preview">
+        <img src="https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1400&auto=format&fit=crop" alt="works preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Works</div>
           <div class="menu-card-title">Visual Archive</div>
@@ -1002,7 +1000,7 @@ body::after{
       </a>
 
       <a class="menu-card" href="index.html#about">
-        <img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="about preview">
+        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?q=80&w=1400&auto=format&fit=crop" alt="about preview">
         <div class="menu-card-text">
           <div class="menu-card-label">About</div>
           <div class="menu-card-title">Profile & World</div>
@@ -1010,7 +1008,7 @@ body::after{
       </a>
 
       <a class="menu-card" href="index.html#contact">
-        <img src="images/Screenshot_エンドフィールド_20260324_082027~2.jpg" alt="contact preview">
+        <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1400&auto=format&fit=crop" alt="contact preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Contact</div>
           <div class="menu-card-title">Get in Touch</div>
@@ -1018,7 +1016,7 @@ body::after{
       </a>
 
       <a class="menu-card" href="works.html">
-        <img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="extra preview">
+        <img src="https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?q=80&w=1400&auto=format&fit=crop" alt="archive preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Archive</div>
           <div class="menu-card-title">Latest View</div>
