@@ -486,8 +486,6 @@ body::after{
 }
 
 /* タイトルバー */
-
-/* タイトルバー */
 .page-title{
   position:sticky;
   top:0;
@@ -498,8 +496,7 @@ body::after{
   padding:0 76px 0 18px;
   display:flex;
   align-items:center;
-  justify-content:flex-start;
-  gap:14px;
+  justify-content:center;
   background:rgba(255,250,255,0.22);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -507,17 +504,23 @@ body::after{
 }
 
 .page-title-logo{
-  height:28px;
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  height:22px;
   width:auto;
   display:block;
   object-fit:contain;
-  flex-shrink:0;
   filter:
     drop-shadow(0 2px 8px rgba(255,255,255,0.12))
     drop-shadow(0 4px 14px rgba(89,35,78,0.12));
 }
 
 .page-title-text{
+  width:100%;
+  text-align:center;
+  pointer-events:none;
   font-family:"Space Grotesk",sans-serif;
   font-size:12px;
   font-weight:600;
@@ -525,9 +528,9 @@ body::after{
   color:#6d2e5c;
   text-shadow:0 1px 0 rgba(255,255,255,0.22);
   white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  padding:0 92px 0 92px;
 }
+
 /* HOMEボタン */
 .fixed-home-btn{
   position:fixed;
@@ -927,18 +930,19 @@ body::after{
   }
 
   .page-title{
-  padding:0 64px 0 12px;
-  gap:10px;
-}
+    padding:0 64px 0 12px;
+  }
 
-.page-title-logo{
-  height:22px;
-}
+  .page-title-logo{
+    left:12px;
+    height:18px;
+  }
 
-.page-title-text{
-  font-size:10px;
-  letter-spacing:0.16em;
-}
+  .page-title-text{
+    font-size:10px;
+    letter-spacing:0.16em;
+    padding:0 72px 0 72px;
+  }
 
   .menu-toggle{
     width:56px;
@@ -1083,7 +1087,6 @@ body::after{
     </div>
 
     <div class="menu-bottom">
-      <!-- 1枚目：zzz.html -->
       <a class="menu-card" href="zzz.html">
         <img src="images/Screenshot_20260403_004108~2.jpg" alt="zzz preview">
         <div class="menu-card-text">
@@ -1092,9 +1095,8 @@ body::after{
         </div>
       </a>
 
-      <!-- 2枚目：Works.html -->
       <a class="menu-card" href="works.html">
-        <img src="images/Screenshot_20260403_004118~2.jpg" alt="works preview">
+        <img src="images/Screenshot_エンドフィールド_20260402_163809~2.jpg" alt="works preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Works</div>
           <div class="menu-card-title">Creative Archive</div>
@@ -1137,7 +1139,6 @@ body::after{
 
 <div class="works-wrap">
 
-  <!-- 01 -->
   <section class="work-section">
     <div
       class="media full-bleed reveal work-item"
@@ -1161,7 +1162,6 @@ body::after{
     </div>
   </section>
 
-  <!-- 02 -->
   <section class="work-section">
     <div class="split">
       <div
@@ -1208,7 +1208,6 @@ body::after{
     </div>
   </section>
 
-  <!-- 03 -->
   <section class="work-section">
     <div class="split reverse">
       <div class="stack">
@@ -1255,7 +1254,6 @@ body::after{
     </div>
   </section>
 
-  <!-- 04 -->
   <section class="work-section">
     <div class="mosaic">
       <div class="mosaic-left">
