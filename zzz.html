@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZZZ | Creative Studio</title>
-
+<meta name="theme-color" content="#f4b9dd">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -485,6 +486,8 @@ body::after{
 }
 
 /* タイトルバー */
+
+/* タイトルバー */
 .page-title{
   position:sticky;
   top:0;
@@ -492,11 +495,11 @@ body::after{
   width:100%;
   height:var(--topbar-h);
   margin:0;
-  padding:0 76px 0 24px;
+  padding:0 76px 0 18px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  text-align:center;
+  justify-content:flex-start;
+  gap:14px;
   background:rgba(255,250,255,0.22);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -504,10 +507,11 @@ body::after{
 }
 
 .page-title-logo{
-  height:24px;
+  height:28px;
   width:auto;
   display:block;
   object-fit:contain;
+  flex-shrink:0;
   filter:
     drop-shadow(0 2px 8px rgba(255,255,255,0.12))
     drop-shadow(0 4px 14px rgba(89,35,78,0.12));
@@ -520,8 +524,10 @@ body::after{
   letter-spacing:0.22em;
   color:#6d2e5c;
   text-shadow:0 1px 0 rgba(255,255,255,0.22);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
-
 /* HOMEボタン */
 .fixed-home-btn{
   position:fixed;
@@ -921,16 +927,18 @@ body::after{
   }
 
   .page-title{
-    padding:0 64px 0 16px;
-  }
+  padding:0 64px 0 12px;
+  gap:10px;
+}
 
-  .page-title-logo{
-    height:20px;
-  }
+.page-title-logo{
+  height:22px;
+}
 
-  .page-title-text{
-    font-size:11px;
-  }
+.page-title-text{
+  font-size:10px;
+  letter-spacing:0.16em;
+}
 
   .menu-toggle{
     width:56px;
@@ -1068,7 +1076,7 @@ body::after{
       <div class="menu-links">
         <a class="menu-link" href="index.html">HOME</a>
         <a class="menu-link" href="zzz.html">ZZZ</a>
-        <a class="menu-link" href="Works.html">WORKS</a>
+        <a class="menu-link" href="works.html">WORKS</a>
         <a class="menu-link" href="index.html#about">ABOUT</a>
         <a class="menu-link" href="index.html#contact">CONTACT</a>
       </div>
@@ -1085,7 +1093,7 @@ body::after{
       </a>
 
       <!-- 2枚目：Works.html -->
-      <a class="menu-card" href="Works.html">
+      <a class="menu-card" href="works.html">
         <img src="images/Screenshot_20260403_004118~2.jpg" alt="works preview">
         <div class="menu-card-text">
           <div class="menu-card-label">Works</div>
@@ -1124,6 +1132,7 @@ body::after{
 
 <div class="page-title">
   <img class="page-title-logo" src="images/rectangle_large_type_2_407cf457bc54a5b95fa4057dd907d482~2.png" alt="logo">
+  <div class="page-title-text">Zenless Zone Zero</div>
 </div>
 
 <div class="works-wrap">
