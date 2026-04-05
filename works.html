@@ -1069,7 +1069,18 @@ body::after{
 .zoom-overlay.show{
   opacity:1;
 }
+body.page-enter{
+  opacity:0;
+  transform:scale(1.015);
+  transition:
+    opacity .95s ease,
+    transform 1.05s cubic-bezier(.22,1,.36,1);
+}
 
+body.page-enter.page-enter-active{
+  opacity:1;
+  transform:scale(1);
+}
   
 </style>
 </head>
@@ -1511,6 +1522,21 @@ zoom.style.transform = 'rotate(-2.2deg) scale(1.06)';
 
   });
 });
+
+// ===============================
+// PAGE ENTER EFFECT
+// ===============================
+if (window.location.search.includes('fromZoom=1')) {
+  document.body.classList.add('page-enter');
+
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-enter-active');
+      });
+    });
+  });
+}
   
 </script>
 
