@@ -1393,9 +1393,9 @@ const observer = new IntersectionObserver((entries) => {
       entry.target.classList.remove("show");
     }
   });
-},{
-  threshold:0.16,
-  rootMargin:"0px 0px -8% 0px"
+}, {
+  threshold: 0.16,
+  rootMargin: "0px 0px -8% 0px"
 });
 
 document.querySelectorAll(".reveal").forEach((el) => {
@@ -1455,7 +1455,7 @@ function closeMenu(){
 menuToggle.addEventListener("click", () => {
   if(fullscreenMenu.classList.contains("open")){
     closeMenu();
-  }else{
+  } else {
     openMenu();
   }
 });
@@ -1471,20 +1471,21 @@ document.addEventListener("keydown", (e) => {
     closeModal();
     closeMenu();
   }
-});// ===============================
+});
+
+// ===============================
 // ZOOM PAGE TRANSITION
 // works.html に戻るカードだけ対象
 // ===============================
-document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
+document.querySelectorAll('.menu-card[href="works.html"]').forEach((card) => {
   card.addEventListener('click', function(e){
-
     const link = card.getAttribute('href');
-    if(!link) return;
+    if (!link) return;
 
     e.preventDefault();
 
     const img = card.querySelector('img');
-    if(!img){
+    if (!img) {
       window.location.href = link + '?fromZoom=1';
       return;
     }
@@ -1494,12 +1495,10 @@ document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
     const clone = img.cloneNode(true);
     const zoom = document.createElement('div');
     zoom.className = 'zoom-transition';
-
     zoom.style.top = rect.top + 'px';
     zoom.style.left = rect.left + 'px';
     zoom.style.width = rect.width + 'px';
     zoom.style.height = rect.height + 'px';
-
     zoom.appendChild(clone);
     document.body.appendChild(zoom);
 
@@ -1509,7 +1508,6 @@ document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
 
     requestAnimationFrame(() => {
       overlay.classList.add('show');
-
       zoom.style.transition = 'all 1.05s cubic-bezier(.22,1,.36,1)';
       zoom.style.top = '0px';
       zoom.style.left = '0px';
@@ -1521,32 +1519,6 @@ document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
     setTimeout(() => {
       window.location.href = link + '?fromZoom=1';
     }, 820);
-
-  });
-});
-
-// ===============================
-
-    // オーバーレイ
-    const overlay = document.createElement('div');
-    overlay.className = 'zoom-overlay';
-    document.body.appendChild(overlay);
-
-    requestAnimationFrame(() => {
-      overlay.classList.add('show');
-
-      zoom.style.transition = 'all .9s cubic-bezier(.22,1,.36,1)';
-      zoom.style.top = '0px';
-zoom.style.left = '0px';
-zoom.style.width = '100vw';
-zoom.style.height = '100vh';
-zoom.style.transform = 'rotate(-2.2deg) scale(1.06)';
-    });
-
-    setTimeout(() => {
-      window.location.href = link;
-    }, 550);
-
   });
 });
 
@@ -1567,8 +1539,9 @@ if (window.location.search.includes('fromZoom=1')) {
     window.history.replaceState({}, document.title, cleanUrl);
   });
 }
-  
 </script>
+
+
 
 </body>
 </html>
