@@ -31,12 +31,12 @@ body{
   letter-spacing:0.01em;
   -webkit-font-smoothing:antialiased;
   background:
-    radial-gradient(circle at 18% 16%, rgba(232,255,245,0.42), transparent 24%),
-    radial-gradient(circle at 78% 20%, rgba(205,250,255,0.28), transparent 26%),
-    radial-gradient(circle at 52% 78%, rgba(245,255,210,0.16), transparent 30%),
-    radial-gradient(circle at 30% 48%, rgba(175,235,225,0.22), transparent 34%),
-    radial-gradient(circle at 72% 62%, rgba(165,225,215,0.18), transparent 36%),
-    linear-gradient(180deg, #8fe3d5 0%, #68cfc1 28%, #4fbcb3 58%, #3aa7a1 100%);
+  radial-gradient(circle at 18% 16%, rgba(238,255,252,0.42), transparent 24%),
+  radial-gradient(circle at 78% 20%, rgba(214,246,248,0.28), transparent 26%),
+  radial-gradient(circle at 52% 78%, rgba(240,255,230,0.16), transparent 30%),
+  radial-gradient(circle at 30% 48%, rgba(170,220,220,0.22), transparent 34%),
+  radial-gradient(circle at 72% 62%, rgba(156,199,201,0.18), transparent 36%),
+  linear-gradient(180deg, #bfe4e1 0%, #9fd1d0 28%, #84bebe 58%, #6aa7a8 100%);
   background-repeat:no-repeat;
   background-size:cover;
   background-attachment:fixed;
@@ -1046,6 +1046,8 @@ body::after{
   pointer-events:none;
   overflow:hidden;
   border-radius:0;
+  transform-origin:center center;
+  will-change:transform, top, left, width, height;
 }
 
 .zoom-transition img{
@@ -1058,15 +1060,16 @@ body::after{
 .zoom-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.2);
+  background:rgba(106,167,168,0.18);
   opacity:0;
   z-index:99998;
-  transition:opacity .4s ease;
+  transition:opacity .55s ease;
 }
 
 .zoom-overlay.show{
   opacity:1;
 }
+
   
 </style>
 </head>
@@ -1494,11 +1497,12 @@ document.querySelectorAll('.menu-card').forEach(card => {
     requestAnimationFrame(() => {
       overlay.classList.add('show');
 
-      zoom.style.transition = 'all .65s cubic-bezier(.22,1,.36,1)';
+      zoom.style.transition = 'all .9s cubic-bezier(.22,1,.36,1)';
       zoom.style.top = '0px';
-      zoom.style.left = '0px';
-      zoom.style.width = '100vw';
-      zoom.style.height = '100vh';
+zoom.style.left = '0px';
+zoom.style.width = '100vw';
+zoom.style.height = '100vh';
+zoom.style.transform = 'rotate(-2.2deg) scale(1.06)';
     });
 
     setTimeout(() => {
