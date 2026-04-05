@@ -31,12 +31,12 @@ body{
   letter-spacing:0.01em;
   -webkit-font-smoothing:antialiased;
   background:
-  radial-gradient(circle at 18% 16%, rgba(238,255,252,0.42), transparent 24%),
-  radial-gradient(circle at 78% 20%, rgba(214,246,248,0.28), transparent 26%),
-  radial-gradient(circle at 52% 78%, rgba(240,255,230,0.16), transparent 30%),
-  radial-gradient(circle at 30% 48%, rgba(170,220,220,0.22), transparent 34%),
-  radial-gradient(circle at 72% 62%, rgba(156,199,201,0.18), transparent 36%),
-  linear-gradient(180deg, #bfe4e1 0%, #9fd1d0 28%, #84bebe 58%, #6aa7a8 100%);
+  radial-gradient(circle at 18% 16%, rgba(240,248,255,0.45), transparent 24%),
+  radial-gradient(circle at 78% 20%, rgba(210,235,255,0.28), transparent 26%),
+  radial-gradient(circle at 52% 78%, rgba(230,245,255,0.18), transparent 30%),
+  radial-gradient(circle at 30% 48%, rgba(140,200,240,0.22), transparent 34%),
+  radial-gradient(circle at 72% 62%, rgba(120,180,230,0.20), transparent 36%),
+  linear-gradient(180deg, #bfe3ff 0%, #94c9f5 28%, #6fbbe9 58%, #4aa6e8 100%);
   background-repeat:no-repeat;
   background-size:cover;
   background-attachment:fixed;
@@ -1060,10 +1060,10 @@ body::after{
 .zoom-overlay{
   position:fixed;
   inset:0;
-  background:rgba(106,167,168,0.18);
+  background:rgba(74,166,232,0.18);
   opacity:0;
   z-index:99998;
-  transition:opacity .55s ease;
+  transition:opacity .65s ease;
 }
 
 .zoom-overlay.show{
@@ -1471,12 +1471,11 @@ document.addEventListener("keydown", (e) => {
     closeModal();
     closeMenu();
   }
-});
-
-// ===============================
+});// ===============================
 // ZOOM PAGE TRANSITION
+// works.html に戻るカードだけ対象
 // ===============================
-document.querySelectorAll('.menu-card').forEach(card => {
+document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
   card.addEventListener('click', function(e){
 
     const link = card.getAttribute('href');
@@ -1485,9 +1484,13 @@ document.querySelectorAll('.menu-card').forEach(card => {
     e.preventDefault();
 
     const img = card.querySelector('img');
+    if(!img){
+      window.location.href = link + '?fromZoom=1';
+      return;
+    }
+
     const rect = img.getBoundingClientRect();
 
-    // 複製
     const clone = img.cloneNode(true);
     const zoom = document.createElement('div');
     zoom.className = 'zoom-transition';
@@ -1499,6 +1502,30 @@ document.querySelectorAll('.menu-card').forEach(card => {
 
     zoom.appendChild(clone);
     document.body.appendChild(zoom);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'zoom-overlay';
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('show');
+
+      zoom.style.transition = 'all 1.05s cubic-bezier(.22,1,.36,1)';
+      zoom.style.top = '0px';
+      zoom.style.left = '0px';
+      zoom.style.width = '100vw';
+      zoom.style.height = '100vh';
+      zoom.style.transform = 'rotate(-2.6deg) scale(1.08)';
+    });
+
+    setTimeout(() => {
+      window.location.href = link + '?fromZoom=1';
+    }, 820);
+
+  });
+});
+
+// ===============================
 
     // オーバーレイ
     const overlay = document.createElement('div');
@@ -1535,6 +1562,9 @@ if (window.location.search.includes('fromZoom=1')) {
         document.body.classList.add('page-enter-active');
       });
     });
+
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
   });
 }
   
