@@ -1078,6 +1078,17 @@ body.page-enter.page-enter-active{
     font-size:20px;
   }
 }
+
+html, body{
+  min-height:100%;
+  height:auto;
+  overflow-x:hidden;
+}
+
+body{
+  min-height:100dvh;
+}
+  
 </style>
 </head>
 
@@ -1469,67 +1480,80 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ZOOM PAGE TRANSITION
-document.querySelectorAll('.menu-card[href="works.html"]').forEach((card) => {
+// ===============================
+// ZOOM TRANSITION（完全修正版）
+// ===============================
+document.querySelectorAll('.menu-card[href="works.html"]').forEach(card => {
   card.addEventListener('click', function(e){
-    const link = card.getAttribute('href');
-    if (!link) return;
 
     e.preventDefault();
+    const link = "works.html?fromZoom=1";
 
     const img = card.querySelector('img');
-    if (!img) {
-      window.location.href = link + '?fromZoom=1';
+    if(!img){
+      window.location.href = link;
       return;
     }
 
     const rect = img.getBoundingClientRect();
-    const imgSrc = img.getAttribute('src') || '';
 
-    const cloneWrap = document.createElement('div');
-    cloneWrap.className = 'zoom-transition';
-    cloneWrap.style.top = rect.top + 'px';
-    cloneWrap.style.left = rect.left + 'px';
-    cloneWrap.style.width = rect.width + 'px';
-    cloneWrap.style.height = rect.height + 'px';
+    // wrapper
+    const zoom = document.createElement('div');
+    zoom.style.position = 'fixed';
+    zoom.style.top = rect.top + 'px';
+    zoom.style.left = rect.left + 'px';
+    zoom.style.width = rect.width + 'px';
+    zoom.style.height = rect.height + 'px';
+    zoom.style.zIndex = '99999';
+    zoom.style.overflow = 'hidden';
+    zoom.style.willChange = 'transform';
 
-    const cloneImg = img.cloneNode(true);
-    cloneImg.style.transition = 'transform .92s cubic-bezier(.22,1,.36,1)';
-    cloneImg.style.transformOrigin = 'center center';
-    cloneImg.style.objectPosition = '50% 50%';
+    // img clone
+    const clone = img.cloneNode(true);
+    clone.style.width = '100%';
+    clone.style.height = '100%';
+    clone.style.objectFit = 'cover';
+    clone.style.transformOrigin = '50% 50%';
+    clone.style.willChange = 'transform';
 
-    if (imgSrc.includes('Screenshot_エンドフィールド_20260402_163809')) {
-      cloneImg.style.objectPosition = '46% 34%';
-    }
+    zoom.appendChild(clone);
+    document.body.appendChild(zoom);
 
-    cloneWrap.appendChild(cloneImg);
-    document.body.appendChild(cloneWrap);
-
+    // overlay
     const overlay = document.createElement('div');
-    overlay.className = 'zoom-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.inset = '0';
+    overlay.style.background = 'rgba(74,166,232,0.22)';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity .5s ease';
+    overlay.style.zIndex = '99998';
     document.body.appendChild(overlay);
 
     requestAnimationFrame(() => {
-      overlay.classList.add('show');
 
-      cloneWrap.style.transition = 'top .92s cubic-bezier(.22,1,.36,1), left .92s cubic-bezier(.22,1,.36,1), width .92s cubic-bezier(.22,1,.36,1), height .92s cubic-bezier(.22,1,.36,1)';
-      cloneWrap.style.top = '0px';
-      cloneWrap.style.left = '0px';
-      cloneWrap.style.width = '100vw';
-      cloneWrap.style.height = '100vh';
+      overlay.style.opacity = '1';
 
-      if (imgSrc.includes('Screenshot_エンドフィールド_20260402_163809')) {
-        cloneImg.style.transform = 'scale(1.34) rotate(-3.2deg)';
-      } else {
-        cloneImg.style.transform = 'scale(1.18) rotate(-2deg)';
-      }
+      // wrapper fullscreen（はみ出し防止）
+      zoom.style.transition = 'all 1.1s cubic-bezier(.22,1,.36,1)';
+      zoom.style.top = '0';
+      zoom.style.left = '0';
+      zoom.style.width = '100%';
+      zoom.style.height = '100%';
+
+      // 🔥 核心：瞳に潜る
+      clone.style.transition = 'transform 1.1s cubic-bezier(.22,1,.36,1)';
+      clone.style.transform =
+        'scale(3.6) translate(-18%, -12%) rotate(-4deg)';
     });
 
+    // 🔥 待ちなし遷移
     setTimeout(() => {
-      window.location.href = link + '?fromZoom=1';
-    }, 920);
+      window.location.href = link;
+    }, 900);
+
   });
 });
+    
 
 // PAGE ENTER EFFECT
 if (window.location.search.includes('fromZoom=1')) {
