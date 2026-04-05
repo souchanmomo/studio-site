@@ -1036,6 +1036,38 @@ body::after{
     font-size:20px;
   }
 }
+
+/* ===============================
+   ZOOM TRANSITION
+=============================== */
+.zoom-transition{
+  position:fixed;
+  z-index:99999;
+  pointer-events:none;
+  overflow:hidden;
+  border-radius:0;
+}
+
+.zoom-transition img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.zoom-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.2);
+  opacity:0;
+  z-index:99998;
+  transition:opacity .4s ease;
+}
+
+.zoom-overlay.show{
+  opacity:1;
+}
+  
 </style>
 </head>
 
@@ -1426,6 +1458,56 @@ document.addEventListener("keydown", (e) => {
     closeMenu();
   }
 });
+
+// ===============================
+// ZOOM PAGE TRANSITION
+// ===============================
+document.querySelectorAll('.menu-card').forEach(card => {
+  card.addEventListener('click', function(e){
+
+    const link = card.getAttribute('href');
+    if(!link) return;
+
+    e.preventDefault();
+
+    const img = card.querySelector('img');
+    const rect = img.getBoundingClientRect();
+
+    // 複製
+    const clone = img.cloneNode(true);
+    const zoom = document.createElement('div');
+    zoom.className = 'zoom-transition';
+
+    zoom.style.top = rect.top + 'px';
+    zoom.style.left = rect.left + 'px';
+    zoom.style.width = rect.width + 'px';
+    zoom.style.height = rect.height + 'px';
+
+    zoom.appendChild(clone);
+    document.body.appendChild(zoom);
+
+    // オーバーレイ
+    const overlay = document.createElement('div');
+    overlay.className = 'zoom-overlay';
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => {
+      overlay.classList.add('show');
+
+      zoom.style.transition = 'all .65s cubic-bezier(.22,1,.36,1)';
+      zoom.style.top = '0px';
+      zoom.style.left = '0px';
+      zoom.style.width = '100vw';
+      zoom.style.height = '100vh';
+    });
+
+    setTimeout(() => {
+      window.location.href = link;
+    }, 550);
+
+  });
+});
+  
 </script>
 
 </body>
