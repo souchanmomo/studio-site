@@ -110,13 +110,6 @@ body{
   mix-blend-mode:screen;
 }
 
-/* 旧背景装飾は停止 */
-body::before,
-body::after,
-.wind-lines,
-.bg-particles{
-  display:none !important;
-}
 
 /* ローディング */
 #loader{
@@ -1073,6 +1066,59 @@ body::after,
   .modal-desc{
     font-size:14px;
   }
+}
+.wind-lines{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:1;
+
+  background:
+    linear-gradient(120deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(255,255,255,0.00) 58%,
+      rgba(255,255,255,0.35) 61%,
+      rgba(255,255,255,0.00) 64%,
+      transparent 70%
+    ),
+    linear-gradient(120deg,
+      transparent 0%,
+      transparent 60%,
+      rgba(255,255,255,0.00) 63%,
+      rgba(255,255,255,0.28) 66%,
+      rgba(255,255,255,0.00) 69%,
+      transparent 75%
+    ),
+    linear-gradient(120deg,
+      transparent 0%,
+      transparent 65%,
+      rgba(255,255,255,0.00) 68%,
+      rgba(255,255,255,0.22) 71%,
+      rgba(255,255,255,0.00) 74%,
+      transparent 80%
+    ),
+    radial-gradient(ellipse 70% 12% at 75% 70%, rgba(255,255,255,0.25), transparent 60%),
+    radial-gradient(ellipse 60% 10% at 30% 40%, rgba(255,255,255,0.18), transparent 60%);
+
+  filter:blur(6px);
+  mix-blend-mode:screen;
+}
+
+  body::after{
+  content:"";
+  position:fixed;
+  inset:-8%;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(ellipse 76% 12% at 18% 22%, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.10) 24%, transparent 58%),
+    radial-gradient(ellipse 72% 11% at 84% 20%, rgba(255,240,248,0.22) 0%, rgba(255,240,248,0.08) 24%, transparent 58%),
+    radial-gradient(ellipse 54% 8% at 78% 84%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 22%, transparent 56%);
+  mix-blend-mode:screen;
+  opacity:.9;
+  filter:blur(2px);
 }
 </style>
 </head>
