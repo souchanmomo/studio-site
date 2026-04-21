@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZZZ | Creative Studio</title>
-<meta name="theme-color" content="#e7c5f2">
+<meta name="theme-color" content="#e7c8f2">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,12 +19,16 @@
 
 html,body{
   min-height:100%;
-  background:#e2c0f2;
+  background:#e7c8f2;
 }
 
 :root{
   --topbar-h:61px;
   --zzz-accent:#5e204f;
+  --zzz-accent-soft:#7b3a68;
+  --zzz-glass:rgba(255,250,255,0.22);
+  --zzz-glass-deep:rgba(124,76,124,0.54);
+  --zzz-bg-image:url("images/file_00000000163472098563e8d57edc408a.png");
 }
 
 body{
@@ -33,89 +37,46 @@ body{
   color:#fff8fe;
   letter-spacing:0.01em;
   -webkit-font-smoothing:antialiased;
-  background:#e2c0f2;
+  background:#e7c8f2;
   overflow-x:hidden;
   position:relative;
 }
 
-/* ===== 背景：理想画像寄せ ===== */
+/* 既存の背景疑似要素は完全停止 */
+body::before,
+body::after{
+  content:none !important;
+  display:none !important;
+}
+
+/* 背景画像レイヤー */
 .page-bg{
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  overflow:hidden;
   background:
-    radial-gradient(circle at 14% 8%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.72) 8%, rgba(255,255,255,0) 24%),
-    radial-gradient(circle at 48% 12%, rgba(255,245,250,0.62) 0%, rgba(255,245,250,0.20) 14%, rgba(255,245,250,0) 30%),
-    radial-gradient(circle at 84% 16%, rgba(255,208,232,0.58) 0%, rgba(255,208,232,0.14) 16%, rgba(255,208,232,0) 34%),
-    radial-gradient(circle at 18% 62%, rgba(255,218,238,0.24) 0%, rgba(255,218,238,0.08) 18%, rgba(255,218,238,0) 36%),
-    radial-gradient(circle at 84% 82%, rgba(205,188,255,0.38) 0%, rgba(205,188,255,0.10) 18%, rgba(205,188,255,0) 38%),
-    linear-gradient(180deg, #fff8fb 0%, #ffeef6 13%, #ffdceb 30%, #f3d2eb 48%, #e5cef4 68%, #d7c2f1 84%, #cdb6ef 100%);
+    linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
+    var(--zzz-bg-image) center top / cover no-repeat;
 }
 
+/* ごく薄いなじませ */
 .page-bg::before{
   content:"";
   position:absolute;
-  inset:-10%;
+  inset:0;
   background:
-    linear-gradient(129deg,
-      transparent 0%,
-      transparent 49%,
-      rgba(255,255,255,0.00) 53%,
-      rgba(255,255,255,0.38) 57.2%,
-      rgba(255,255,255,0.00) 61.8%,
-      transparent 66%,
-      transparent 100%),
-    linear-gradient(129deg,
-      transparent 0%,
-      transparent 55%,
-      rgba(255,255,255,0.00) 59%,
-      rgba(255,244,250,0.28) 63.2%,
-      rgba(255,255,255,0.00) 67.3%,
-      transparent 72%,
-      transparent 100%),
-    linear-gradient(129deg,
-      transparent 0%,
-      transparent 61%,
-      rgba(255,255,255,0.00) 65%,
-      rgba(255,240,248,0.22) 69.1%,
-      rgba(255,255,255,0.00) 73.3%,
-      transparent 78%,
-      transparent 100%),
-    linear-gradient(129deg,
-      transparent 0%,
-      transparent 68%,
-      rgba(255,255,255,0.00) 71.5%,
-      rgba(255,240,248,0.15) 74.8%,
-      rgba(255,255,255,0.00) 78.1%,
-      transparent 82%,
-      transparent 100%),
-    radial-gradient(ellipse 58% 7% at 78% 58%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.06) 14%, transparent 36%),
-    radial-gradient(ellipse 70% 8% at 76% 70%, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.05) 13%, transparent 38%),
-    radial-gradient(ellipse 78% 8% at 72% 82%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 13%, transparent 40%);
-  filter:blur(3px);
-  opacity:1;
-  mix-blend-mode:screen;
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 18%),
+    radial-gradient(circle at 85% 80%, rgba(214,196,255,0.08) 0%, rgba(214,196,255,0) 22%);
+  opacity:.45;
 }
 
 .page-bg::after{
   content:"";
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at 1.5% 34%, rgba(255,255,255,0.80) 0 2px, transparent 7px),
-    radial-gradient(circle at 5% 70%, rgba(255,255,255,0.36) 0 2px, transparent 6px),
-    radial-gradient(circle at 10% 12%, rgba(255,255,255,0.64) 0 4px, transparent 11px),
-    radial-gradient(circle at 18% 82%, rgba(255,255,255,0.28) 0 2px, transparent 7px),
-    radial-gradient(circle at 40% 18%, rgba(255,255,255,0.24) 0 2px, transparent 6px),
-    radial-gradient(circle at 62% 30%, rgba(255,245,250,0.26) 0 2px, transparent 7px),
-    radial-gradient(circle at 72% 56%, rgba(255,255,255,0.34) 0 2px, transparent 8px),
-    radial-gradient(circle at 82% 64%, rgba(255,255,255,0.44) 0 3px, transparent 10px),
-    radial-gradient(circle at 90% 76%, rgba(255,255,255,0.52) 0 2px, transparent 8px),
-    radial-gradient(circle at 97% 34%, rgba(255,255,255,0.28) 0 2px, transparent 7px);
-  opacity:.72;
-  mix-blend-mode:screen;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+  opacity:.35;
 }
 
 /* ローディング */
@@ -509,10 +470,10 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,250,255,0.22);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.20);
+  background:rgba(255,245,250,0.46);
+  backdrop-filter:blur(14px) saturate(112%);
+  -webkit-backdrop-filter:blur(14px) saturate(112%);
+  border-bottom:1px solid rgba(255,255,255,0.26);
 }
 
 .page-title-logo{
@@ -943,11 +904,13 @@ body{
   }
 
   html,body{
-    background:#e2c0f2;
+    background:#e7c8f2;
   }
 
-  body{
-    background:#e2c0f2;
+  .page-bg{
+    background:
+      linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
+      var(--zzz-bg-image) center top / cover no-repeat;
   }
 
   .page-title{
@@ -1074,125 +1037,6 @@ body{
     font-size:14px;
   }
 }
-
-/* =========================
-   背景 完全上書き（最優先）
-   ========================= */
-
-/* 既存の背景系を全停止 */
-body,
-html{
-  background:#e8c6f4 !important;
-}
-
-.wind-lines,
-.bg-particles{
-  display:none !important;
-}
-
-body::before,
-body::after{
-  display:none !important;
-}
-
-/* 背景本体 */
-.page-bg{
-  position:fixed !important;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
-  overflow:hidden;
-
-  background:
-    radial-gradient(circle at 10% 9%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.78) 7%, rgba(255,255,255,0) 22%),
-    radial-gradient(circle at 26% 22%, rgba(255,232,246,0.95) 0%, rgba(255,232,246,0.28) 16%, rgba(255,232,246,0) 34%),
-    radial-gradient(circle at 55% 14%, rgba(255,220,238,0.75) 0%, rgba(255,220,238,0.18) 17%, rgba(255,220,238,0) 36%),
-    radial-gradient(circle at 82% 18%, rgba(255,206,232,0.74) 0%, rgba(255,206,232,0.15) 18%, rgba(255,206,232,0) 38%),
-    radial-gradient(circle at 18% 66%, rgba(255,226,242,0.34) 0%, rgba(255,226,242,0.10) 18%, rgba(255,226,242,0) 40%),
-    radial-gradient(circle at 85% 82%, rgba(211,192,255,0.40) 0%, rgba(211,192,255,0.12) 18%, rgba(211,192,255,0) 40%),
-    linear-gradient(180deg, #fff9fc 0%, #fff1f8 10%, #ffe2ef 24%, #f9d2e8 42%, #efcdef 58%, #e4caf3 74%, #d6c0f0 88%, #ccb4ed 100%) !important;
-}
-
-/* 流線（これが一番重要） */
-.page-bg::before{
-  content:"";
-  position:absolute;
-  inset:-12%;
-
-  background:
-    linear-gradient(128deg,
-      transparent 0%,
-      transparent 46%,
-      rgba(255,255,255,0) 51%,
-      rgba(255,255,255,0.65) 55%,
-      rgba(255,255,255,0) 59%,
-      transparent 63%,
-      transparent 100%),
-
-    linear-gradient(128deg,
-      transparent 0%,
-      transparent 54%,
-      rgba(255,255,255,0) 58%,
-      rgba(255,245,250,0.52) 62%,
-      rgba(255,255,255,0) 66%,
-      transparent 70%,
-      transparent 100%),
-
-    linear-gradient(128deg,
-      transparent 0%,
-      transparent 62%,
-      rgba(255,255,255,0) 66%,
-      rgba(255,243,249,0.42) 69%,
-      rgba(255,255,255,0) 73%,
-      transparent 77%,
-      transparent 100%),
-
-    linear-gradient(128deg,
-      transparent 0%,
-      transparent 69%,
-      rgba(255,255,255,0) 72%,
-      rgba(255,240,248,0.32) 75%,
-      rgba(255,255,255,0) 78%,
-      transparent 82%,
-      transparent 100%),
-
-    radial-gradient(ellipse 62% 8% at 74% 58%, rgba(255,255,255,0.34) 0%, rgba(255,255,255,0.09) 11%, transparent 34%),
-    radial-gradient(ellipse 72% 9% at 76% 69%, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.07) 11%, transparent 36%),
-    radial-gradient(ellipse 82% 9% at 71% 81%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.06) 11%, transparent 38%);
-
-  filter:blur(2px);
-  opacity:1;
-  mix-blend-mode:screen;
-}
-
-/* 粒子 */
-.page-bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-
-  background:
-    radial-gradient(circle at 1.5% 39%, rgba(255,255,255,0.95) 0 3px, transparent 8px),
-    radial-gradient(circle at 6% 74%, rgba(255,255,255,0.45) 0 2px, transparent 6px),
-    radial-gradient(circle at 12% 11%, rgba(255,255,255,0.72) 0 5px, transparent 13px),
-    radial-gradient(circle at 18% 86%, rgba(255,255,255,0.30) 0 2px, transparent 7px),
-    radial-gradient(circle at 43% 16%, rgba(255,255,255,0.22) 0 2px, transparent 7px),
-    radial-gradient(circle at 63% 28%, rgba(255,245,250,0.32) 0 2px, transparent 8px),
-    radial-gradient(circle at 73% 56%, rgba(255,255,255,0.38) 0 3px, transparent 9px),
-    radial-gradient(circle at 81% 61%, rgba(255,255,255,0.55) 0 4px, transparent 12px),
-    radial-gradient(circle at 90% 77%, rgba(255,255,255,0.58) 0 3px, transparent 10px),
-    radial-gradient(circle at 96% 33%, rgba(255,255,255,0.34) 0 2px, transparent 7px);
-
-  opacity:.82;
-  mix-blend-mode:screen;
-}
-
-/* タイトルバーも馴染ませる */
-.page-title{
-  background:rgba(255,245,250,0.42) !important;
-  backdrop-filter:blur(14px);
-}
-  
 </style>
 </head>
 
