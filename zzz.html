@@ -513,7 +513,7 @@ body::after{
     0 1px 0 rgba(255,255,255,0.26),
     0 0 12px rgba(255,255,255,0.10);
   white-space:nowrap;
-  padding:0 132px 0 132px;
+  padding:0 132px 0 156px;
 }
 
 /* HOMEボタン */
@@ -939,13 +939,13 @@ body::after{
     height:56px;
   }
 
-  .page-title-text{
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:0.06em;
-    padding:0 96px 0 96px;
-  }
-
+  
+.page-title-text{
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:0.06em;
+  padding:0 96px 0 118px;
+}
   .menu-toggle{
     width:56px;
     height:var(--topbar-h);
@@ -1065,6 +1065,7 @@ body::after{
 }
 
   /* ===== modal cast loop ===== */
+/* ===== modal cast loop / image card ===== */
 .modal-cast-wrap{
   margin-top:18px;
   max-height:52vh;
@@ -1092,17 +1093,28 @@ body::after{
 .modal-cast-track{
   display:flex;
   flex-direction:column;
-  gap:14px;
+  gap:18px;
   padding-bottom:2px;
 }
 
 .modal-cast-card{
-  background:rgba(255,255,255,0.42);
-  border:1px solid rgba(255,255,255,0.28);
-  padding:16px 16px 18px;
+  background:rgba(255,255,255,0.36);
+  border:1px solid rgba(255,255,255,0.22);
   box-shadow:0 10px 28px rgba(0,0,0,0.08);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
+  overflow:hidden;
+}
+
+.modal-cast-image{
+  width:100%;
+  display:block;
+  aspect-ratio:16 / 9;
+  object-fit:cover;
+}
+
+.modal-cast-body{
+  padding:16px 16px 18px;
 }
 
 .modal-cast-role{
@@ -1138,7 +1150,7 @@ body::after{
     padding-right:2px;
   }
 
-  .modal-cast-card{
+  .modal-cast-body{
     padding:14px 14px 16px;
   }
 
@@ -1442,7 +1454,7 @@ body::after{
   </div>
 </div>
 
-<script>
+  <script>
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   requestAnimationFrame(() => {
@@ -1481,27 +1493,32 @@ const modalCastTrack = document.getElementById("modalCastTrack");
 const menuToggle = document.getElementById("menuToggle");
 const fullscreenMenu = document.getElementById("fullscreenMenu");
 
-/* ===== 4人分データ ===== */
+/* ===== 画像付き4人データ ===== */
+/* image はあとで差し替えるだけでOK */
 const modalCastData = {
   "Urban Pink / Neon Mood": [
     {
       role: "Front Character",
       name: "Anby",
+      image: "images/character-anby.jpg",
       text: "静かな視線と鋭いコントラストで、画面の中心をしっかり作れるポジションです。ピンク系ネオンの中でも埋もれにくく、クールさと華やかさを両立できます。"
     },
     {
       role: "Accent Character",
       name: "Nicole",
+      image: "images/character-nicole.jpg",
       text: "やわらかい色面の中に軽さとポップさを足す役です。重くなりすぎる画面に抜け感を作れて、ページ全体の温度感を少し上げたい時に効きます。"
     },
     {
       role: "Mood Character",
       name: "Ellen",
+      image: "images/character-ellen.jpg",
       text: "ページ全体の空気感を締める役として使いやすいです。可愛いだけに寄らず、少し都会的でクールな印象に寄せたい時に相性が良いです。"
     },
     {
       role: "Balance Character",
       name: "Zhu Yuan",
+      image: "images/character-zhuyuan.jpg",
       text: "強いビジュアルの中でも安定感を出せる存在です。ネオン感の強い背景に対して画面の説得力を補強し、全体の完成度を底上げしてくれます。"
     }
   ],
@@ -1510,21 +1527,25 @@ const modalCastData = {
     {
       role: "Visual Core",
       name: "Soldier 11",
+      image: "images/character-soldier11.jpg",
       text: "黄色系の強い背景でも輪郭が崩れにくく、主役としてかなり成立しやすいキャラクターです。構図の中心に置いた時の強さが大きいです。"
     },
     {
       role: "Secondary Accent",
       name: "Lucy",
+      image: "images/character-lucy.jpg",
       text: "オレンジ〜ゴールド帯の空気感と相性が良く、画面に少し遊びや熱量を足したい時に噛み合います。固すぎない見え方を作る要員です。"
     },
     {
       role: "Power Accent",
       name: "Koleda",
+      image: "images/character-koleda.jpg",
       text: "都市感や機械感のあるビジュアルに重さを加える役割です。背景が軽すぎる時に、全体の密度感を引き上げるために使いやすいです。"
     },
     {
       role: "Tone Keeper",
       name: "Ben",
+      image: "images/character-ben.jpg",
       text: "ビジュアルの力強さを下支えしてくれる存在です。派手な色面の中でも安定感が出るので、構図に芯を持たせたい時に効きます。"
     }
   ],
@@ -1533,21 +1554,25 @@ const modalCastData = {
     {
       role: "Tech Mood",
       name: "Grace",
+      image: "images/character-grace.jpg",
       text: "緑系ビジュアルとの相性が良く、機械感や都市的な冷たさを自然に入れられるキャラクターです。情報量の多い画面でも埋もれにくいです。"
     },
     {
       role: "Soft Contrast",
       name: "Rina",
+      image: "images/character-rina.jpg",
       text: "強い配色の中でも空気をやわらかく整える役です。鋭い背景に対して少し上品さを入れたい時にちょうど良く噛み合います。"
     },
     {
       role: "Balance Character",
       name: "Qingyi",
+      image: "images/character-qingyi.jpg",
       text: "明るさ・機能感・軽快さのバランスが取りやすく、情報量の多いページでも視線誘導の役として使いやすい立ち位置です。"
     },
     {
       role: "Urban Accent",
       name: "Jane",
+      image: "images/character-jane.jpg",
       text: "都会的でシャープな印象を少し強めたい時に使いやすいです。全体がぼやけそうな場面でも、画面の緊張感を保ってくれます。"
     }
   ],
@@ -1556,21 +1581,25 @@ const modalCastData = {
     {
       role: "Lead Character",
       name: "Anby",
+      image: "images/character-anby.jpg",
       text: "背景がやわらかい時でも芯のある見え方を保てるのが強みです。可読性と雰囲気づくりの両方に寄与できます。"
     },
     {
       role: "Contrast Accent",
       name: "Nicole",
+      image: "images/character-nicole.jpg",
       text: "軽快さと視線誘導を足しやすく、重たい構図をやわらげる役として使いやすいです。"
     },
     {
       role: "Cool Tone",
       name: "Ellen",
+      image: "images/character-ellen.jpg",
       text: "少し冷たいニュアンスを入れることで、背景の甘さを引き締める役割を持たせられます。"
     },
     {
       role: "Structure Support",
       name: "Zhu Yuan",
+      image: "images/character-zhuyuan.jpg",
       text: "主役級の存在感があり、ページ全体の説得力や完成度を安定させやすいです。"
     }
   ],
@@ -1579,21 +1608,25 @@ const modalCastData = {
     {
       role: "Visual Core",
       name: "Nicole",
+      image: "images/character-nicole.jpg",
       text: "ピンク〜ラベンダー帯の空気感に最も軽やかに馴染みやすく、ページのポップさを素直に伸ばせます。"
     },
     {
       role: "Cool Counterpoint",
       name: "Ellen",
+      image: "images/character-ellen.jpg",
       text: "甘い背景の中に冷たさを足し、全体を大人っぽく見せる役として機能します。"
     },
     {
       role: "Urban Balance",
       name: "Jane",
+      image: "images/character-jane.jpg",
       text: "可愛さ一辺倒にならないように、少しシャープな印象を混ぜたい時に効きます。"
     },
     {
       role: "Main Support",
       name: "Anby",
+      image: "images/character-anby.jpg",
       text: "派手すぎず静かな存在感があるため、背景演出を壊さずページ全体のまとまりを作れます。"
     }
   ],
@@ -1602,21 +1635,25 @@ const modalCastData = {
     {
       role: "City Accent",
       name: "Nicole",
+      image: "images/character-nicole.jpg",
       text: "都市的で軽快なムードを作るのに向いています。ページ全体のテンポ感を上げたい時に有効です。"
     },
     {
       role: "Cool Center",
       name: "Ellen",
+      image: "images/character-ellen.jpg",
       text: "柔らかい背景の中でも主役感を保ちやすく、少しクールな空気を足せます。"
     },
     {
       role: "Structure Accent",
       name: "Zhu Yuan",
+      image: "images/character-zhuyuan.jpg",
       text: "視線を集めやすく、構図にしっかりした軸を作りたい時に扱いやすいです。"
     },
     {
       role: "Light Balance",
       name: "Anby",
+      image: "images/character-anby.jpg",
       text: "全体が重くなりすぎるのを防ぎつつ、静かな緊張感を保つ役として優秀です。"
     }
   ],
@@ -1625,21 +1662,25 @@ const modalCastData = {
     {
       role: "Soft Contrast",
       name: "Rina",
+      image: "images/character-rina.jpg",
       text: "残光や柔らかい粒子の背景と相性が良く、画面の上品さを崩さずに存在感を出せます。"
     },
     {
       role: "Tech Accent",
       name: "Grace",
+      image: "images/character-grace.jpg",
       text: "ふんわりした背景に対して情報感や機械的ニュアンスを足し、画面の密度を上げやすいです。"
     },
     {
       role: "Urban Balance",
       name: "Qingyi",
+      image: "images/character-qingyi.jpg",
       text: "明るさと軽快さのバランスが良く、背景演出と人物の間を自然につないでくれます。"
     },
     {
       role: "Sharp Accent",
       name: "Jane",
+      image: "images/character-jane.jpg",
       text: "夢っぽい背景の中でも輪郭を立ててくれるので、画面がぼやけるのを防ぎやすいです。"
     }
   ],
@@ -1648,106 +1689,120 @@ const modalCastData = {
     {
       role: "Final Mood",
       name: "Anby",
+      image: "images/character-anby.jpg",
       text: "最後の見せ場として静かな重心を作る役に向いています。派手な背景の中でも落ち着きが出ます。"
     },
     {
       role: "Glow Accent",
       name: "Nicole",
+      image: "images/character-nicole.jpg",
       text: "ネオンのやわらかい光感を引き立てやすく、ページ終盤の華やかさを支えられます。"
     },
     {
       role: "Cool Finish",
       name: "Ellen",
+      image: "images/character-ellen.jpg",
       text: "可愛いだけで終わらせず、少し冷たい余韻を残したい時にかなり相性が良いです。"
     },
     {
       role: "Visual Anchor",
       name: "Zhu Yuan",
+      image: "images/character-zhuyuan.jpg",
       text: "ページの締めとして視線を止めやすく、最後まで完成度の高い印象を保ちやすい存在です。"
     }
   ]
 };
 
-let loopMeasure = 0;
+let loopSetHeight = 0;
 let loopLock = false;
 let loopTicking = false;
+let loopStarted = false;
 
 function getFallbackCards(title){
   return [
     {
       role: "Visual Role",
       name: "Character 01",
+      image: "images/placeholder-1.jpg",
       text: title + " に合わせたキャラ説明をここに入れられます。"
     },
     {
       role: "Support Role",
       name: "Character 02",
+      image: "images/placeholder-2.jpg",
       text: "画面の雰囲気や配色との相性、立ち位置などを説明する用途で使えます。"
     },
     {
       role: "Mood Role",
       name: "Character 03",
+      image: "images/placeholder-3.jpg",
       text: "ページ全体の空気感にどう効くか、視線誘導や印象面の役割も書けます。"
     },
     {
       role: "Balance Role",
       name: "Character 04",
+      image: "images/placeholder-4.jpg",
       text: "最後の1人は、全体の締まりや補完関係を説明する枠として使うと収まりが良いです。"
     }
   ];
 }
 
+function createCardsHTML(list){
+  return list.map((item) => `
+    <div class="modal-cast-card">
+      <img class="modal-cast-image" src="${item.image}" alt="${item.name}">
+      <div class="modal-cast-body">
+        <div class="modal-cast-role">${item.role}</div>
+        <div class="modal-cast-name">${item.name}</div>
+        <div class="modal-cast-text">${item.text}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
 function buildCastCards(title){
   const original = modalCastData[title] || getFallbackCards(title);
 
-  /* 上下に余裕を持たせて滑らかに見せるため3セット */
-  const loopList = [...original, ...original, ...original];
-
-  modalCastTrack.innerHTML = loopList.map((item) => `
-    <div class="modal-cast-card">
-      <div class="modal-cast-role">${item.role}</div>
-      <div class="modal-cast-name">${item.name}</div>
-      <div class="modal-cast-text">${item.text}</div>
-    </div>
-  `).join("");
+  /* 4セット作って中央寄りから開始すると下方向も最初から自然 */
+  const loopList = [...original, ...original, ...original, ...original];
+  modalCastTrack.innerHTML = createCardsHTML(loopList);
 
   requestAnimationFrame(() => {
     const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
-    if(cards.length){
-      loopMeasure = cards[0].offsetHeight + 14;
-      const setHeight = loopMeasure * original.length;
+    if(!cards.length) return;
 
-      /* 真ん中のセット先頭から開始 */
-      modalCastWrap.scrollTop = setHeight;
-    }else{
-      loopMeasure = 0;
-      modalCastWrap.scrollTop = 0;
+    const originalCount = original.length;
+    let total = 0;
+
+    for(let i = 0; i < originalCount; i++){
+      total += cards[i].offsetHeight;
+      if(i < originalCount - 1) total += 18;
     }
+
+    loopSetHeight = total;
+
+    /* 2セット目の先頭から始める */
+    modalCastWrap.scrollTop = loopSetHeight * 1.5;
+    loopStarted = true;
   });
 }
 
 function normalizeInfiniteScroll(){
-  if(loopLock || !loopMeasure) return;
-
-  const totalCards = modalCastTrack.children.length;
-  if(!totalCards) return;
-
-  const originalCount = totalCards / 3;
-  const setHeight = loopMeasure * originalCount;
-  const minEdge = setHeight * 0.35;
-  const maxEdge = setHeight * 2.65;
+  if(loopLock || !loopSetHeight || !loopStarted) return;
 
   const current = modalCastWrap.scrollTop;
+  const minEdge = loopSetHeight * 0.75;
+  const maxEdge = loopSetHeight * 2.75;
 
-  if(current < minEdge){
+  if(current <= minEdge){
     loopLock = true;
-    modalCastWrap.scrollTop = current + setHeight;
+    modalCastWrap.scrollTop = current + loopSetHeight;
     requestAnimationFrame(() => {
       loopLock = false;
     });
-  }else if(current > maxEdge){
+  }else if(current >= maxEdge){
     loopLock = true;
-    modalCastWrap.scrollTop = current - setHeight;
+    modalCastWrap.scrollTop = current - loopSetHeight;
     requestAnimationFrame(() => {
       loopLock = false;
     });
@@ -1782,7 +1837,8 @@ document.querySelectorAll(".work-item").forEach((item) => {
 function closeModal(){
   modal.classList.remove("show");
   modalCastTrack.innerHTML = "";
-  loopMeasure = 0;
+  loopSetHeight = 0;
+  loopStarted = false;
 
   if(!fullscreenMenu.classList.contains("open")){
     document.body.style.overflow = "";
@@ -1831,7 +1887,7 @@ document.addEventListener("keydown", (e) => {
     closeMenu();
   }
 });
-</script>
+</script>    
 
 </body>
 </html>
