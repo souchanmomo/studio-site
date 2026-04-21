@@ -53,7 +53,7 @@ body{
     radial-gradient(circle at 82% 18%, rgba(255,220,240,0.66) 0%, rgba(255,220,240,0.16) 18%, rgba(255,220,240,0) 40%),
     radial-gradient(circle at 18% 72%, rgba(255,214,236,0.26) 0%, rgba(255,214,236,0.08) 18%, rgba(255,214,236,0) 40%),
     radial-gradient(circle at 86% 84%, rgba(214,196,255,0.38) 0%, rgba(214,196,255,0.10) 20%, rgba(214,196,255,0) 42%),
-    linear-gradient(180deg, #fffefe 0%, #fff6fb 9%, #ffe8f3 24%, #f8d7e9 44%, #ead7f8 70%, #d8c2f4 86%, #c7b1f0 100%);
+    linear-gradient(180deg, #fff8fc 0%, #fdebf5 12%, #f6d7e8 30%, #ebd6f7 62%, #d8c2f4 84%, #c7b1f0 100%);
 }
 
 .page-bg::before{
@@ -65,7 +65,7 @@ body{
       transparent 0%,
       transparent 54%,
       rgba(255,255,255,0) 58%,
-      rgba(255,255,255,0.24) 61.2%,
+      rgba(255,255,255,0.38) 61.2%,
       rgba(255,255,255,0) 64.8%,
       transparent 69%,
       transparent 100%),
@@ -73,7 +73,7 @@ body{
       transparent 0%,
       transparent 60%,
       rgba(255,255,255,0) 63.8%,
-      rgba(255,255,255,0.18) 66.8%,
+      rgba(255,255,255,0.30) 66.8%,
       rgba(255,255,255,0) 70.2%,
       transparent 74%,
       transparent 100%),
@@ -81,16 +81,16 @@ body{
       transparent 0%,
       transparent 65%,
       rgba(255,255,255,0) 68.8%,
-      rgba(255,255,255,0.14) 71.3%,
+      rgba(255,255,255,0.22) 71.3%,
       rgba(255,255,255,0) 74.2%,
       transparent 78%,
       transparent 100%),
-    radial-gradient(ellipse 58% 7% at 78% 58%, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.07) 12%, transparent 34%),
-    radial-gradient(ellipse 68% 8% at 80% 68%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.06) 12%, transparent 36%),
-    radial-gradient(ellipse 76% 8% at 74% 78%, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.05) 12%, transparent 38%);
-  filter:blur(7px);
-  mix-blend-mode:screen;
-  opacity:1;
+    radial-gradient(ellipse 58% 7% at 78% 58%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.08) 12%, transparent 34%),
+    radial-gradient(ellipse 68% 8% at 80% 68%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.06) 12%, transparent 36%),
+    radial-gradient(ellipse 76% 8% at 74% 78%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 12%, transparent 38%);
+  filter:blur(2px);
+  mix-blend-mode:normal;
+  opacity:.95;
 }
 
 .page-bg::after{
@@ -1120,6 +1120,13 @@ body{
   opacity:.9;
   filter:blur(2px);
 }
+
+.wind-lines,
+.bg-particles,
+body::after{
+  display:none !important;
+}
+  
 </style>
 </head>
 
