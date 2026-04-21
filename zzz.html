@@ -1063,6 +1063,94 @@ body::after{
   transform:translateZ(0);
   backface-visibility:hidden;
 }
+
+  /* ===== modal cast loop ===== */
+.modal-cast-wrap{
+  margin-top:18px;
+  max-height:52vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:4px;
+  scroll-behavior:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+
+.modal-cast-wrap::-webkit-scrollbar{
+  width:6px;
+}
+
+.modal-cast-wrap::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.modal-cast-wrap::-webkit-scrollbar-thumb{
+  background:rgba(90,31,76,0.22);
+  border-radius:999px;
+}
+
+.modal-cast-track{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding-bottom:2px;
+}
+
+.modal-cast-card{
+  background:rgba(255,255,255,0.42);
+  border:1px solid rgba(255,255,255,0.28);
+  padding:16px 16px 18px;
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+
+.modal-cast-role{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:#7a3767;
+  margin-bottom:10px;
+}
+
+.modal-cast-name{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:18px;
+  font-weight:700;
+  line-height:1.2;
+  color:#4c1d44;
+  margin-bottom:8px;
+}
+
+.modal-cast-text{
+  font-family:"Manrope",sans-serif;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.9;
+  color:#4d2344;
+}
+
+@media (max-width: 820px){
+  .modal-cast-wrap{
+    max-height:48vh;
+    padding-right:2px;
+  }
+
+  .modal-cast-card{
+    padding:14px 14px 16px;
+  }
+
+  .modal-cast-name{
+    font-size:17px;
+  }
+
+  .modal-cast-text{
+    font-size:14px;
+    line-height:1.85;
+  }
+}
 </style>
 </head>
 
@@ -1346,7 +1434,10 @@ body::after{
     <div class="modal-body">
       <div class="modal-label" id="modalLabel"></div>
       <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-desc" id="modalDesc"></div>
+
+      <div class="modal-cast-wrap" id="modalCastWrap">
+        <div class="modal-cast-track" id="modalCastTrack"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1382,25 +1473,317 @@ const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
 const modalLabel = document.getElementById("modalLabel");
 const modalTitle = document.getElementById("modalTitle");
-const modalDesc = document.getElementById("modalDesc");
 const modalClose = document.getElementById("modalClose");
+
+const modalCastWrap = document.getElementById("modalCastWrap");
+const modalCastTrack = document.getElementById("modalCastTrack");
+
+const menuToggle = document.getElementById("menuToggle");
+const fullscreenMenu = document.getElementById("fullscreenMenu");
+
+/* ===== 4人分データ ===== */
+const modalCastData = {
+  "Urban Pink / Neon Mood": [
+    {
+      role: "Front Character",
+      name: "Anby",
+      text: "静かな視線と鋭いコントラストで、画面の中心をしっかり作れるポジションです。ピンク系ネオンの中でも埋もれにくく、クールさと華やかさを両立できます。"
+    },
+    {
+      role: "Accent Character",
+      name: "Nicole",
+      text: "やわらかい色面の中に軽さとポップさを足す役です。重くなりすぎる画面に抜け感を作れて、ページ全体の温度感を少し上げたい時に効きます。"
+    },
+    {
+      role: "Mood Character",
+      name: "Ellen",
+      text: "ページ全体の空気感を締める役として使いやすいです。可愛いだけに寄らず、少し都会的でクールな印象に寄せたい時に相性が良いです。"
+    },
+    {
+      role: "Balance Character",
+      name: "Zhu Yuan",
+      text: "強いビジュアルの中でも安定感を出せる存在です。ネオン感の強い背景に対して画面の説得力を補強し、全体の完成度を底上げしてくれます。"
+    }
+  ],
+
+  "Soft Light / City Tone": [
+    {
+      role: "Visual Core",
+      name: "Soldier 11",
+      text: "黄色系の強い背景でも輪郭が崩れにくく、主役としてかなり成立しやすいキャラクターです。構図の中心に置いた時の強さが大きいです。"
+    },
+    {
+      role: "Secondary Accent",
+      name: "Lucy",
+      text: "オレンジ〜ゴールド帯の空気感と相性が良く、画面に少し遊びや熱量を足したい時に噛み合います。固すぎない見え方を作る要員です。"
+    },
+    {
+      role: "Power Accent",
+      name: "Koleda",
+      text: "都市感や機械感のあるビジュアルに重さを加える役割です。背景が軽すぎる時に、全体の密度感を引き上げるために使いやすいです。"
+    },
+    {
+      role: "Tone Keeper",
+      name: "Ben",
+      text: "ビジュアルの力強さを下支えしてくれる存在です。派手な色面の中でも安定感が出るので、構図に芯を持たせたい時に効きます。"
+    }
+  ],
+
+  "Layered Atmosphere": [
+    {
+      role: "Tech Mood",
+      name: "Grace",
+      text: "緑系ビジュアルとの相性が良く、機械感や都市的な冷たさを自然に入れられるキャラクターです。情報量の多い画面でも埋もれにくいです。"
+    },
+    {
+      role: "Soft Contrast",
+      name: "Rina",
+      text: "強い配色の中でも空気をやわらかく整える役です。鋭い背景に対して少し上品さを入れたい時にちょうど良く噛み合います。"
+    },
+    {
+      role: "Balance Character",
+      name: "Qingyi",
+      text: "明るさ・機能感・軽快さのバランスが取りやすく、情報量の多いページでも視線誘導の役として使いやすい立ち位置です。"
+    },
+    {
+      role: "Urban Accent",
+      name: "Jane",
+      text: "都会的でシャープな印象を少し強めたい時に使いやすいです。全体がぼやけそうな場面でも、画面の緊張感を保ってくれます。"
+    }
+  ],
+
+  "Readable Contrast": [
+    {
+      role: "Lead Character",
+      name: "Anby",
+      text: "背景がやわらかい時でも芯のある見え方を保てるのが強みです。可読性と雰囲気づくりの両方に寄与できます。"
+    },
+    {
+      role: "Contrast Accent",
+      name: "Nicole",
+      text: "軽快さと視線誘導を足しやすく、重たい構図をやわらげる役として使いやすいです。"
+    },
+    {
+      role: "Cool Tone",
+      name: "Ellen",
+      text: "少し冷たいニュアンスを入れることで、背景の甘さを引き締める役割を持たせられます。"
+    },
+    {
+      role: "Structure Support",
+      name: "Zhu Yuan",
+      text: "主役級の存在感があり、ページ全体の説得力や完成度を安定させやすいです。"
+    }
+  ],
+
+  "Pink / Lavender Background": [
+    {
+      role: "Visual Core",
+      name: "Nicole",
+      text: "ピンク〜ラベンダー帯の空気感に最も軽やかに馴染みやすく、ページのポップさを素直に伸ばせます。"
+    },
+    {
+      role: "Cool Counterpoint",
+      name: "Ellen",
+      text: "甘い背景の中に冷たさを足し、全体を大人っぽく見せる役として機能します。"
+    },
+    {
+      role: "Urban Balance",
+      name: "Jane",
+      text: "可愛さ一辺倒にならないように、少しシャープな印象を混ぜたい時に効きます。"
+    },
+    {
+      role: "Main Support",
+      name: "Anby",
+      text: "派手すぎず静かな存在感があるため、背景演出を壊さずページ全体のまとまりを作れます。"
+    }
+  ],
+
+  "Soft City Pop": [
+    {
+      role: "City Accent",
+      name: "Nicole",
+      text: "都市的で軽快なムードを作るのに向いています。ページ全体のテンポ感を上げたい時に有効です。"
+    },
+    {
+      role: "Cool Center",
+      name: "Ellen",
+      text: "柔らかい背景の中でも主役感を保ちやすく、少しクールな空気を足せます。"
+    },
+    {
+      role: "Structure Accent",
+      name: "Zhu Yuan",
+      text: "視線を集めやすく、構図にしっかりした軸を作りたい時に扱いやすいです。"
+    },
+    {
+      role: "Light Balance",
+      name: "Anby",
+      text: "全体が重くなりすぎるのを防ぎつつ、静かな緊張感を保つ役として優秀です。"
+    }
+  ],
+
+  "Dreamy Motion": [
+    {
+      role: "Soft Contrast",
+      name: "Rina",
+      text: "残光や柔らかい粒子の背景と相性が良く、画面の上品さを崩さずに存在感を出せます。"
+    },
+    {
+      role: "Tech Accent",
+      name: "Grace",
+      text: "ふんわりした背景に対して情報感や機械的ニュアンスを足し、画面の密度を上げやすいです。"
+    },
+    {
+      role: "Urban Balance",
+      name: "Qingyi",
+      text: "明るさと軽快さのバランスが良く、背景演出と人物の間を自然につないでくれます。"
+    },
+    {
+      role: "Sharp Accent",
+      name: "Jane",
+      text: "夢っぽい背景の中でも輪郭を立ててくれるので、画面がぼやけるのを防ぎやすいです。"
+    }
+  ],
+
+  "Soft Neon Finish": [
+    {
+      role: "Final Mood",
+      name: "Anby",
+      text: "最後の見せ場として静かな重心を作る役に向いています。派手な背景の中でも落ち着きが出ます。"
+    },
+    {
+      role: "Glow Accent",
+      name: "Nicole",
+      text: "ネオンのやわらかい光感を引き立てやすく、ページ終盤の華やかさを支えられます。"
+    },
+    {
+      role: "Cool Finish",
+      name: "Ellen",
+      text: "可愛いだけで終わらせず、少し冷たい余韻を残したい時にかなり相性が良いです。"
+    },
+    {
+      role: "Visual Anchor",
+      name: "Zhu Yuan",
+      text: "ページの締めとして視線を止めやすく、最後まで完成度の高い印象を保ちやすい存在です。"
+    }
+  ]
+};
+
+let loopMeasure = 0;
+let loopLock = false;
+let loopTicking = false;
+
+function getFallbackCards(title){
+  return [
+    {
+      role: "Visual Role",
+      name: "Character 01",
+      text: title + " に合わせたキャラ説明をここに入れられます。"
+    },
+    {
+      role: "Support Role",
+      name: "Character 02",
+      text: "画面の雰囲気や配色との相性、立ち位置などを説明する用途で使えます。"
+    },
+    {
+      role: "Mood Role",
+      name: "Character 03",
+      text: "ページ全体の空気感にどう効くか、視線誘導や印象面の役割も書けます。"
+    },
+    {
+      role: "Balance Role",
+      name: "Character 04",
+      text: "最後の1人は、全体の締まりや補完関係を説明する枠として使うと収まりが良いです。"
+    }
+  ];
+}
+
+function buildCastCards(title){
+  const original = modalCastData[title] || getFallbackCards(title);
+
+  /* 上下に余裕を持たせて滑らかに見せるため3セット */
+  const loopList = [...original, ...original, ...original];
+
+  modalCastTrack.innerHTML = loopList.map((item) => `
+    <div class="modal-cast-card">
+      <div class="modal-cast-role">${item.role}</div>
+      <div class="modal-cast-name">${item.name}</div>
+      <div class="modal-cast-text">${item.text}</div>
+    </div>
+  `).join("");
+
+  requestAnimationFrame(() => {
+    const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
+    if(cards.length){
+      loopMeasure = cards[0].offsetHeight + 14;
+      const setHeight = loopMeasure * original.length;
+
+      /* 真ん中のセット先頭から開始 */
+      modalCastWrap.scrollTop = setHeight;
+    }else{
+      loopMeasure = 0;
+      modalCastWrap.scrollTop = 0;
+    }
+  });
+}
+
+function normalizeInfiniteScroll(){
+  if(loopLock || !loopMeasure) return;
+
+  const totalCards = modalCastTrack.children.length;
+  if(!totalCards) return;
+
+  const originalCount = totalCards / 3;
+  const setHeight = loopMeasure * originalCount;
+  const minEdge = setHeight * 0.35;
+  const maxEdge = setHeight * 2.65;
+
+  const current = modalCastWrap.scrollTop;
+
+  if(current < minEdge){
+    loopLock = true;
+    modalCastWrap.scrollTop = current + setHeight;
+    requestAnimationFrame(() => {
+      loopLock = false;
+    });
+  }else if(current > maxEdge){
+    loopLock = true;
+    modalCastWrap.scrollTop = current - setHeight;
+    requestAnimationFrame(() => {
+      loopLock = false;
+    });
+  }
+}
+
+function handleLoopScroll(){
+  if(loopTicking) return;
+  loopTicking = true;
+
+  requestAnimationFrame(() => {
+    normalizeInfiniteScroll();
+    loopTicking = false;
+  });
+}
+
+modalCastWrap.addEventListener("scroll", handleLoopScroll, { passive:true });
 
 document.querySelectorAll(".work-item").forEach((item) => {
   item.addEventListener("click", () => {
     modalImg.src = item.dataset.image;
     modalLabel.textContent = item.dataset.label;
     modalTitle.textContent = item.dataset.title;
-    modalDesc.textContent = item.dataset.desc;
+
+    buildCastCards(item.dataset.title);
+
     modal.classList.add("show");
     document.body.style.overflow = "hidden";
   });
 });
 
-const menuToggle = document.getElementById("menuToggle");
-const fullscreenMenu = document.getElementById("fullscreenMenu");
-
 function closeModal(){
   modal.classList.remove("show");
+  modalCastTrack.innerHTML = "";
+  loopMeasure = 0;
+
   if(!fullscreenMenu.classList.contains("open")){
     document.body.style.overflow = "";
   }
