@@ -980,14 +980,49 @@ body::after{
 
 .modal-cast-image{
   position:absolute;
-  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
+  transition:
+    opacity .42s ease,
+    transform .58s cubic-bezier(.22,1,.36,1),
+    clip-path .58s cubic-bezier(.22,1,.36,1),
+    filter .42s ease;
   backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  transform-origin:left center;
-  will-change:transform, opacity, filter;
+  will-change:transform, opacity, clip-path;
+}
+
+.modal-cast-image.base{
+  inset:0;
+  opacity:1;
+  visibility:visible;
+  transform:scale(1) translate3d(0,0,0);
+  clip-path:inset(0 0 0 0 round 0px);
+  z-index:1;
+}
+
+.modal-cast-image.hover{
+  inset:0;
+  opacity:0;
+  visibility:visible;
+  transform:translate3d(18px,18px,0) scale(1.03);
+  clip-path:inset(0 0 100% 0 round 0px);
+  z-index:2;
+  filter:brightness(1.02);
+}
+
+.modal-cast-card.center-active .modal-cast-image.base{
+  opacity:1;
+  visibility:visible;
+  transform:scale(1) translate3d(0,0,0);
+  clip-path:inset(0 18% 18% 0 round 0px);
+}
+
+.modal-cast-card.center-active .modal-cast-image.hover{
+  opacity:1;
+  visibility:visible;
+  transform:translate3d(0,0,0) scale(1);
+  clip-path:inset(0 0 0 0 round 0px);
 }
 
 .modal-cast-image.base{
