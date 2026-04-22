@@ -72,17 +72,17 @@ body::after{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 18%),
-    radial-gradient(circle at 85% 80%, rgba(214,196,255,0.06) 0%, rgba(214,196,255,0) 22%);
-  opacity:.4;
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 18%),
+    radial-gradient(circle at 85% 80%, rgba(214,196,255,0.08) 0%, rgba(214,196,255,0) 22%);
+  opacity:.45;
 }
 
 .page-bg::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.015));
-  opacity:.3;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+  opacity:.35;
 }
 
 /* ローディング */
@@ -90,13 +90,13 @@ body::after{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.20), transparent 28%),
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.24), transparent 28%),
     linear-gradient(180deg, rgba(255,205,232,0.96), rgba(204,181,245,0.96));
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
-  transition:opacity .55s ease, visibility .55s ease;
+  transition:opacity .7s ease, visibility .7s ease;
   overflow:hidden;
 }
 
@@ -108,8 +108,9 @@ body::after{
 .loader-glow{
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18), transparent 24%);
-  animation:loaderGlow 2.8s ease-in-out infinite;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), transparent 24%);
+  animation:loaderGlow 2.6s ease-in-out infinite;
   pointer-events:none;
 }
 
@@ -117,10 +118,11 @@ body::after{
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.18;
+  opacity:.28;
   background:
-    linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.14) 48%, transparent 64%);
-  animation:loaderSweep 3.6s ease-in-out infinite;
+    linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.18) 48%, transparent 64%),
+    linear-gradient(115deg, transparent 52%, rgba(255,255,255,0.08) 62%, transparent 72%);
+  animation:loaderSweep 3.4s ease-in-out infinite;
 }
 
 .loader-core{
@@ -145,7 +147,7 @@ body::after{
 .loader-bar{
   width:180px;
   height:1px;
-  background:rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.22);
   overflow:hidden;
   position:relative;
 }
@@ -157,7 +159,7 @@ body::after{
   left:-40%;
   width:40%;
   height:100%;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
   animation:loaderBarMove 1.6s ease-in-out infinite;
 }
 
@@ -166,16 +168,19 @@ body::after{
   50%{opacity:1; transform:translateY(-2px);}
   100%{opacity:.45; transform:translateY(0);}
 }
+
 @keyframes loaderGlow{
   0%{opacity:.35; transform:scale(1);}
-  50%{opacity:.7; transform:scale(1.04);}
+  50%{opacity:.8; transform:scale(1.06);}
   100%{opacity:.35; transform:scale(1);}
 }
+
 @keyframes loaderSweep{
-  0%{transform:translateX(-5%);}
-  50%{transform:translateX(5%);}
-  100%{transform:translateX(-5%);}
+  0%{transform:translateX(-6%);}
+  50%{transform:translateX(6%);}
+  100%{transform:translateX(-6%);}
 }
+
 @keyframes loaderBarMove{
   0%{left:-40%;}
   100%{left:100%;}
@@ -193,15 +198,6 @@ body::after{
   z-index:2;
 }
 
-.page-title,
-.menu-toggle,
-.fixed-home-btn,
-.fullscreen-menu,
-.modal{
-  transform:translateZ(0);
-  backface-visibility:hidden;
-}
-
 /* ハンバーガー */
 .menu-toggle{
   position:fixed;
@@ -217,11 +213,11 @@ body::after{
   justify-content:center;
   cursor:pointer;
   z-index:1200;
-  transition:background .22s ease;
+  transition:background .25s ease;
 }
 
 .menu-toggle:hover{
-  background:rgba(169,117,170,0.40);
+  background:rgba(169,117,170,0.42);
 }
 
 .menu-icon{
@@ -236,7 +232,7 @@ body::after{
   width:100%;
   height:1.5px;
   background:#fffaff;
-  transition:.30s ease;
+  transition:.35s ease;
   transform-origin:center;
 }
 
@@ -248,9 +244,11 @@ body::after{
   top:7px;
   transform:rotate(45deg);
 }
+
 .menu-toggle.active .menu-icon span:nth-child(2){
   opacity:0;
 }
+
 .menu-toggle.active .menu-icon span:nth-child(3){
   top:7px;
   transform:rotate(-45deg);
@@ -260,10 +258,12 @@ body::after{
 .fullscreen-menu{
   position:fixed;
   inset:0;
-  background:rgba(255,220,238,0.14);
+  background:rgba(255,220,238,0.12);
+  backdrop-filter:blur(14px) saturate(108%);
+  -webkit-backdrop-filter:blur(14px) saturate(108%);
   opacity:0;
   pointer-events:none;
-  transition:opacity .35s ease;
+  transition:opacity .45s ease;
   z-index:1100;
   overflow:hidden;
 }
@@ -273,8 +273,8 @@ body::after{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.08), transparent 28%),
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.10), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   pointer-events:none;
 }
 
@@ -329,29 +329,35 @@ body::after{
   letter-spacing:0.04em;
   opacity:0;
   transform:translate3d(-34px,0,0);
-  transition:opacity .2s ease, transform .2s ease;
+  transition:opacity .25s ease, transform .25s ease;
   white-space:nowrap;
 }
 
 .fullscreen-menu.open .menu-kicker{
-  animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards;
+  animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards;
   animation-delay:.04s;
 }
 
-.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.10s;}
-.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.18s;}
-.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.26s;}
-.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.34s;}
-.fullscreen-menu.open .menu-link:nth-child(5){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.42s;}
+.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.10s;}
+.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.20s;}
+.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.30s;}
+.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.40s;}
+.fullscreen-menu.open .menu-link:nth-child(5){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.50s;}
 
 @keyframes menuTextIn{
-  0%{opacity:0; transform:translate3d(-34px,0,0);}
-  100%{opacity:.95; transform:translate3d(0,0,0);}
+  0%{
+    opacity:0;
+    transform:translate3d(-34px,0,0);
+  }
+  100%{
+    opacity:.95;
+    transform:translate3d(0,0,0);
+  }
 }
 
 .menu-link:hover{
   opacity:1 !important;
-  transform:translate3d(6px,0,0) !important;
+  transform:translate3d(8px,0,0) !important;
 }
 
 /* ハンバーガー内画像 */
@@ -373,6 +379,7 @@ body::after{
   color:#fffaff;
   background:rgba(255,255,255,0.06);
   opacity:0;
+  will-change:transform, opacity;
 }
 
 .menu-bottom > .menu-card{
@@ -380,26 +387,31 @@ body::after{
 }
 
 .menu-card:nth-child(odd){
-  transform:translate3d(-48px,0,0);
+  transform:translate3d(-58px,0,0);
 }
 
 .menu-card:nth-child(even){
-  transform:translate3d(48px,0,0);
+  transform:translate3d(58px,0,0);
 }
 
 .fullscreen-menu.open .menu-card{
-  animation:menuCardSlide .8s cubic-bezier(.22,1,.36,1) forwards;
+  animation:menuCardSlide .95s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 .fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.14s;}
-.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.22s;}
-.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.30s;}
-.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.38s;}
-.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.46s;}
+.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.24s;}
+.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.34s;}
+.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.44s;}
+.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.54s;}
 
 @keyframes menuCardSlide{
-  0%{opacity:0;}
-  100%{opacity:1; transform:translate3d(0,0,0);}
+  0%{
+    opacity:0;
+  }
+  100%{
+    opacity:1;
+    transform:translate3d(0,0,0);
+  }
 }
 
 .menu-card img{
@@ -407,7 +419,7 @@ body::after{
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .45s ease;
+  transition:transform .7s ease, filter .7s ease;
 }
 
 .menu-card::after{
@@ -418,7 +430,8 @@ body::after{
 }
 
 .menu-card:hover img{
-  transform:scale(1.02);
+  transform:scale(1.04);
+  filter:brightness(1.05);
 }
 
 .menu-card-text{
@@ -463,8 +476,10 @@ body::after{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,245,250,0.42);
-  border-bottom:1px solid rgba(255,255,255,0.24);
+  background:rgba(255,245,250,0.46);
+  backdrop-filter:blur(14px) saturate(112%);
+  -webkit-backdrop-filter:blur(14px) saturate(112%);
+  border-bottom:1px solid rgba(255,255,255,0.26);
 }
 
 .page-title-logo{
@@ -476,6 +491,9 @@ body::after{
   width:auto;
   display:block;
   object-fit:contain;
+  filter:
+    drop-shadow(0 2px 8px rgba(255,255,255,0.10))
+    drop-shadow(0 4px 14px rgba(89,35,78,0.10));
 }
 
 .page-title-text{
@@ -487,7 +505,9 @@ body::after{
   font-weight:700;
   letter-spacing:0.13em;
   color:#5a1f4c;
-  text-shadow:0 1px 0 rgba(255,255,255,0.22);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.26),
+    0 0 12px rgba(255,255,255,0.10);
   white-space:nowrap;
   padding:0 132px 0 156px;
 }
@@ -513,8 +533,13 @@ body::after{
   letter-spacing:0.18em;
   background:rgba(124,76,124,0.54);
   border:1px solid rgba(255,255,255,0.18);
-  box-shadow:0 8px 18px rgba(0,0,0,0.12);
-  transition:transform .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:
+    0 14px 28px rgba(0,0,0,0.14),
+    0 0 20px rgba(255,255,255,0.05),
+    inset 0 0 0 1px rgba(255,255,255,0.02);
+  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
 }
 
 .fixed-home-btn::before{
@@ -526,8 +551,8 @@ body::after{
 
 .fixed-home-btn:hover{
   transform:translateY(-2px);
-  background:rgba(124,76,124,0.66);
-  border-color:rgba(255,255,255,0.22);
+  background:rgba(124,76,124,0.70);
+  border-color:rgba(255,255,255,0.24);
 }
 
 .fullscreen-menu.open ~ .fixed-home-btn{
@@ -609,13 +634,15 @@ body::after{
   width:100%;
   height:auto;
   display:block;
-  transition:transform .45s ease;
+  transition:transform .7s ease, filter .7s ease;
   backface-visibility:hidden;
   transform:translateZ(0);
+  will-change:transform, opacity;
 }
 
 .media:hover img.main-image{
-  transform:scale(1.02);
+  transform:scale(1.04);
+  filter:brightness(1.03);
 }
 
 .media-overlay{
@@ -631,14 +658,14 @@ body::after{
     rgba(70,35,70,0.08) 54%,
     rgba(70,35,70,0) 100%
   );
-  transition:background .35s ease;
+  transition:background .45s ease;
 }
 
 .media:hover .media-overlay{
   background:linear-gradient(
     to top,
-    rgba(70,35,70,0.80) 0%,
-    rgba(70,35,70,0.42) 28%,
+    rgba(70,35,70,0.82) 0%,
+    rgba(70,35,70,0.44) 28%,
     rgba(70,35,70,0.10) 56%,
     rgba(70,35,70,0) 100%
   );
@@ -646,9 +673,9 @@ body::after{
 
 .overlay-text{
   color:#fffaff;
-  transform:translateY(8px);
+  transform:translateY(10px);
   opacity:.96;
-  transition:transform .35s ease, opacity .35s ease;
+  transition:transform .45s ease, opacity .45s ease;
 }
 
 .media:hover .overlay-text{
@@ -671,6 +698,9 @@ body::after{
   height:auto;
   pointer-events:none;
   opacity:.98;
+  filter:
+    drop-shadow(0 12px 24px rgba(0,0,0,0.24))
+    drop-shadow(0 2px 6px rgba(255,255,255,0.12));
   transform:none !important;
 }
 
@@ -706,16 +736,19 @@ body::after{
   50%{transform:translateY(-10px);}
   100%{transform:translateY(0);}
 }
+
 @keyframes float2{
   0%{transform:translateY(0);}
   50%{transform:translateY(-8px);}
   100%{transform:translateY(0);}
 }
+
 @keyframes float3{
   0%{transform:translateY(0);}
   50%{transform:translateY(-7px);}
   100%{transform:translateY(0);}
 }
+
 @keyframes float4{
   0%{transform:translateY(0);}
   50%{transform:translateY(-9px);}
@@ -768,10 +801,11 @@ body::after{
 
 .reveal{
   opacity:0;
-  transform:translate3d(0,24px,0);
+  transform:translate3d(0,34px,0);
   transition:
-    opacity .55s ease,
-    transform .7s cubic-bezier(.22,1,.36,1);
+    opacity .72s ease,
+    transform .9s cubic-bezier(.22,1,.36,1);
+  will-change:opacity, transform;
   backface-visibility:hidden;
 }
 
@@ -797,7 +831,6 @@ body::after{
   padding-bottom:4px;
 }
 
-/* modal */
 .modal{
   position:fixed;
   inset:0;
@@ -805,9 +838,11 @@ body::after{
   align-items:center;
   justify-content:center;
   background:rgba(96,56,102,0.50);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   opacity:0;
   pointer-events:none;
-  transition:opacity .25s ease;
+  transition:opacity .35s ease;
   z-index:3000;
   padding:24px;
 }
@@ -821,9 +856,9 @@ body::after{
   width:min(920px, 100%);
   max-height:90vh;
   overflow:auto;
-  background:rgba(255,240,248,0.90);
+  background:rgba(255,240,248,0.68);
   border:1px solid rgba(255,255,255,0.18);
-  box-shadow:0 14px 40px rgba(0,0,0,0.18);
+  box-shadow:0 20px 80px rgba(0,0,0,0.22);
 }
 
 .modal-img{
@@ -862,6 +897,15 @@ body::after{
   font-weight:700;
 }
 
+.page-title,
+.menu-toggle,
+.fixed-home-btn,
+.fullscreen-menu,
+.modal{
+  transform:translateZ(0);
+  backface-visibility:hidden;
+}
+
 /* modal cast */
 .modal-cast-wrap{
   margin-top:18px;
@@ -872,7 +916,6 @@ body::after{
   scroll-behavior:auto;
   overscroll-behavior:contain;
   -webkit-overflow-scrolling:touch;
-  contain:layout paint;
 }
 
 .modal-cast-wrap::-webkit-scrollbar{
@@ -884,7 +927,7 @@ body::after{
 }
 
 .modal-cast-wrap::-webkit-scrollbar-thumb{
-  background:rgba(90,31,76,0.18);
+  background:rgba(90,31,76,0.22);
   border-radius:999px;
 }
 
@@ -896,18 +939,20 @@ body::after{
 }
 
 .modal-cast-card{
-  background:rgba(255,255,255,0.42);
+  background:rgba(255,255,255,0.36);
   border:1px solid rgba(255,255,255,0.22);
-  box-shadow:0 6px 16px rgba(0,0,0,0.06);
+  box-shadow:0 10px 28px rgba(0,0,0,0.08);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
   overflow:hidden;
-  contain:layout paint;
   touch-action:pan-y;
-  transition:transform .25s ease, box-shadow .25s ease;
+  transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
+  will-change:transform;
 }
 
 .modal-cast-card.center-active{
-  transform:scale(1.005);
-  box-shadow:0 10px 22px rgba(0,0,0,0.09);
+  transform:scale(1.01);
+  box-shadow:0 14px 30px rgba(0,0,0,0.10);
 }
 
 .modal-cast-image-wrap{
@@ -915,7 +960,7 @@ body::after{
   width:100%;
   aspect-ratio:16 / 9;
   overflow:hidden;
-  background:#ead6ef;
+  background:rgba(255,255,255,0.08);
 }
 
 .modal-cast-image{
@@ -925,29 +970,25 @@ body::after{
   height:100%;
   object-fit:cover;
   backface-visibility:hidden;
-  transition:
-    opacity .32s cubic-bezier(.22,1,.36,1),
-    transform .42s cubic-bezier(.22,1,.36,1);
+  transform:translateZ(0);
 }
 
 .modal-cast-image.base{
   opacity:1;
-  transform:scale(1);
+  transition:opacity .28s ease;
 }
 
 .modal-cast-image.hover{
   opacity:0;
-  transform:scale(1.03);
+  transition:opacity .28s ease;
 }
 
 .modal-cast-card.center-active .modal-cast-image.base{
   opacity:0;
-  transform:scale(1.02);
 }
 
 .modal-cast-card.center-active .modal-cast-image.hover{
   opacity:1;
-  transform:scale(1);
 }
 
 .modal-cast-body{
@@ -1438,7 +1479,7 @@ window.addEventListener("load", () => {
   requestAnimationFrame(() => {
     setTimeout(() => {
       loader.classList.add("hide");
-    }, 280);
+    }, 450);
   });
 });
 
@@ -1471,7 +1512,6 @@ const modalCastTrack = document.getElementById("modalCastTrack");
 const menuToggle = document.getElementById("menuToggle");
 const fullscreenMenu = document.getElementById("fullscreenMenu");
 
-/* ===== 画像付きデータ ===== */
 const modalCastData = {
   "雲嶽山": [
     {
@@ -1734,7 +1774,7 @@ let loopLock = false;
 let loopTicking = false;
 let loopStarted = false;
 let centeredCard = null;
-let centerUpdateTimer = null;
+let centerTicking = false;
 
 function getFallbackCards(title){
   return [
@@ -1792,67 +1832,6 @@ function clearCenterCard(){
   }
 }
 
-function buildCastCards(title){
-  const original = modalCastData[title] || getFallbackCards(title);
-
-  /* 3セットだけにして軽量化 */
-  const loopList = [...original, ...original, ...original];
-  modalCastTrack.innerHTML = createCardsHTML(loopList);
-
-  requestAnimationFrame(() => {
-    const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
-    if(!cards.length) return;
-
-    const originalCount = original.length;
-    let total = 0;
-
-    for(let i = 0; i < originalCount; i++){
-      total += cards[i].offsetHeight;
-      if(i < originalCount - 1) total += 18;
-    }
-
-    loopSetHeight = total;
-
-    /* 真ん中セットから開始 */
-    modalCastWrap.scrollTop = loopSetHeight;
-    loopStarted = true;
-
-    setTimeout(updateCenterCard, 40);
-  });
-}
-
-function normalizeInfiniteScroll(){
-  if(loopLock || !loopSetHeight || !loopStarted) return;
-
-  const current = modalCastWrap.scrollTop;
-  const minEdge = loopSetHeight * 0.35;
-  const maxEdge = loopSetHeight * 1.65;
-
-  if(current <= minEdge){
-    loopLock = true;
-    modalCastWrap.scrollTop = current + loopSetHeight;
-    requestAnimationFrame(() => {
-      loopLock = false;
-    });
-  }else if(current >= maxEdge){
-    loopLock = true;
-    modalCastWrap.scrollTop = current - loopSetHeight;
-    requestAnimationFrame(() => {
-      loopLock = false;
-    });
-  }
-}
-
-function handleLoopScroll(){
-  if(loopTicking) return;
-  loopTicking = true;
-
-  requestAnimationFrame(() => {
-    normalizeInfiniteScroll();
-    loopTicking = false;
-  });
-}
-
 function updateCenterCard(){
   const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
   if(!cards.length) return;
@@ -1882,14 +1861,78 @@ function updateCenterCard(){
   }
 }
 
+function requestCenterUpdate(){
+  if(centerTicking) return;
+  centerTicking = true;
+
+  requestAnimationFrame(() => {
+    updateCenterCard();
+    centerTicking = false;
+  });
+}
+
+function buildCastCards(title){
+  const original = modalCastData[title] || getFallbackCards(title);
+  const loopList = [...original, ...original, ...original];
+
+  modalCastTrack.innerHTML = createCardsHTML(loopList);
+
+  requestAnimationFrame(() => {
+    const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
+    if(!cards.length) return;
+
+    const originalCount = original.length;
+    let total = 0;
+
+    for(let i = 0; i < originalCount; i++){
+      total += cards[i].offsetHeight;
+      if(i < originalCount - 1) total += 18;
+    }
+
+    loopSetHeight = total;
+    modalCastWrap.scrollTop = loopSetHeight;
+    loopStarted = true;
+    requestCenterUpdate();
+  });
+}
+
+function normalizeInfiniteScroll(){
+  if(loopLock || !loopSetHeight || !loopStarted) return;
+
+  const current = modalCastWrap.scrollTop;
+  const minEdge = loopSetHeight * 0.5;
+  const maxEdge = loopSetHeight * 1.5;
+
+  if(current <= minEdge){
+    loopLock = true;
+    modalCastWrap.scrollTop = current + loopSetHeight;
+    requestAnimationFrame(() => {
+      loopLock = false;
+      requestCenterUpdate();
+    });
+  }else if(current >= maxEdge){
+    loopLock = true;
+    modalCastWrap.scrollTop = current - loopSetHeight;
+    requestAnimationFrame(() => {
+      loopLock = false;
+      requestCenterUpdate();
+    });
+  }
+}
+
+function handleLoopScroll(){
+  if(loopTicking) return;
+  loopTicking = true;
+
+  requestAnimationFrame(() => {
+    normalizeInfiniteScroll();
+    loopTicking = false;
+  });
+}
+
 modalCastWrap.addEventListener("scroll", () => {
   handleLoopScroll();
-  clearCenterCard();
-
-  clearTimeout(centerUpdateTimer);
-  centerUpdateTimer = setTimeout(() => {
-    updateCenterCard();
-  }, 70);
+  requestCenterUpdate();
 }, { passive:true });
 
 document.querySelectorAll(".work-item").forEach((item) => {
@@ -1910,7 +1953,6 @@ function closeModal(){
   modalCastTrack.innerHTML = "";
   loopSetHeight = 0;
   loopStarted = false;
-  clearTimeout(centerUpdateTimer);
   clearCenterCard();
 
   if(!fullscreenMenu.classList.contains("open")){
