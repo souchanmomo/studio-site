@@ -2518,6 +2518,24 @@ window.addEventListener("load", () => {
     document.body.classList.add("intro-start");
   }, 1800);
 });
+
+// intro中はreveal無効
+const isIntro = () => document.body.classList.contains("intro-hold");
+
+const observer = new IntersectionObserver((entries) => {
+  if(isIntro()) return;
+
+  entries.forEach((entry) => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }else{
+      entry.target.classList.remove("show");
+    }
+  });
+},{
+  threshold:0.16,
+  rootMargin:"0px 0px -8% 0px"
+});
   
 </script>
 
