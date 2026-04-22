@@ -70,13 +70,13 @@ body::after{
 .page-bg::before{
   content:"";
   position:absolute;
-  inset:-2% 0 -2% 0;
+  inset:0;
   background-image:var(--zzz-bg-image);
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.035);
-  will-change:transform;
+  transform:none;
+  will-change:auto;
   backface-visibility:hidden;
 }
 
@@ -1298,12 +1298,12 @@ body::after{
   }
 
   .page-bg::before{
-  inset:-2% 0 -2% 0;
+  inset:0;
   background-image:var(--zzz-bg-image);
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.025);
+  transform:none;
   backface-visibility:hidden;
 }
 
@@ -2398,43 +2398,9 @@ function handleLoopScroll(){
   });
 }
 
-let bgTicking = false;
-let bgCurrent = 0;
-let bgTarget = 0;
-let bgAnimating = false;
 
-function animateBackground(){
-  bgAnimating = true;
-  bgCurrent += (bgTarget - bgCurrent) * 0.085;
 
-  if(Math.abs(bgTarget - bgCurrent) < 0.08){
-    bgCurrent = bgTarget;
-  }
 
-  document.documentElement.style.setProperty("--bg-shift", `${bgCurrent.toFixed(2)}px`);
-
-  if(Math.abs(bgTarget - bgCurrent) > 0.08){
-    requestAnimationFrame(animateBackground);
-  }else{
-    bgAnimating = false;
-  }
-}
-
-function updateBackgroundMotion(){
-  if(bgTicking) return;
-  bgTicking = true;
-
-  requestAnimationFrame(() => {
-    const y = window.scrollY || window.pageYOffset || 0;
-    bgTarget = Math.max(-4, Math.min(10, y * 0.012));
-
-    if(!bgAnimating){
-      animateBackground();
-    }
-
-    bgTicking = false;
-  });
-}
 
 modalCastWrap.addEventListener("scroll", () => {
   updateScrollVelocity();
@@ -2442,8 +2408,7 @@ modalCastWrap.addEventListener("scroll", () => {
   requestCenterUpdate();
 }, { passive:true });
 
-window.addEventListener("scroll", updateBackgroundMotion, { passive:true });
-window.addEventListener("load", updateBackgroundMotion);
+
 
 document.querySelectorAll(".work-item").forEach((item) => {
   item.addEventListener("click", () => {
