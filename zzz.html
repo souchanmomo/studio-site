@@ -1870,16 +1870,16 @@ function updateCenterCard(force = false){
   const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
   if(!cards.length) return;
 
-  const wrapTop = modalCastWrap.scrollTop;
-  const wrapHeight = modalCastWrap.clientHeight;
-  const wrapCenter = wrapTop + (wrapHeight / 2);
+  const wrapRect = modalCastWrap.getBoundingClientRect();
+  const wrapCenter = wrapRect.top + (wrapRect.height / 2);
+  const activeRange = wrapRect.height * 0.18;
 
   let targetCard = null;
   let nearestDistance = Infinity;
 
   for(const card of cards){
-    const cardTop = card.offsetTop;
-    const cardCenter = cardTop + (card.offsetHeight / 2);
+    const rect = card.getBoundingClientRect();
+    const cardCenter = rect.top + (rect.height / 2);
     const distance = Math.abs(wrapCenter - cardCenter);
 
     if(distance < nearestDistance){
@@ -1888,7 +1888,7 @@ function updateCenterCard(force = false){
     }
   }
 
-  if(!targetCard){
+  if(!targetCard || nearestDistance > activeRange){
     if(centeredCard){
       centeredCard.classList.remove("center-active");
       centeredCard = null;
@@ -1905,7 +1905,6 @@ function updateCenterCard(force = false){
     centeredCard = targetCard;
   }
 }
-
   
 
 function requestCenterUpdate(force = false){
