@@ -53,7 +53,6 @@ body::after{
   display:none !important;
 }
 
-
 .page-bg{
   position:absolute;
   top:0;
@@ -63,11 +62,15 @@ body::after{
   height:100%;
   z-index:0;
   pointer-events:none;
-  background:
+  background-image:
     linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
-    var(--zzz-bg-image) center top / cover no-repeat;
+    var(--zzz-bg-image);
+  background-repeat:no-repeat,no-repeat;
+  background-size:auto,cover;
+  background-position:center center, center calc(0px + var(--bg-shift));
   background-attachment:scroll;
 }
+
 .page-bg::before{
   content:"";
   position:absolute;
@@ -83,20 +86,12 @@ body::after{
   position:absolute;
   inset:0;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02)),
+    linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.55)),
     radial-gradient(circle at 22% 16%, rgba(255,255,255,0.06), transparent 18%),
     radial-gradient(circle at 80% 68%, rgba(255,255,255,0.04), transparent 20%);
-  opacity:.35;
-}
-
-  .page-bg::after{
-  background:linear-gradient(
-    180deg,
-    rgba(0,0,0,0.25),
-    rgba(0,0,0,0.55)
-  );
   opacity:.55;
 }
+
 /* ローディング */
 #loader{
   position:fixed;
@@ -1242,12 +1237,15 @@ body::after{
   }
 
   .page-bg{
-    background:
+    background-image:
       linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
-      var(--zzz-bg-image) center top / 100% auto no-repeat;
+      var(--zzz-bg-image);
+    background-repeat:no-repeat,no-repeat;
+    background-size:auto,100% auto;
+    background-position:center center, center calc(0px + var(--bg-shift));
     background-color:#0b1330;
+    background-attachment:scroll;
   }
-
 
   .page-title{
     padding:0 64px 0 8px;
