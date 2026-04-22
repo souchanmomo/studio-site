@@ -41,20 +41,17 @@ body{
   background:#e7c8f2;
   overflow-x:hidden;
   position:relative;
-isolation:isolate;
+  isolation:isolate;
   overscroll-behavior-y:none;
   -webkit-overflow-scrolling:touch;
-  
 }
 
-/* 既存の背景疑似要素は完全停止 */
 body::before,
 body::after{
   content:none !important;
   display:none !important;
 }
 
-/* 背景画像レイヤー */
 .page-bg{
   position:absolute;
   top:0;
@@ -70,23 +67,22 @@ body::after{
   background-attachment:scroll;
 }
 
-/* ごく薄いなじませ */
 .page-bg::before{
   content:"";
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 18%),
-    radial-gradient(circle at 85% 80%, rgba(214,196,255,0.08) 0%, rgba(214,196,255,0) 22%);
-  opacity:.45;
+    radial-gradient(circle at 10% 10%, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 18%),
+    radial-gradient(circle at 85% 80%, rgba(214,196,255,0.06) 0%, rgba(214,196,255,0) 22%);
+  opacity:.4;
 }
 
 .page-bg::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
-  opacity:.35;
+  background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.015));
+  opacity:.3;
 }
 
 /* ローディング */
@@ -94,13 +90,13 @@ body::after{
   position:fixed;
   inset:0;
   background:
-    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.24), transparent 28%),
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.20), transparent 28%),
     linear-gradient(180deg, rgba(255,205,232,0.96), rgba(204,181,245,0.96));
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:9999;
-  transition:opacity .7s ease, visibility .7s ease;
+  transition:opacity .55s ease, visibility .55s ease;
   overflow:hidden;
 }
 
@@ -112,9 +108,8 @@ body::after{
 .loader-glow{
   position:absolute;
   inset:0;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), transparent 24%);
-  animation:loaderGlow 2.6s ease-in-out infinite;
+  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18), transparent 24%);
+  animation:loaderGlow 2.8s ease-in-out infinite;
   pointer-events:none;
 }
 
@@ -122,11 +117,10 @@ body::after{
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.28;
+  opacity:.18;
   background:
-    linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.18) 48%, transparent 64%),
-    linear-gradient(115deg, transparent 52%, rgba(255,255,255,0.08) 62%, transparent 72%);
-  animation:loaderSweep 3.4s ease-in-out infinite;
+    linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.14) 48%, transparent 64%);
+  animation:loaderSweep 3.6s ease-in-out infinite;
 }
 
 .loader-core{
@@ -151,7 +145,7 @@ body::after{
 .loader-bar{
   width:180px;
   height:1px;
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.18);
   overflow:hidden;
   position:relative;
 }
@@ -163,7 +157,7 @@ body::after{
   left:-40%;
   width:40%;
   height:100%;
-  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.95), transparent);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
   animation:loaderBarMove 1.6s ease-in-out infinite;
 }
 
@@ -172,19 +166,16 @@ body::after{
   50%{opacity:1; transform:translateY(-2px);}
   100%{opacity:.45; transform:translateY(0);}
 }
-
 @keyframes loaderGlow{
   0%{opacity:.35; transform:scale(1);}
-  50%{opacity:.8; transform:scale(1.06);}
+  50%{opacity:.7; transform:scale(1.04);}
   100%{opacity:.35; transform:scale(1);}
 }
-
 @keyframes loaderSweep{
-  0%{transform:translateX(-6%);}
-  50%{transform:translateX(6%);}
-  100%{transform:translateX(-6%);}
+  0%{transform:translateX(-5%);}
+  50%{transform:translateX(5%);}
+  100%{transform:translateX(-5%);}
 }
-
 @keyframes loaderBarMove{
   0%{left:-40%;}
   100%{left:100%;}
@@ -202,6 +193,15 @@ body::after{
   z-index:2;
 }
 
+.page-title,
+.menu-toggle,
+.fixed-home-btn,
+.fullscreen-menu,
+.modal{
+  transform:translateZ(0);
+  backface-visibility:hidden;
+}
+
 /* ハンバーガー */
 .menu-toggle{
   position:fixed;
@@ -217,11 +217,11 @@ body::after{
   justify-content:center;
   cursor:pointer;
   z-index:1200;
-  transition:background .25s ease;
+  transition:background .22s ease;
 }
 
 .menu-toggle:hover{
-  background:rgba(169,117,170,0.42);
+  background:rgba(169,117,170,0.40);
 }
 
 .menu-icon{
@@ -236,7 +236,7 @@ body::after{
   width:100%;
   height:1.5px;
   background:#fffaff;
-  transition:.35s ease;
+  transition:.30s ease;
   transform-origin:center;
 }
 
@@ -248,11 +248,9 @@ body::after{
   top:7px;
   transform:rotate(45deg);
 }
-
 .menu-toggle.active .menu-icon span:nth-child(2){
   opacity:0;
 }
-
 .menu-toggle.active .menu-icon span:nth-child(3){
   top:7px;
   transform:rotate(-45deg);
@@ -262,12 +260,10 @@ body::after{
 .fullscreen-menu{
   position:fixed;
   inset:0;
-  background:rgba(255,220,238,0.12);
-  backdrop-filter:blur(14px) saturate(108%);
-  -webkit-backdrop-filter:blur(14px) saturate(108%);
+  background:rgba(255,220,238,0.14);
   opacity:0;
   pointer-events:none;
-  transition:opacity .45s ease;
+  transition:opacity .35s ease;
   z-index:1100;
   overflow:hidden;
 }
@@ -277,8 +273,8 @@ body::after{
   position:absolute;
   inset:0;
   background:
-    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.10), transparent 28%),
-    linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    radial-gradient(circle at 18% 18%, rgba(255,255,255,0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
   pointer-events:none;
 }
 
@@ -333,35 +329,29 @@ body::after{
   letter-spacing:0.04em;
   opacity:0;
   transform:translate3d(-34px,0,0);
-  transition:opacity .25s ease, transform .25s ease;
+  transition:opacity .2s ease, transform .2s ease;
   white-space:nowrap;
 }
 
 .fullscreen-menu.open .menu-kicker{
-  animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards;
   animation-delay:.04s;
 }
 
-.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.10s;}
-.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.20s;}
-.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.30s;}
-.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.40s;}
-.fullscreen-menu.open .menu-link:nth-child(5){animation:menuTextIn .95s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.50s;}
+.fullscreen-menu.open .menu-link:nth-child(1){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.10s;}
+.fullscreen-menu.open .menu-link:nth-child(2){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.18s;}
+.fullscreen-menu.open .menu-link:nth-child(3){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.26s;}
+.fullscreen-menu.open .menu-link:nth-child(4){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.34s;}
+.fullscreen-menu.open .menu-link:nth-child(5){animation:menuTextIn .8s cubic-bezier(.22,1,.36,1) forwards; animation-delay:.42s;}
 
 @keyframes menuTextIn{
-  0%{
-    opacity:0;
-    transform:translate3d(-34px,0,0);
-  }
-  100%{
-    opacity:.95;
-    transform:translate3d(0,0,0);
-  }
+  0%{opacity:0; transform:translate3d(-34px,0,0);}
+  100%{opacity:.95; transform:translate3d(0,0,0);}
 }
 
 .menu-link:hover{
   opacity:1 !important;
-  transform:translate3d(8px,0,0) !important;
+  transform:translate3d(6px,0,0) !important;
 }
 
 /* ハンバーガー内画像 */
@@ -383,7 +373,6 @@ body::after{
   color:#fffaff;
   background:rgba(255,255,255,0.06);
   opacity:0;
-  will-change:transform, opacity;
 }
 
 .menu-bottom > .menu-card{
@@ -391,31 +380,26 @@ body::after{
 }
 
 .menu-card:nth-child(odd){
-  transform:translate3d(-58px,0,0);
+  transform:translate3d(-48px,0,0);
 }
 
 .menu-card:nth-child(even){
-  transform:translate3d(58px,0,0);
+  transform:translate3d(48px,0,0);
 }
 
 .fullscreen-menu.open .menu-card{
-  animation:menuCardSlide .95s cubic-bezier(.22,1,.36,1) forwards;
+  animation:menuCardSlide .8s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 .fullscreen-menu.open .menu-card:nth-child(1){animation-delay:.14s;}
-.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.24s;}
-.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.34s;}
-.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.44s;}
-.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.54s;}
+.fullscreen-menu.open .menu-card:nth-child(2){animation-delay:.22s;}
+.fullscreen-menu.open .menu-card:nth-child(3){animation-delay:.30s;}
+.fullscreen-menu.open .menu-card:nth-child(4){animation-delay:.38s;}
+.fullscreen-menu.open .menu-card:nth-child(5){animation-delay:.46s;}
 
 @keyframes menuCardSlide{
-  0%{
-    opacity:0;
-  }
-  100%{
-    opacity:1;
-    transform:translate3d(0,0,0);
-  }
+  0%{opacity:0;}
+  100%{opacity:1; transform:translate3d(0,0,0);}
 }
 
 .menu-card img{
@@ -423,7 +407,7 @@ body::after{
   height:100%;
   object-fit:cover;
   display:block;
-  transition:transform .7s ease, filter .7s ease;
+  transition:transform .45s ease;
 }
 
 .menu-card::after{
@@ -434,8 +418,7 @@ body::after{
 }
 
 .menu-card:hover img{
-  transform:scale(1.04);
-  filter:brightness(1.05);
+  transform:scale(1.02);
 }
 
 .menu-card-text{
@@ -480,10 +463,8 @@ body::after{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,245,250,0.46);
-  backdrop-filter:blur(14px) saturate(112%);
-  -webkit-backdrop-filter:blur(14px) saturate(112%);
-  border-bottom:1px solid rgba(255,255,255,0.26);
+  background:rgba(255,245,250,0.42);
+  border-bottom:1px solid rgba(255,255,255,0.24);
 }
 
 .page-title-logo{
@@ -495,9 +476,6 @@ body::after{
   width:auto;
   display:block;
   object-fit:contain;
-  filter:
-    drop-shadow(0 2px 8px rgba(255,255,255,0.10))
-    drop-shadow(0 4px 14px rgba(89,35,78,0.10));
 }
 
 .page-title-text{
@@ -509,9 +487,7 @@ body::after{
   font-weight:700;
   letter-spacing:0.13em;
   color:#5a1f4c;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,0.26),
-    0 0 12px rgba(255,255,255,0.10);
+  text-shadow:0 1px 0 rgba(255,255,255,0.22);
   white-space:nowrap;
   padding:0 132px 0 156px;
 }
@@ -537,13 +513,8 @@ body::after{
   letter-spacing:0.18em;
   background:rgba(124,76,124,0.54);
   border:1px solid rgba(255,255,255,0.18);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.14),
-    0 0 20px rgba(255,255,255,0.05),
-    inset 0 0 0 1px rgba(255,255,255,0.02);
-  transition:transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .25s ease;
+  box-shadow:0 8px 18px rgba(0,0,0,0.12);
+  transition:transform .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
 }
 
 .fixed-home-btn::before{
@@ -555,8 +526,8 @@ body::after{
 
 .fixed-home-btn:hover{
   transform:translateY(-2px);
-  background:rgba(124,76,124,0.70);
-  border-color:rgba(255,255,255,0.24);
+  background:rgba(124,76,124,0.66);
+  border-color:rgba(255,255,255,0.22);
 }
 
 .fullscreen-menu.open ~ .fixed-home-btn{
@@ -638,15 +609,13 @@ body::after{
   width:100%;
   height:auto;
   display:block;
-  transition:transform .7s ease, filter .7s ease;
+  transition:transform .45s ease;
   backface-visibility:hidden;
   transform:translateZ(0);
-  will-change:transform, opacity;
 }
 
 .media:hover img.main-image{
-  transform:scale(1.04);
-  filter:brightness(1.03);
+  transform:scale(1.02);
 }
 
 .media-overlay{
@@ -662,14 +631,14 @@ body::after{
     rgba(70,35,70,0.08) 54%,
     rgba(70,35,70,0) 100%
   );
-  transition:background .45s ease;
+  transition:background .35s ease;
 }
 
 .media:hover .media-overlay{
   background:linear-gradient(
     to top,
-    rgba(70,35,70,0.82) 0%,
-    rgba(70,35,70,0.44) 28%,
+    rgba(70,35,70,0.80) 0%,
+    rgba(70,35,70,0.42) 28%,
     rgba(70,35,70,0.10) 56%,
     rgba(70,35,70,0) 100%
   );
@@ -677,9 +646,9 @@ body::after{
 
 .overlay-text{
   color:#fffaff;
-  transform:translateY(10px);
+  transform:translateY(8px);
   opacity:.96;
-  transition:transform .45s ease, opacity .45s ease;
+  transition:transform .35s ease, opacity .35s ease;
 }
 
 .media:hover .overlay-text{
@@ -702,9 +671,6 @@ body::after{
   height:auto;
   pointer-events:none;
   opacity:.98;
-  filter:
-    drop-shadow(0 12px 24px rgba(0,0,0,0.24))
-    drop-shadow(0 2px 6px rgba(255,255,255,0.12));
   transform:none !important;
 }
 
@@ -740,19 +706,16 @@ body::after{
   50%{transform:translateY(-10px);}
   100%{transform:translateY(0);}
 }
-
 @keyframes float2{
   0%{transform:translateY(0);}
   50%{transform:translateY(-8px);}
   100%{transform:translateY(0);}
 }
-
 @keyframes float3{
   0%{transform:translateY(0);}
   50%{transform:translateY(-7px);}
   100%{transform:translateY(0);}
 }
-
 @keyframes float4{
   0%{transform:translateY(0);}
   50%{transform:translateY(-9px);}
@@ -805,11 +768,10 @@ body::after{
 
 .reveal{
   opacity:0;
-  transform:translate3d(0,34px,0);
+  transform:translate3d(0,24px,0);
   transition:
-    opacity .72s ease,
-    transform .9s cubic-bezier(.22,1,.36,1);
-  will-change:opacity, transform;
+    opacity .55s ease,
+    transform .7s cubic-bezier(.22,1,.36,1);
   backface-visibility:hidden;
 }
 
@@ -835,6 +797,7 @@ body::after{
   padding-bottom:4px;
 }
 
+/* modal */
 .modal{
   position:fixed;
   inset:0;
@@ -842,11 +805,9 @@ body::after{
   align-items:center;
   justify-content:center;
   background:rgba(96,56,102,0.50);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
   opacity:0;
   pointer-events:none;
-  transition:opacity .35s ease;
+  transition:opacity .25s ease;
   z-index:3000;
   padding:24px;
 }
@@ -860,9 +821,9 @@ body::after{
   width:min(920px, 100%);
   max-height:90vh;
   overflow:auto;
-  background:rgba(255,240,248,0.68);
+  background:rgba(255,240,248,0.90);
   border:1px solid rgba(255,255,255,0.18);
-  box-shadow:0 20px 80px rgba(0,0,0,0.22);
+  box-shadow:0 14px 40px rgba(0,0,0,0.18);
 }
 
 .modal-img{
@@ -884,13 +845,6 @@ body::after{
   color:#6d2f5f;
 }
 
-.modal-desc{
-  font-size:15px;
-  font-weight:800;
-  line-height:1.85;
-  color:#4d2344;
-}
-
 .modal-close{
   position:absolute;
   top:14px;
@@ -908,6 +862,125 @@ body::after{
   font-weight:700;
 }
 
+/* modal cast */
+.modal-cast-wrap{
+  margin-top:18px;
+  max-height:52vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+  padding-right:4px;
+  scroll-behavior:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  contain:layout paint;
+}
+
+.modal-cast-wrap::-webkit-scrollbar{
+  width:6px;
+}
+
+.modal-cast-wrap::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.modal-cast-wrap::-webkit-scrollbar-thumb{
+  background:rgba(90,31,76,0.18);
+  border-radius:999px;
+}
+
+.modal-cast-track{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  padding-bottom:2px;
+}
+
+.modal-cast-card{
+  background:rgba(255,255,255,0.42);
+  border:1px solid rgba(255,255,255,0.22);
+  box-shadow:0 6px 16px rgba(0,0,0,0.06);
+  overflow:hidden;
+  contain:layout paint;
+  touch-action:pan-y;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.modal-cast-card.center-active{
+  transform:scale(1.005);
+  box-shadow:0 10px 22px rgba(0,0,0,0.09);
+}
+
+.modal-cast-image-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  background:#ead6ef;
+}
+
+.modal-cast-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  backface-visibility:hidden;
+  transition:
+    opacity .32s cubic-bezier(.22,1,.36,1),
+    transform .42s cubic-bezier(.22,1,.36,1);
+}
+
+.modal-cast-image.base{
+  opacity:1;
+  transform:scale(1);
+}
+
+.modal-cast-image.hover{
+  opacity:0;
+  transform:scale(1.03);
+}
+
+.modal-cast-card.center-active .modal-cast-image.base{
+  opacity:0;
+  transform:scale(1.02);
+}
+
+.modal-cast-card.center-active .modal-cast-image.hover{
+  opacity:1;
+  transform:scale(1);
+}
+
+.modal-cast-body{
+  padding:16px 16px 18px;
+}
+
+.modal-cast-role{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:#7a3767;
+  margin-bottom:10px;
+}
+
+.modal-cast-name{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:18px;
+  font-weight:700;
+  line-height:1.2;
+  color:#4c1d44;
+  margin-bottom:8px;
+}
+
+.modal-cast-text{
+  font-family:"Manrope",sans-serif;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.9;
+  color:#4d2344;
+}
+
 @media (max-width: 820px){
   :root{
     --topbar-h:56px;
@@ -917,18 +990,18 @@ body::after{
     background:#e7c8f2;
   }
 
- .page-bg{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  min-height:100%;
-  height:100%;
-  background:
-    linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
-    var(--zzz-bg-image) center top / cover no-repeat;
-  background-attachment:scroll;
-}
+  .page-bg{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    min-height:100%;
+    height:100%;
+    background:
+      linear-gradient(180deg, rgba(255,250,252,0.10) 0%, rgba(245,215,236,0.06) 100%),
+      var(--zzz-bg-image) center top / cover no-repeat;
+    background-attachment:scroll;
+  }
 
   .page-title{
     padding:0 64px 0 8px;
@@ -939,13 +1012,13 @@ body::after{
     height:56px;
   }
 
-  
-.page-title-text{
-  font-size:20px;
-  font-weight:700;
-  letter-spacing:0.06em;
-  padding:0 96px 0 118px;
-}
+  .page-title-text{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    padding:0 96px 0 118px;
+  }
+
   .menu-toggle{
     width:56px;
     height:var(--topbar-h);
@@ -1050,111 +1123,6 @@ body::after{
     font-size:21px;
   }
 
-  .modal-desc{
-    font-size:14px;
-  }
-}
-
-  .page-title,
-.menu-toggle,
-.fixed-home-btn,
-.fullscreen-menu,
-.modal{
-  transform:translateZ(0);
-  backface-visibility:hidden;
-}
-
-  /* ===== modal cast loop ===== */
-/* ===== modal cast loop / image card ===== */
-.modal-cast-wrap{
-  margin-top:18px;
-  max-height:52vh;
-  overflow-y:auto;
-  overflow-x:hidden;
-  padding-right:4px;
-  scroll-behavior:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-}
-
-.modal-cast-wrap::-webkit-scrollbar{
-  width:6px;
-}
-
-.modal-cast-wrap::-webkit-scrollbar-track{
-  background:transparent;
-}
-
-.modal-cast-wrap::-webkit-scrollbar-thumb{
-  background:rgba(90,31,76,0.22);
-  border-radius:999px;
-}
-
-.modal-cast-track{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  padding-bottom:2px;
-}
-
-.modal-cast-card{
-  background:rgba(255,255,255,0.36);
-  border:1px solid rgba(255,255,255,0.22);
-  box-shadow:0 10px 28px rgba(0,0,0,0.08);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  overflow:hidden;
-}
-
- .modal-cast-card{
-  touch-action:pan-y;
-  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
-}
-
-.modal-cast-card.center-active{
-  transform:scale(1.01);
-  box-shadow:0 16px 36px rgba(0,0,0,0.12);
-} 
-
-.modal-cast-image{
-  width:100%;
-  display:block;
-  aspect-ratio:16 / 9;
-  object-fit:cover;
-}
-
-.modal-cast-body{
-  padding:16px 16px 18px;
-}
-
-.modal-cast-role{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  color:#7a3767;
-  margin-bottom:10px;
-}
-
-.modal-cast-name{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:18px;
-  font-weight:700;
-  line-height:1.2;
-  color:#4c1d44;
-  margin-bottom:8px;
-}
-
-.modal-cast-text{
-  font-family:"Manrope",sans-serif;
-  font-size:14px;
-  font-weight:700;
-  line-height:1.9;
-  color:#4d2344;
-}
-
-@media (max-width: 820px){
   .modal-cast-wrap{
     max-height:48vh;
     padding-right:2px;
@@ -1173,54 +1141,6 @@ body::after{
     line-height:1.85;
   }
 }
-
-.modal-cast-image-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16 / 9;
-  overflow:hidden;
-}
-
-.modal-cast-image{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:
-    opacity .5s cubic-bezier(.22,1,.36,1),
-    transform .7s cubic-bezier(.22,1,.36,1),
-    filter .6s ease;
-  backface-visibility:hidden;
-}
-
-/* 初期状態 */
-.modal-cast-image.base{
-  opacity:1;
-  transform:scale(1);
-}
-
-.modal-cast-image.hover{
-  opacity:0;
-  transform:scale(1.06);
-  filter:brightness(1.05);
-}
-
-/* ホバー or タッチ時 */
-.modal-cast-card.center-active .modal-cast-image.base{
-  opacity:0;
-  transform:scale(1.04);
-}
-
-.modal-cast-card.center-active .modal-cast-image.hover{
-  opacity:1;
-  transform:scale(1);
-}
-
-.modal-cast-card{
-  touch-action:manipulation;
-}
-  
 </style>
 </head>
 
@@ -1512,13 +1432,13 @@ body::after{
   </div>
 </div>
 
-  <script>
+<script>
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   requestAnimationFrame(() => {
     setTimeout(() => {
       loader.classList.add("hide");
-    }, 450);
+    }, 280);
   });
 });
 
@@ -1551,8 +1471,7 @@ const modalCastTrack = document.getElementById("modalCastTrack");
 const menuToggle = document.getElementById("menuToggle");
 const fullscreenMenu = document.getElementById("fullscreenMenu");
 
-/* ===== 画像付き4人データ ===== */
-/* image はあとで差し替えるだけでOK */
+/* ===== 画像付きデータ ===== */
 const modalCastData = {
   "雲嶽山": [
     {
@@ -1620,59 +1539,67 @@ const modalCastData = {
       image: "images/イドリー.png",
       image2: "images/イドリー(完凸).png",
       text: "都市感や機械感のあるビジュアルに重さを加える役割です。背景が軽すぎる時に、全体の密度感を引き上げるために使いやすいです。"
-    },
+    }
   ],
 
-  "Layered Atmosphere": [
+  "対ホロウ六課": [
     {
       role: "Tech Mood",
       name: "Grace",
       image: "images/character-grace.jpg",
+      image2: "images/character-grace.jpg",
       text: "緑系ビジュアルとの相性が良く、機械感や都市的な冷たさを自然に入れられるキャラクターです。情報量の多い画面でも埋もれにくいです。"
     },
     {
       role: "Soft Contrast",
       name: "Rina",
       image: "images/character-rina.jpg",
+      image2: "images/character-rina.jpg",
       text: "強い配色の中でも空気をやわらかく整える役です。鋭い背景に対して少し上品さを入れたい時にちょうど良く噛み合います。"
     },
     {
       role: "Balance Character",
       name: "Qingyi",
       image: "images/character-qingyi.jpg",
+      image2: "images/character-qingyi.jpg",
       text: "明るさ・機能感・軽快さのバランスが取りやすく、情報量の多いページでも視線誘導の役として使いやすい立ち位置です。"
     },
     {
       role: "Urban Accent",
       name: "Jane",
       image: "images/character-jane.jpg",
+      image2: "images/character-jane.jpg",
       text: "都会的でシャープな印象を少し強めたい時に使いやすいです。全体がぼやけそうな場面でも、画面の緊張感を保ってくれます。"
     }
   ],
 
-  "Readable Contrast": [
+  "モッキンバード": [
     {
       role: "Lead Character",
       name: "Anby",
       image: "images/character-anby.jpg",
+      image2: "images/character-anby.jpg",
       text: "背景がやわらかい時でも芯のある見え方を保てるのが強みです。可読性と雰囲気づくりの両方に寄与できます。"
     },
     {
       role: "Contrast Accent",
       name: "Nicole",
       image: "images/character-nicole.jpg",
+      image2: "images/character-nicole.jpg",
       text: "軽快さと視線誘導を足しやすく、重たい構図をやわらげる役として使いやすいです。"
     },
     {
       role: "Cool Tone",
       name: "Ellen",
       image: "images/character-ellen.jpg",
+      image2: "images/character-ellen.jpg",
       text: "少し冷たいニュアンスを入れることで、背景の甘さを引き締める役割を持たせられます。"
     },
     {
       role: "Structure Support",
       name: "Zhu Yuan",
       image: "images/character-zhuyuan.jpg",
+      image2: "images/character-zhuyuan.jpg",
       text: "主役級の存在感があり、ページ全体の説得力や完成度を安定させやすいです。"
     }
   ],
@@ -1682,24 +1609,28 @@ const modalCastData = {
       role: "Visual Core",
       name: "Nicole",
       image: "images/character-nicole.jpg",
+      image2: "images/character-nicole.jpg",
       text: "ピンク〜ラベンダー帯の空気感に最も軽やかに馴染みやすく、ページのポップさを素直に伸ばせます。"
     },
     {
       role: "Cool Counterpoint",
       name: "Ellen",
       image: "images/character-ellen.jpg",
+      image2: "images/character-ellen.jpg",
       text: "甘い背景の中に冷たさを足し、全体を大人っぽく見せる役として機能します。"
     },
     {
       role: "Urban Balance",
       name: "Jane",
       image: "images/character-jane.jpg",
+      image2: "images/character-jane.jpg",
       text: "可愛さ一辺倒にならないように、少しシャープな印象を混ぜたい時に効きます。"
     },
     {
       role: "Main Support",
       name: "Anby",
       image: "images/character-anby.jpg",
+      image2: "images/character-anby.jpg",
       text: "派手すぎず静かな存在感があるため、背景演出を壊さずページ全体のまとまりを作れます。"
     }
   ],
@@ -1709,24 +1640,28 @@ const modalCastData = {
       role: "City Accent",
       name: "Nicole",
       image: "images/character-nicole.jpg",
+      image2: "images/character-nicole.jpg",
       text: "都市的で軽快なムードを作るのに向いています。ページ全体のテンポ感を上げたい時に有効です。"
     },
     {
       role: "Cool Center",
       name: "Ellen",
       image: "images/character-ellen.jpg",
+      image2: "images/character-ellen.jpg",
       text: "柔らかい背景の中でも主役感を保ちやすく、少しクールな空気を足せます。"
     },
     {
       role: "Structure Accent",
       name: "Zhu Yuan",
       image: "images/character-zhuyuan.jpg",
+      image2: "images/character-zhuyuan.jpg",
       text: "視線を集めやすく、構図にしっかりした軸を作りたい時に扱いやすいです。"
     },
     {
       role: "Light Balance",
       name: "Anby",
       image: "images/character-anby.jpg",
+      image2: "images/character-anby.jpg",
       text: "全体が重くなりすぎるのを防ぎつつ、静かな緊張感を保つ役として優秀です。"
     }
   ],
@@ -1736,24 +1671,28 @@ const modalCastData = {
       role: "Soft Contrast",
       name: "Rina",
       image: "images/character-rina.jpg",
+      image2: "images/character-rina.jpg",
       text: "残光や柔らかい粒子の背景と相性が良く、画面の上品さを崩さずに存在感を出せます。"
     },
     {
       role: "Tech Accent",
       name: "Grace",
       image: "images/character-grace.jpg",
+      image2: "images/character-grace.jpg",
       text: "ふんわりした背景に対して情報感や機械的ニュアンスを足し、画面の密度を上げやすいです。"
     },
     {
       role: "Urban Balance",
       name: "Qingyi",
       image: "images/character-qingyi.jpg",
+      image2: "images/character-qingyi.jpg",
       text: "明るさと軽快さのバランスが良く、背景演出と人物の間を自然につないでくれます。"
     },
     {
       role: "Sharp Accent",
       name: "Jane",
       image: "images/character-jane.jpg",
+      image2: "images/character-jane.jpg",
       text: "夢っぽい背景の中でも輪郭を立ててくれるので、画面がぼやけるのを防ぎやすいです。"
     }
   ],
@@ -1763,24 +1702,28 @@ const modalCastData = {
       role: "Final Mood",
       name: "Anby",
       image: "images/character-anby.jpg",
+      image2: "images/character-anby.jpg",
       text: "最後の見せ場として静かな重心を作る役に向いています。派手な背景の中でも落ち着きが出ます。"
     },
     {
       role: "Glow Accent",
       name: "Nicole",
       image: "images/character-nicole.jpg",
+      image2: "images/character-nicole.jpg",
       text: "ネオンのやわらかい光感を引き立てやすく、ページ終盤の華やかさを支えられます。"
     },
     {
       role: "Cool Finish",
       name: "Ellen",
       image: "images/character-ellen.jpg",
+      image2: "images/character-ellen.jpg",
       text: "可愛いだけで終わらせず、少し冷たい余韻を残したい時にかなり相性が良いです。"
     },
     {
       role: "Visual Anchor",
       name: "Zhu Yuan",
       image: "images/character-zhuyuan.jpg",
+      image2: "images/character-zhuyuan.jpg",
       text: "ページの締めとして視線を止めやすく、最後まで完成度の高い印象を保ちやすい存在です。"
     }
   ]
@@ -1790,6 +1733,8 @@ let loopSetHeight = 0;
 let loopLock = false;
 let loopTicking = false;
 let loopStarted = false;
+let centeredCard = null;
+let centerUpdateTimer = null;
 
 function getFallbackCards(title){
   return [
@@ -1797,24 +1742,28 @@ function getFallbackCards(title){
       role: "Visual Role",
       name: "Character 01",
       image: "images/placeholder-1.jpg",
+      image2: "images/placeholder-1.jpg",
       text: title + " に合わせたキャラ説明をここに入れられます。"
     },
     {
       role: "Support Role",
       name: "Character 02",
       image: "images/placeholder-2.jpg",
+      image2: "images/placeholder-2.jpg",
       text: "画面の雰囲気や配色との相性、立ち位置などを説明する用途で使えます。"
     },
     {
       role: "Mood Role",
       name: "Character 03",
       image: "images/placeholder-3.jpg",
+      image2: "images/placeholder-3.jpg",
       text: "ページ全体の空気感にどう効くか、視線誘導や印象面の役割も書けます。"
     },
     {
       role: "Balance Role",
       name: "Character 04",
       image: "images/placeholder-4.jpg",
+      image2: "images/placeholder-4.jpg",
       text: "最後の1人は、全体の締まりや補完関係を説明する枠として使うと収まりが良いです。"
     }
   ];
@@ -1824,9 +1773,10 @@ function createCardsHTML(list){
   return list.map((item) => `
     <div class="modal-cast-card">
       <div class="modal-cast-image-wrap">
-  <img class="modal-cast-image base" src="${item.image}" alt="${item.name}">
-  <img class="modal-cast-image hover" src="${item.image2 || item.image}" alt="${item.name}">
-</div>
+        <img class="modal-cast-image base" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async">
+        <img class="modal-cast-image hover" src="${item.image2 || item.image}" alt="${item.name}" loading="lazy" decoding="async">
+      </div>
+      <div class="modal-cast-body">
         <div class="modal-cast-role">${item.role}</div>
         <div class="modal-cast-name">${item.name}</div>
         <div class="modal-cast-text">${item.text}</div>
@@ -1835,11 +1785,18 @@ function createCardsHTML(list){
   `).join("");
 }
 
+function clearCenterCard(){
+  if(centeredCard){
+    centeredCard.classList.remove("center-active");
+    centeredCard = null;
+  }
+}
+
 function buildCastCards(title){
   const original = modalCastData[title] || getFallbackCards(title);
 
-  /* 4セット作って中央寄りから開始すると下方向も最初から自然 */
-  const loopList = [...original, ...original, ...original, ...original];
+  /* 3セットだけにして軽量化 */
+  const loopList = [...original, ...original, ...original];
   modalCastTrack.innerHTML = createCardsHTML(loopList);
 
   requestAnimationFrame(() => {
@@ -1856,13 +1813,11 @@ function buildCastCards(title){
 
     loopSetHeight = total;
 
-    /* 2セット目の先頭から始める */
-    modalCastWrap.scrollTop = loopSetHeight * 1.5;
+    /* 真ん中セットから開始 */
+    modalCastWrap.scrollTop = loopSetHeight;
     loopStarted = true;
 
-    requestAnimationFrame(() => {
-      updateCenterCard();
-       });
+    setTimeout(updateCenterCard, 40);
   });
 }
 
@@ -1870,8 +1825,8 @@ function normalizeInfiniteScroll(){
   if(loopLock || !loopSetHeight || !loopStarted) return;
 
   const current = modalCastWrap.scrollTop;
-  const minEdge = loopSetHeight * 0.75;
-  const maxEdge = loopSetHeight * 2.75;
+  const minEdge = loopSetHeight * 0.35;
+  const maxEdge = loopSetHeight * 1.65;
 
   if(current <= minEdge){
     loopLock = true;
@@ -1898,9 +1853,43 @@ function handleLoopScroll(){
   });
 }
 
+function updateCenterCard(){
+  const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
+  if(!cards.length) return;
+
+  const centerLine = modalCastWrap.scrollTop + (modalCastWrap.clientHeight / 2);
+
+  let nearestCard = null;
+  let nearestDistance = Infinity;
+
+  for(const card of cards){
+    const cardCenter = card.offsetTop + (card.offsetHeight / 2);
+    const distance = Math.abs(centerLine - cardCenter);
+
+    if(distance < nearestDistance){
+      nearestDistance = distance;
+      nearestCard = card;
+    }
+  }
+
+  if(centeredCard && centeredCard !== nearestCard){
+    centeredCard.classList.remove("center-active");
+  }
+
+  if(nearestCard && centeredCard !== nearestCard){
+    nearestCard.classList.add("center-active");
+    centeredCard = nearestCard;
+  }
+}
+
 modalCastWrap.addEventListener("scroll", () => {
   handleLoopScroll();
-  requestCenterUpdate();
+  clearCenterCard();
+
+  clearTimeout(centerUpdateTimer);
+  centerUpdateTimer = setTimeout(() => {
+    updateCenterCard();
+  }, 70);
 }, { passive:true });
 
 document.querySelectorAll(".work-item").forEach((item) => {
@@ -1921,15 +1910,12 @@ function closeModal(){
   modalCastTrack.innerHTML = "";
   loopSetHeight = 0;
   loopStarted = false;
+  clearTimeout(centerUpdateTimer);
+  clearCenterCard();
 
   if(!fullscreenMenu.classList.contains("open")){
     document.body.style.overflow = "";
   }
-
-  if(centeredCard){
-  centeredCard.classList.remove("center-active");
-  centeredCard = null;
-}
 }
 
 modalClose.addEventListener("click", closeModal);
@@ -1974,51 +1960,7 @@ document.addEventListener("keydown", (e) => {
     closeMenu();
   }
 });
-
- let centeredCard = null;
-let centerTicking = false;
-
-function updateCenterCard(){
-  const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
-  if(!cards.length) return;
-
-  const wrapRect = modalCastWrap.getBoundingClientRect();
-  const wrapCenterY = wrapRect.top + (wrapRect.height / 2);
-
-  let nearestCard = null;
-  let nearestDistance = Infinity;
-
-  cards.forEach((card) => {
-    const rect = card.getBoundingClientRect();
-    const cardCenterY = rect.top + (rect.height / 2);
-    const distance = Math.abs(wrapCenterY - cardCenterY);
-
-    if(distance < nearestDistance){
-      nearestDistance = distance;
-      nearestCard = card;
-    }
-  });
-
-  if(centeredCard && centeredCard !== nearestCard){
-    centeredCard.classList.remove("center-active");
-  }
-
-  if(nearestCard && centeredCard !== nearestCard){
-    nearestCard.classList.add("center-active");
-    centeredCard = nearestCard;
-  }
-}
-
-function requestCenterUpdate(){
-  if(centerTicking) return;
-  centerTicking = true;
-
-  requestAnimationFrame(() => {
-    updateCenterCard();
-    centerTicking = false;
-  });
-}
-</script>    
+</script>
 
 </body>
 </html>
