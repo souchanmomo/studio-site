@@ -1106,6 +1106,16 @@ body::after{
   overflow:hidden;
 }
 
+ .modal-cast-card{
+  touch-action:pan-y;
+  transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+}
+
+.modal-cast-card.center-active{
+  transform:scale(1.01);
+  box-shadow:0 16px 36px rgba(0,0,0,0.12);
+} 
+
 .modal-cast-image{
   width:100%;
   display:block;
@@ -1197,14 +1207,12 @@ body::after{
 }
 
 /* ホバー or タッチ時 */
-.modal-cast-card:hover .modal-cast-image.base,
-.modal-cast-card.active .modal-cast-image.base{
+.modal-cast-card.center-active .modal-cast-image.base{
   opacity:0;
   transform:scale(1.04);
 }
 
-.modal-cast-card:hover .modal-cast-image.hover,
-.modal-cast-card.active .modal-cast-image.hover{
+.modal-cast-card.center-active .modal-cast-image.hover{
   opacity:1;
   transform:scale(1);
 }
@@ -1851,6 +1859,10 @@ function buildCastCards(title){
     /* 2セット目の先頭から始める */
     modalCastWrap.scrollTop = loopSetHeight * 1.5;
     loopStarted = true;
+
+    requestAnimationFrame(() => {
+      updateCenterCard();
+       });
   });
 }
 
@@ -1886,7 +1898,10 @@ function handleLoopScroll(){
   });
 }
 
-modalCastWrap.addEventListener("scroll", handleLoopScroll, { passive:true });
+modalCastWrap.addEventListener("scroll", () => {
+  handleLoopScroll();
+  requestCenterUpdate();
+}, { passive:true });
 
 document.querySelectorAll(".work-item").forEach((item) => {
   item.addEventListener("click", () => {
@@ -1910,6 +1925,11 @@ function closeModal(){
   if(!fullscreenMenu.classList.contains("open")){
     document.body.style.overflow = "";
   }
+
+  if(centeredCard){
+  centeredCard.classList.remove("center-active");
+  centeredCard = null;
+}
 }
 
 modalClose.addEventListener("click", closeModal);
@@ -1955,40 +1975,49 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
- let activeCard = null;
+ let centeredCard = null;
+let centerTicking = false;
 
-/* 押した瞬間 */
-document.addEventListener("pointerdown", (e) => {
-  const card = e.target.closest(".modal-cast-card");
-  if(!card) return;
+function updateCenterCard(){
+  const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
+  if(!cards.length) return;
 
-  activeCard = card;
-  card.classList.add("active");
-});
+  const wrapRect = modalCastWrap.getBoundingClientRect();
+  const wrapCenterY = wrapRect.top + (wrapRect.height / 2);
 
-/* 指が離れた */
-document.addEventListener("pointerup", () => {
-  if(activeCard){
-    activeCard.classList.remove("active");
-    activeCard = null;
+  let nearestCard = null;
+  let nearestDistance = Infinity;
+
+  cards.forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const cardCenterY = rect.top + (rect.height / 2);
+    const distance = Math.abs(wrapCenterY - cardCenterY);
+
+    if(distance < nearestDistance){
+      nearestDistance = distance;
+      nearestCard = card;
+    }
+  });
+
+  if(centeredCard && centeredCard !== nearestCard){
+    centeredCard.classList.remove("center-active");
   }
-});
 
-/* 指が外に出た / キャンセル */
-document.addEventListener("pointercancel", () => {
-  if(activeCard){
-    activeCard.classList.remove("active");
-    activeCard = null;
+  if(nearestCard && centeredCard !== nearestCard){
+    nearestCard.classList.add("center-active");
+    centeredCard = nearestCard;
   }
-});
+}
 
-/* スクロール開始時も強制解除（←超重要） */
-modalCastWrap.addEventListener("scroll", () => {
-  if(activeCard){
-    activeCard.classList.remove("active");
-    activeCard = null;
-  }
-}, { passive:true });
+function requestCenterUpdate(){
+  if(centerTicking) return;
+  centerTicking = true;
+
+  requestAnimationFrame(() => {
+    updateCenterCard();
+    centerTicking = false;
+  });
+}
 </script>    
 
 </body>
