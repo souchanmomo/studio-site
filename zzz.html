@@ -43,11 +43,10 @@ body{
   -webkit-font-smoothing:antialiased;
   background:#e7c8f2;
   overflow-x:hidden;
+  overflow-y:auto;
   position:relative;
   isolation:isolate;
-  overscroll-behavior-y:none;
   -webkit-overflow-scrolling:touch;
-  overflow-y:auto;
 }
 
 body::before,
@@ -567,6 +566,8 @@ body::after{
 /* Works本体 */
 .works-wrap{
   width:100%;
+  position:relative;
+  z-index:2;
 }
 
 .work-section{
@@ -901,53 +902,15 @@ body::after{
   transform:translate3d(0,0,0);
 }
 
-
-
-.works-wrap{
-  width:100%;
-  position:relative;
-  z-index:2;
-}
-  
-
-
-/* 初期状態（全カードを右に待機） */
-.intro-hold .media,
-.intro-hold .work-info{
-  opacity:0;
-  transform:translate3d(60px,0,0);
-  filter:blur(6px);
-}
-
-
-  
-@keyframes cardSlideIn{
-  0%{
-    opacity:0;
-    transform:translate3d(56px,0,0);
-    filter:blur(6px);
-  }
-  65%{
-    opacity:1;
-    transform:translate3d(-2px,0,0);
-    filter:blur(0);
-  }
-  100%{
-    opacity:1;
-    transform:translate3d(0,0,0);
-    filter:blur(0);
-  }
-}
-
-/* イントロ固定レイヤー */
+/* ===== 安全なイントロ演出 ===== */
 .intro-overlay{
   position:fixed;
   inset:0;
   z-index:2500;
   pointer-events:none;
   opacity:1;
-  transition:opacity .8s ease, visibility .8s ease;
   visibility:visible;
+  transition:opacity .8s ease, visibility .8s ease;
 }
 
 .intro-overlay.hide{
@@ -961,33 +924,16 @@ body::after{
   background:transparent;
 }
 
-.intro-seq .media,
-.intro-seq .work-info{
+.intro-seq .intro-item{
   opacity:0;
   transform:translate3d(72px,0,0);
   filter:blur(6px);
 }
 
-.intro-seq.start .media,
-.intro-seq.start .work-info{
-  animation:cardSlideIn 1.45s cubic-bezier(.16,1,.30,1) forwards;
+.intro-seq.start .intro-item{
+  animation:cardSlideIn 1.6s cubic-bezier(.16,1,.30,1) forwards;
+  animation-delay:var(--intro-delay, 0s);
 }
-
-.intro-seq.start .work-section:nth-of-type(1) .media{ animation-delay:.22s; }
-.intro-seq.start .work-section:nth-of-type(1) .work-info{ animation-delay:.36s; }
-
-.intro-seq.start .work-section:nth-of-type(2) .media:nth-of-type(1){ animation-delay:.50s; }
-.intro-seq.start .work-section:nth-of-type(2) .media:nth-of-type(2){ animation-delay:.68s; }
-.intro-seq.start .work-section:nth-of-type(2) .work-info{ animation-delay:.82s; }
-
-.intro-seq.start .work-section:nth-of-type(3) .media:nth-of-type(1){ animation-delay:1.00s; }
-.intro-seq.start .work-section:nth-of-type(3) .media:nth-of-type(2){ animation-delay:1.18s; }
-.intro-seq.start .work-section:nth-of-type(3) .work-info{ animation-delay:1.32s; }
-
-.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(1){ animation-delay:1.50s; }
-.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(2){ animation-delay:1.68s; }
-.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(3){ animation-delay:1.86s; }
-.intro-seq.start .work-section:nth-of-type(4) .work-info{ animation-delay:2.00s; }
 
 @keyframes cardSlideIn{
   0%{
@@ -995,7 +941,7 @@ body::after{
     transform:translate3d(72px,0,0);
     filter:blur(6px);
   }
-  60%{
+  62%{
     opacity:1;
     transform:translate3d(6px,0,0);
     filter:blur(0);
@@ -1006,7 +952,7 @@ body::after{
     filter:blur(0);
   }
 }
-  
+
 .back{
   padding:22px 22px 58px;
   text-align:center;
@@ -1344,19 +1290,19 @@ body::after{
   }
 
   .page-bg{
-  position:fixed;
-  inset:0;
-  background:#0b1330;
-}
+    position:fixed;
+    inset:0;
+    background:#0b1330;
+  }
 
-.page-bg::before{
-  inset:0;
-  background-image:var(--zzz-bg-image);
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.02);
-}
+  .page-bg::before{
+    inset:0;
+    background-image:var(--zzz-bg-image);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+    transform:translate3d(0, var(--bg-shift), 0) scale(1.02);
+  }
 
   .page-title{
     padding:0 64px 0 8px;
@@ -1540,7 +1486,7 @@ body::after{
 <div class="intro-overlay" id="introOverlay">
   <div class="intro-overlay-bg"></div>
 </div>
-  
+
 <div id="loader">
   <div class="loader-glow"></div>
   <div class="loader-lines"></div>
@@ -1626,11 +1572,12 @@ body::after{
 
   <section class="work-section">
     <div
-      class="media full-bleed reveal work-item"
+      class="media full-bleed reveal work-item intro-item"
       data-label="ZZZ Visual"
       data-title="雲嶽山"
       data-desc="背景だけテイストを変えつつ、構成は works.html と揃えた版です。"
       data-image="images/Screenshot_20260403_004108~3.jpg"
+      style="--intro-delay:.18s;"
     >
       <img class="main-image" src="images/Screenshot_20260403_004108~3.jpg" alt="ZZZ visual">
       <span class="media-logo-wrap is-bottom-right is-soft has-plate">
@@ -1643,7 +1590,7 @@ body::after{
         </div>
       </div>
     </div>
-    <div class="work-info reveal">
+    <div class="work-info reveal intro-item" style="--intro-delay:.34s;">
       <div class="work-label">ZZZ Visual</div>
       <div class="work-title">Urban Pink / Neon Mood</div>
       <div class="work-sub">背景だけガラッと空気を変えて、やわらかいネオン感とポップさを出したページです。</div>
@@ -1653,11 +1600,12 @@ body::after{
   <section class="work-section">
     <div class="split">
       <div
-        class="media reveal work-item"
+        class="media reveal work-item intro-item"
         data-label="Scene"
         data-title="怪啖屋"
         data-desc="白光・淡い黄色・流れるラインで、やわらかい都市感を背景側に持たせています。"
         data-image="images/Screenshot_20260403_004118~3.jpg"
+        style="--intro-delay:.54s;"
       >
         <img class="main-image" src="images/Screenshot_20260403_004118~3.jpg" alt="scene 01">
         <span class="media-logo-wrap is-top-left has-plate">
@@ -1674,11 +1622,12 @@ body::after{
 
       <div class="stack">
         <div
-          class="media reveal work-item"
+          class="media reveal work-item intro-item"
           data-label="Detail"
           data-title="対ホロウ六課"
           data-desc="ピンクとラベンダーのベースに白い残光を重ねて、ただ甘いだけではない背景にしています。"
           data-image="images/Screenshot_20260403_094847~2.jpg"
+          style="--intro-delay:.74s;"
         >
           <img class="main-image" src="images/Screenshot_20260403_094847~2.jpg" alt="detail 01">
           <span class="media-logo-wrap is-top-left is-soft">
@@ -1693,7 +1642,7 @@ body::after{
           </div>
         </div>
 
-        <div class="work-info reveal">
+        <div class="work-info reveal intro-item" style="--intro-delay:.90s;">
           <div class="work-label">Detail</div>
           <div class="work-title">Layered Atmosphere</div>
           <div class="work-sub">works.html の骨格はそのままに、背景だけで別ページ感を出すための設計です。</div>
@@ -1705,18 +1654,19 @@ body::after{
   <section class="work-section">
     <div class="split reverse">
       <div class="stack">
-        <div class="work-info reveal">
+        <div class="work-info reveal intro-item" style="--intro-delay:1.10s;">
           <div class="work-label">Direction</div>
           <div class="work-title">Visual Contrast / Soft Neon</div>
           <div class="work-sub">本文やタイトルは背景に負けないよう、白ではなく少し深い色に寄せて読みやすさを優先しています。</div>
         </div>
 
         <div
-          class="media reveal work-item"
+          class="media reveal work-item intro-item"
           data-label="Direction"
           data-title="モッキンバード"
           data-desc="上部の見づらさを避けるため、見出しや本文は背景と相性の良い深い色味に調整しています。"
           data-image="images/Screenshot_20260403_094702~2.jpg"
+          style="--intro-delay:1.26s;"
         >
           <img class="main-image" src="images/Screenshot_20260403_094702~2.jpg" alt="direction">
           <span class="media-logo-wrap is-top-left is-soft">
@@ -1733,11 +1683,12 @@ body::after{
       </div>
 
       <div
-        class="media reveal work-item"
+        class="media reveal work-item intro-item"
         data-label="Neon Visual"
         data-title="Pink / Lavender Background"
         data-desc="同じレイアウトでも背景の色設計を変えるだけで、ページのキャラクターがかなり変わります。"
         data-image="images/Screenshot_20260403_094622~3.jpg"
+        style="--intro-delay:1.44s;"
       >
         <img class="main-image" src="images/Screenshot_20260403_094622~3.jpg" alt="neon visual">
         <span class="media-logo-wrap is-top-left is-soft">
@@ -1758,11 +1709,12 @@ body::after{
     <div class="mosaic">
       <div class="mosaic-left">
         <div
-          class="media reveal work-item"
+          class="media reveal work-item intro-item"
           data-label="Visual Direction"
           data-title="Soft City Pop"
           data-desc="ZZZっぽい空気感に寄せつつ、完全なコピーではなく背景演出だけで雰囲気を作っています。"
           data-image="images/Screenshot_20260403_094642~2.jpg"
+          style="--intro-delay:1.66s;"
         >
           <img class="main-image" src="images/Screenshot_20260403_094642~2.jpg" alt="soft city pop">
           <span class="media-logo-wrap is-top-left is-soft">
@@ -1778,11 +1730,12 @@ body::after{
         </div>
 
         <div
-          class="media reveal work-item"
+          class="media reveal work-item intro-item"
           data-label="Atmosphere"
           data-title="Dreamy Motion"
           data-desc="光の流れ・残光・淡い粒子を重ねて、背景だけで違う世界観を見せています。"
           data-image="images/Screenshot_20260403_094622~2.jpg"
+          style="--intro-delay:1.86s;"
         >
           <img class="main-image" src="images/Screenshot_20260403_094622~2.jpg" alt="dreamy motion">
           <span class="media-logo-wrap is-top-left is-soft">
@@ -1800,11 +1753,12 @@ body::after{
 
       <div class="mosaic-right">
         <div
-          class="media reveal work-item"
+          class="media reveal work-item intro-item"
           data-label="Final View"
           data-title="Soft Neon Finish"
           data-desc="最後までやわらかい光の流れを残しながら、統一感のあるページとして締めます。"
           data-image="images/Screenshot_エンドフィールド_20260402_163809~2.jpg"
+          style="--intro-delay:2.06s;"
         >
           <img class="main-image" src="images/Screenshot_エンドフィールド_20260402_163809~2.jpg" alt="final view">
           <span class="media-logo-wrap is-top-left is-soft">
@@ -1821,7 +1775,7 @@ body::after{
       </div>
     </div>
 
-    <div class="work-info reveal">
+    <div class="work-info reveal intro-item" style="--intro-delay:2.24s;">
       <div class="work-label">ZZZ Background Study</div>
       <div class="work-title">Same Structure / Different Atmosphere</div>
       <div class="work-sub">works.html と同じ骨格を使いながら、背景演出だけで別ジャンルの空気感を作るための zzz.html です。</div>
@@ -1875,8 +1829,6 @@ body::after{
   setTimeout(hideLoader, 1800);
 })();
 
-
-
 const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
 const modalLabel = document.getElementById("modalLabel");
@@ -1895,7 +1847,6 @@ const worksWrap = document.getElementById("worksWrap");
 let introRunning = true;
 const isIntro = () => introRunning;
 
-  
 const modalCastData = {
   "雲嶽山": [
     {
@@ -2456,7 +2407,7 @@ function updateBackgroundMotion(){
     bgTicking = false;
   });
 }
-  
+
 modalCastWrap.addEventListener("scroll", () => {
   updateScrollVelocity();
   handleLoopScroll();
@@ -2464,13 +2415,7 @@ modalCastWrap.addEventListener("scroll", () => {
 }, { passive:true });
 
 window.addEventListener("scroll", updateBackgroundMotion, { passive:true });
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    worksWrap.classList.add("start");
-    introOverlay.classList.add("hide");
-    introRunning = false;
-  }, 1800);
-});
+window.addEventListener("load", updateBackgroundMotion);
 
 document.querySelectorAll(".work-item").forEach((item) => {
   item.addEventListener("click", () => {
@@ -2543,8 +2488,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-
-
+/* reveal はイントロ後に有効化 */
 const observer = new IntersectionObserver((entries) => {
   if(isIntro()) return;
 
@@ -2560,8 +2504,20 @@ const observer = new IntersectionObserver((entries) => {
   rootMargin:"0px 0px -8% 0px"
 });
 
-  document.querySelectorAll(".reveal").forEach((el) => {
+document.querySelectorAll(".reveal").forEach((el) => {
   observer.observe(el);
+});
+
+/* 安全なイントロ開始 */
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    worksWrap.classList.add("start");
+    introOverlay.classList.add("hide");
+    introRunning = false;
+    document.querySelectorAll(".reveal").forEach((el) => {
+      observer.observe(el);
+    });
+  }, 1800);
 });
 </script>
 
