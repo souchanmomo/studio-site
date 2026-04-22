@@ -1163,6 +1163,52 @@ body::after{
     line-height:1.85;
   }
 }
+
+.modal-cast-image-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+}
+
+.modal-cast-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:
+    opacity .5s cubic-bezier(.22,1,.36,1),
+    transform .7s cubic-bezier(.22,1,.36,1),
+    filter .6s ease;
+  backface-visibility:hidden;
+}
+
+/* 初期状態 */
+.modal-cast-image.base{
+  opacity:1;
+  transform:scale(1);
+}
+
+.modal-cast-image.hover{
+  opacity:0;
+  transform:scale(1.06);
+  filter:brightness(1.05);
+}
+
+/* ホバー or タッチ時 */
+.modal-cast-card:hover .modal-cast-image.base,
+.modal-cast-card.active .modal-cast-image.base{
+  opacity:0;
+  transform:scale(1.04);
+}
+
+.modal-cast-card:hover .modal-cast-image.hover,
+.modal-cast-card.active .modal-cast-image.hover{
+  opacity:1;
+  transform:scale(1);
+}
+  
 </style>
 </head>
 
@@ -1750,8 +1796,10 @@ function getFallbackCards(title){
 function createCardsHTML(list){
   return list.map((item) => `
     <div class="modal-cast-card">
-      <img class="modal-cast-image" src="${item.image}" alt="${item.name}">
-      <div class="modal-cast-body">
+      <div class="modal-cast-image-wrap">
+  <img class="modal-cast-image base" src="${item.image}" alt="${item.name}">
+  <img class="modal-cast-image hover" src="${item.image2 || item.image}" alt="${item.name}">
+</div>
         <div class="modal-cast-role">${item.role}</div>
         <div class="modal-cast-name">${item.name}</div>
         <div class="modal-cast-text">${item.text}</div>
@@ -1887,6 +1935,19 @@ document.addEventListener("keydown", (e) => {
     closeMenu();
   }
 });
+
+ document.addEventListener("touchstart", (e) => {
+  const card = e.target.closest(".modal-cast-card");
+  if(card){
+    card.classList.add("active");
+  }
+}, {passive:true});
+
+document.addEventListener("touchend", (e) => {
+  document.querySelectorAll(".modal-cast-card").forEach(c=>{
+    c.classList.remove("active");
+  });
+});   
 </script>    
 
 </body>
