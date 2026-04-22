@@ -645,6 +645,45 @@ body::after{
   filter:brightness(1.03);
 }
 
+/* ロゴ配置 */
+.media-logo{
+  position:absolute;
+  z-index:7;
+  pointer-events:none;
+  user-select:none;
+  height:auto;
+  opacity:.96;
+  mix-blend-mode:normal;
+  filter:
+    drop-shadow(0 10px 24px rgba(0,0,0,0.22))
+    drop-shadow(0 2px 8px rgba(255,255,255,0.12));
+  transform:translateZ(0);
+}
+
+.media-logo-left{
+  top:18px;
+  left:18px;
+  width:min(18vw, 132px);
+}
+
+.media-logo-right{
+  right:24px;
+  bottom:22px;
+  width:min(19vw, 156px);
+  opacity:.93;
+  filter:
+    drop-shadow(0 14px 28px rgba(0,0,0,0.26))
+    drop-shadow(0 4px 12px rgba(255,255,255,0.10));
+}
+
+.media-logo-soft{
+  opacity:.90;
+}
+
+.media:hover .media-logo{
+  transform:translateZ(0) scale(1.02);
+}
+
 .media-overlay{
   position:absolute;
   inset:0;
@@ -1229,6 +1268,18 @@ body::after{
     font-size:18px;
   }
 
+  .media-logo-left{
+    top:10px;
+    left:10px;
+    width:min(32vw, 104px);
+  }
+
+  .media-logo-right{
+    right:12px;
+    bottom:12px;
+    width:min(34vw, 120px);
+  }
+
   .stamp{
     width:70px;
   }
@@ -1382,6 +1433,7 @@ body::after{
       data-image="images/Screenshot_20260403_004108~3.jpg"
     >
       <img class="main-image" src="images/Screenshot_20260403_004108~3.jpg" alt="ZZZ visual">
+      <img class="media-logo media-logo-right media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
       <div class="media-overlay">
         <div class="overlay-text">
           <div class="overlay-label">ZZZ Visual</div>
@@ -1406,6 +1458,7 @@ body::after{
         data-image="images/Screenshot_20260403_004118~3.jpg"
       >
         <img class="main-image" src="images/Screenshot_20260403_004118~3.jpg" alt="scene 01">
+        <img class="media-logo media-logo-left" src="images/雲嶽山ロゴ.png" alt="">
         <img class="stamp stamp-2" src="images/stamp-2.png" alt="">
         <div class="media-overlay">
           <div class="overlay-text">
@@ -1424,6 +1477,7 @@ body::after{
           data-image="images/Screenshot_20260403_094847~2.jpg"
         >
           <img class="main-image" src="images/Screenshot_20260403_094847~2.jpg" alt="detail 01">
+          <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
           <img class="stamp stamp-3" src="images/stamp-3.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
@@ -1459,6 +1513,7 @@ body::after{
           data-image="images/Screenshot_20260403_094702~2.jpg"
         >
           <img class="main-image" src="images/Screenshot_20260403_094702~2.jpg" alt="direction">
+          <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
           <img class="stamp stamp-4" src="images/stamp-4.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
@@ -1477,6 +1532,7 @@ body::after{
         data-image="images/Screenshot_20260403_094622~3.jpg"
       >
         <img class="main-image" src="images/Screenshot_20260403_094622~3.jpg" alt="neon visual">
+        <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
         <img class="stamp stamp-2" src="images/stamp-2.png" alt="">
         <div class="media-overlay">
           <div class="overlay-text">
@@ -1499,6 +1555,7 @@ body::after{
           data-image="images/Screenshot_20260403_094642~2.jpg"
         >
           <img class="main-image" src="images/Screenshot_20260403_094642~2.jpg" alt="soft city pop">
+          <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
           <img class="stamp stamp-1" src="images/stamp-1.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
@@ -1516,6 +1573,7 @@ body::after{
           data-image="images/Screenshot_20260403_094622~2.jpg"
         >
           <img class="main-image" src="images/Screenshot_20260403_094622~2.jpg" alt="dreamy motion">
+          <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
           <img class="stamp stamp-3" src="images/stamp-3.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
@@ -1535,6 +1593,7 @@ body::after{
           data-image="images/Screenshot_エンドフィールド_20260402_163809~2.jpg"
         >
           <img class="main-image" src="images/Screenshot_エンドフィールド_20260402_163809~2.jpg" alt="final view">
+          <img class="media-logo media-logo-left media-logo-soft" src="images/雲嶽山ロゴ.png" alt="">
           <img class="stamp stamp-4" src="images/stamp-4.png" alt="">
           <div class="media-overlay">
             <div class="overlay-text">
