@@ -1894,14 +1894,7 @@ function updateCenterCard(force = false){
   }
 }
 
-  if(centeredCard && centeredCard !== nearestCard){
-    centeredCard.classList.remove("center-active");
-  }
-
-  if(nearestCard && centeredCard !== nearestCard){
-    nearestCard.classList.add("center-active");
-    centeredCard = nearestCard;
-  }
+  
 }
 
 function requestCenterUpdate(force = false){
