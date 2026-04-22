@@ -901,9 +901,7 @@ body::after{
   transform:translate3d(0,0,0);
 }
 
-.intro-hold .works-wrap{
-  opacity:0;
-}
+
 
 .works-wrap{
   width:100%;
@@ -911,10 +909,7 @@ body::after{
   z-index:2;
 }
   
-body.intro-start .works-wrap{
-  opacity:1;
-  pointer-events:auto;
-}
+
 
 /* 初期状態（全カードを右に待機） */
 .intro-hold .media,
@@ -924,38 +919,6 @@ body.intro-start .works-wrap{
   filter:blur(6px);
 }
 
-body.intro-start .media,
-body.intro-start .work-info{
-  animation:cardSlideIn 1.25s cubic-bezier(.16,1,.30,1) forwards;
-}
-
-/* 順番ディレイ（上から順に） */
-body.intro-start .media:nth-of-type(1){ animation-delay:.05s; }
-body.intro-start .media:nth-of-type(2){ animation-delay:.12s; }
-body.intro-start .media:nth-of-type(3){ animation-delay:.19s; }
-body.intro-start .media:nth-of-type(4){ animation-delay:.26s; }
-body.intro-start .media:nth-of-type(5){ animation-delay:.33s; }
-body.intro-start .media:nth-of-type(6){ animation-delay:.40s; }
-body.intro-start .media:nth-of-type(7){ animation-delay:.47s; }
-body.intro-start .media:nth-of-type(8){ animation-delay:.54s; }
-
-body.intro-start .work-info:nth-of-type(1){ animation-delay:.10s; }
-body.intro-start .work-info:nth-of-type(2){ animation-delay:.17s; }
-body.intro-start .work-info:nth-of-type(3){ animation-delay:.24s; }
-body.intro-start .work-info:nth-of-type(4){ animation-delay:.31s; }
-body.intro-start .work-info:nth-of-type(5){ animation-delay:.38s; }
-
-body.intro-start .work-section:nth-of-type(1) .media,
-body.intro-start .work-section:nth-of-type(1) .work-info{ animation-delay:.18s; }
-
-body.intro-start .work-section:nth-of-type(2) .media,
-body.intro-start .work-section:nth-of-type(2) .work-info{ animation-delay:.36s; }
-
-body.intro-start .work-section:nth-of-type(3) .media,
-body.intro-start .work-section:nth-of-type(3) .work-info{ animation-delay:.54s; }
-
-body.intro-start .work-section:nth-of-type(4) .media,
-body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.72s; }
 
   
 @keyframes cardSlideIn{
@@ -967,6 +930,74 @@ body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.72s; 
   65%{
     opacity:1;
     transform:translate3d(-2px,0,0);
+    filter:blur(0);
+  }
+  100%{
+    opacity:1;
+    transform:translate3d(0,0,0);
+    filter:blur(0);
+  }
+}
+
+/* イントロ固定レイヤー */
+.intro-overlay{
+  position:fixed;
+  inset:0;
+  z-index:2500;
+  pointer-events:none;
+  opacity:1;
+  transition:opacity .8s ease, visibility .8s ease;
+  visibility:visible;
+}
+
+.intro-overlay.hide{
+  opacity:0;
+  visibility:hidden;
+}
+
+.intro-overlay-bg{
+  position:absolute;
+  inset:0;
+  background:transparent;
+}
+
+.intro-seq .media,
+.intro-seq .work-info{
+  opacity:0;
+  transform:translate3d(72px,0,0);
+  filter:blur(6px);
+}
+
+.intro-seq.start .media,
+.intro-seq.start .work-info{
+  animation:cardSlideIn 1.45s cubic-bezier(.16,1,.30,1) forwards;
+}
+
+.intro-seq.start .work-section:nth-of-type(1) .media{ animation-delay:.22s; }
+.intro-seq.start .work-section:nth-of-type(1) .work-info{ animation-delay:.36s; }
+
+.intro-seq.start .work-section:nth-of-type(2) .media:nth-of-type(1){ animation-delay:.50s; }
+.intro-seq.start .work-section:nth-of-type(2) .media:nth-of-type(2){ animation-delay:.68s; }
+.intro-seq.start .work-section:nth-of-type(2) .work-info{ animation-delay:.82s; }
+
+.intro-seq.start .work-section:nth-of-type(3) .media:nth-of-type(1){ animation-delay:1.00s; }
+.intro-seq.start .work-section:nth-of-type(3) .media:nth-of-type(2){ animation-delay:1.18s; }
+.intro-seq.start .work-section:nth-of-type(3) .work-info{ animation-delay:1.32s; }
+
+.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(1){ animation-delay:1.50s; }
+.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(2){ animation-delay:1.68s; }
+.intro-seq.start .work-section:nth-of-type(4) .media:nth-of-type(3){ animation-delay:1.86s; }
+.intro-seq.start .work-section:nth-of-type(4) .work-info{ animation-delay:2.00s; }
+
+@keyframes cardSlideIn{
+  0%{
+    opacity:0;
+    transform:translate3d(72px,0,0);
+    filter:blur(6px);
+  }
+  60%{
+    opacity:1;
+    transform:translate3d(6px,0,0);
     filter:blur(0);
   }
   100%{
@@ -1503,10 +1534,13 @@ body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.72s; 
 </style>
 </head>
 
-<body class="intro-hold">
+<body>
 
 <div class="page-bg" id="pageBg"></div>
-
+<div class="intro-overlay" id="introOverlay">
+  <div class="intro-overlay-bg"></div>
+</div>
+  
 <div id="loader">
   <div class="loader-glow"></div>
   <div class="loader-lines"></div>
@@ -1588,7 +1622,7 @@ body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.72s; 
   <div class="page-title-text">Zenless Zone Zero</div>
 </div>
 
-<div class="works-wrap">
+<div class="works-wrap intro-seq" id="worksWrap">
 
   <section class="work-section">
     <div
@@ -1855,7 +1889,13 @@ const modalCastTrack = document.getElementById("modalCastTrack");
 const menuToggle = document.getElementById("menuToggle");
 const fullscreenMenu = document.getElementById("fullscreenMenu");
 const pageBg = document.getElementById("pageBg");
+const introOverlay = document.getElementById("introOverlay");
+const worksWrap = document.getElementById("worksWrap");
 
+let introRunning = true;
+const isIntro = () => introRunning;
+
+  
 const modalCastData = {
   "雲嶽山": [
     {
@@ -2497,17 +2537,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-window.addEventListener("load", () => {
-  document.body.classList.add("intro-hold");
 
-  setTimeout(() => {
-    document.body.classList.remove("intro-hold");
-    document.body.classList.add("intro-start");
-  }, 1800);
-});
-
-// intro中はreveal無効
-const isIntro = () => document.body.classList.contains("intro-hold");
 
 const observer = new IntersectionObserver((entries) => {
   if(isIntro()) return;
