@@ -946,35 +946,123 @@ body::after{
   -webkit-backdrop-filter:blur(8px);
   overflow:hidden;
   touch-action:pan-y;
-  transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s ease;
+  transition:
+    transform .42s cubic-bezier(.22,1,.36,1),
+    box-shadow .42s ease,
+    border-color .42s ease;
   will-change:transform;
 }
 
 .modal-cast-card.center-active{
-  transform:scale(1.008);
-  box-shadow:0 14px 30px rgba(0,0,0,0.10);
+  transform:scale(1.012) translateY(-2px);
+  box-shadow:0 18px 38px rgba(0,0,0,0.14);
+  border-color:rgba(255,255,255,0.36);
+}
+
+.modal-cast-image-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  isolation:isolate;
+  background:rgba(255,255,255,0.08);
+}
+
+.modal-cast-image-wrap::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  background:linear-gradient(
+    90deg,
+    rgba(46,18,40,0.18) 0%,
+    rgba(46,18,40,0.12) 18%,
+    rgba(255,255,255,0.00) 36%,
+    rgba(255,255,255,0.00) 100%
+  );
+  opacity:0;
+  transform:translateX(10%);
+  transition:
+    opacity .55s ease,
+    transform .72s cubic-bezier(.22,1,.36,1);
+}
+
+.modal-cast-image-wrap::after{
+  content:"";
+  position:absolute;
+  inset:-8% -12%;
+  z-index:4;
+  pointer-events:none;
+  background:linear-gradient(
+    110deg,
+    rgba(255,255,255,0) 38%,
+    rgba(255,255,255,.34) 49%,
+    rgba(255,255,255,.10) 56%,
+    rgba(255,255,255,0) 66%
+  );
+  opacity:0;
+  transform:translateX(28%);
+  transition:
+    opacity .45s ease,
+    transform .78s cubic-bezier(.22,1,.36,1);
+}
+
+.modal-cast-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
 }
 
 .modal-cast-image.base{
+  z-index:1;
   opacity:1;
   visibility:visible;
-  transition:opacity .32s ease;
+  transform:scale(1);
+  filter:brightness(1) saturate(1);
+  transition:
+    transform .62s cubic-bezier(.22,1,.36,1),
+    filter .52s ease,
+    opacity .35s ease;
 }
 
 .modal-cast-image.hover{
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .32s ease;
+  z-index:2;
+  opacity:1;
+  visibility:visible;
+  clip-path:polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  transform-origin:right center;
+  transform:perspective(1200px) rotateY(16deg) scale(1.03);
+  filter:brightness(1.04) saturate(1.02);
+  transition:
+    clip-path .72s cubic-bezier(.22,1,.36,1),
+    transform .72s cubic-bezier(.22,1,.36,1),
+    filter .52s ease;
 }
 
 .modal-cast-card.center-active .modal-cast-image.base{
-  opacity:0;
-  visibility:hidden;
+  transform:scale(.985);
+  filter:brightness(.82) saturate(.93);
 }
 
 .modal-cast-card.center-active .modal-cast-image.hover{
+  clip-path:polygon(13% 0, 100% 0, 100% 100%, 0 100%);
+  transform:perspective(1200px) rotateY(0deg) scale(1);
+  filter:brightness(1) saturate(1);
+}
+
+.modal-cast-card.center-active .modal-cast-image-wrap::before{
   opacity:1;
-  visibility:visible;
+  transform:translateX(0);
+}
+
+.modal-cast-card.center-active .modal-cast-image-wrap::after{
+  opacity:1;
+  transform:translateX(-18%);
 }
 
 .modal-cast-body{
@@ -1167,21 +1255,14 @@ body::after{
     font-size:14px;
     line-height:1.85;
   }
-}
 
-  .modal-cast-image-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16 / 9;
-  overflow:hidden;
-}
+  .modal-cast-card.center-active{
+    transform:scale(1.008) translateY(-1px);
+  }
 
-.modal-cast-image{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  .modal-cast-card.center-active .modal-cast-image.hover{
+    clip-path:polygon(17% 0, 100% 0, 100% 100%, 0 100%);
+  }
 }
 </style>
 </head>
@@ -1497,15 +1578,14 @@ body::after{
   });
 
   window.addEventListener("load", hideLoader);
-
   setTimeout(hideLoader, 1800);
 })();
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting) {
+    if(entry.isIntersecting){
       entry.target.classList.add("show");
-    } else {
+    }else{
       entry.target.classList.remove("show");
     }
   });
@@ -1795,6 +1875,7 @@ let centeredCard = null;
 let centerTicking = false;
 let centerSwitchTimer = null;
 let pendingCard = null;
+let lastSwitchTime = 0;
 
 function getFallbackCards(title){
   return [
@@ -1844,7 +1925,7 @@ function preloadCastImages(list){
     });
   });
 }
-  
+
 function createCardsHTML(list){
   return list.map((item) => `
     <div class="modal-cast-card">
@@ -1861,90 +1942,95 @@ function createCardsHTML(list){
   `).join("");
 }
 
+function clearPendingSwitch(){
+  if(centerSwitchTimer){
+    clearTimeout(centerSwitchTimer);
+    centerSwitchTimer = null;
+  }
+  pendingCard = null;
+}
+
 function clearCenterCard(){
+  clearPendingSwitch();
   if(centeredCard){
     centeredCard.classList.remove("center-active");
     centeredCard = null;
   }
 }
 
+function getCardDistanceFromCenter(card){
+  const wrapRect = modalCastWrap.getBoundingClientRect();
+  const wrapCenter = wrapRect.top + (wrapRect.height / 2);
+  const rect = card.getBoundingClientRect();
+  const cardCenter = rect.top + (rect.height / 2);
+  return Math.abs(wrapCenter - cardCenter);
+}
+
+function activateCard(card){
+  if(!card) return;
+  if(centeredCard === card) return;
+
+  if(centeredCard){
+    centeredCard.classList.remove("center-active");
+  }
+
+  card.classList.add("center-active");
+  centeredCard = card;
+  lastSwitchTime = performance.now();
+}
+
 function updateCenterCard(force = false){
   const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
   if(!cards.length) return;
 
-  const wrapRect = modalCastWrap.getBoundingClientRect();
-  const wrapCenter = wrapRect.top + (wrapRect.height / 2);
-
-  /* 中央付近だけ反応する範囲 */
-  const activeRange = wrapRect.height * 0.14;
-
-  let targetCard = null;
+  let nearestCard = null;
   let nearestDistance = Infinity;
 
-  for(const card of cards){
-    const rect = card.getBoundingClientRect();
-    const cardCenter = rect.top + (rect.height / 2);
-    const distance = Math.abs(wrapCenter - cardCenter);
-
+  cards.forEach((card) => {
+    const distance = getCardDistanceFromCenter(card);
     if(distance < nearestDistance){
       nearestDistance = distance;
-      targetCard = card;
+      nearestCard = card;
     }
-  }
+  });
 
-  /* 中央付近に誰もいないなら解除 */
-  if(!targetCard || nearestDistance > activeRange){
-    pendingCard = null;
-    if(centerSwitchTimer){
-      clearTimeout(centerSwitchTimer);
-      centerSwitchTimer = null;
-    }
-    if(centeredCard){
-      centeredCard.classList.remove("center-active");
-      centeredCard = null;
-    }
+  if(!nearestCard) return;
+
+  if(force || !centeredCard){
+    clearPendingSwitch();
+    activateCard(nearestCard);
     return;
   }
 
-  /* すでにそのカードが有効なら何もしない */
-  if(centeredCard === targetCard) return;
-
-  /* 強制時は即切り替え */
-  if(force){
-    if(centerSwitchTimer){
-      clearTimeout(centerSwitchTimer);
-      centerSwitchTimer = null;
-    }
-    pendingCard = null;
-
-    if(centeredCard){
-      centeredCard.classList.remove("center-active");
-    }
-    targetCard.classList.add("center-active");
-    centeredCard = targetCard;
+  if(nearestCard === centeredCard){
+    clearPendingSwitch();
     return;
   }
 
-  /* 同じ候補に少し留まったときだけ切り替える */
-  if(pendingCard !== targetCard){
-    pendingCard = targetCard;
+  const currentDistance = getCardDistanceFromCenter(centeredCard);
+  const wrapHeight = modalCastWrap.getBoundingClientRect().height;
+  const minGain = Math.max(26, wrapHeight * 0.05);
+  const cooldown = 220;
+  const now = performance.now();
 
-    if(centerSwitchTimer){
-      clearTimeout(centerSwitchTimer);
-    }
+  if((currentDistance - nearestDistance) < minGain && nearestDistance > wrapHeight * 0.10){
+    return;
+  }
+
+  if((now - lastSwitchTime) < cooldown){
+    return;
+  }
+
+  if(pendingCard !== nearestCard){
+    clearPendingSwitch();
+    pendingCard = nearestCard;
 
     centerSwitchTimer = setTimeout(() => {
-      if(centeredCard && centeredCard !== pendingCard){
-        centeredCard.classList.remove("center-active");
-      }
-
       if(pendingCard){
-        pendingCard.classList.add("center-active");
-        centeredCard = pendingCard;
+        activateCard(pendingCard);
       }
-
-      centerSwitchTimer = null;
-    }, 90);
+      clearPendingSwitch();
+    }, 180);
   }
 }
 
@@ -1982,7 +2068,9 @@ function buildCastCards(title){
     modalCastWrap.scrollTop = loopSetHeight;
     loopStarted = true;
 
-    requestCenterUpdate(true);
+    requestAnimationFrame(() => {
+      requestCenterUpdate(true);
+    });
   });
 }
 
@@ -1998,17 +2086,18 @@ function normalizeInfiniteScroll(){
     modalCastWrap.scrollTop = current + loopSetHeight;
     requestAnimationFrame(() => {
       loopLock = false;
-      requestCenterUpdate();
+      requestCenterUpdate(true);
     });
   }else if(current >= maxEdge){
     loopLock = true;
     modalCastWrap.scrollTop = current - loopSetHeight;
     requestAnimationFrame(() => {
       loopLock = false;
-      requestCenterUpdate();
+      requestCenterUpdate(true);
     });
   }
 }
+
 function handleLoopScroll(){
   if(loopTicking) return;
   loopTicking = true;
@@ -2052,7 +2141,7 @@ function closeModal(){
 modalClose.addEventListener("click", closeModal);
 
 modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
+  if(e.target === modal){
     closeModal();
   }
 });
@@ -2086,7 +2175,7 @@ document.querySelectorAll(".menu-link, .menu-card").forEach((el) => {
 });
 
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
+  if(e.key === "Escape"){
     closeModal();
     closeMenu();
   }
