@@ -29,7 +29,7 @@ html,body{
   --zzz-accent-soft:#7b3a68;
   --zzz-glass:rgba(255,250,255,0.22);
   --zzz-glass-deep:rgba(124,76,124,0.54);
-  --zzz-bg-image:url("images/file_00000000163472098563e8d57edc408a.png");
+  --zzz-bg-image:url("images/ガチャ背景.jpg");
   --bg-shift:0px;
 }
 
@@ -93,6 +93,14 @@ body::after{
   opacity:.35;
 }
 
+  .page-bg::after{
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0.55)
+  );
+  opacity:.55;
+}
 /* ローディング */
 #loader{
   position:fixed;
