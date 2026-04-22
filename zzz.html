@@ -1888,16 +1888,6 @@ function updateCenterCard(force = false){
     }
   }
 
-  if(centeredCard && centeredCard !== targetCard){
-    centeredCard.classList.remove("center-active");
-  }
-
-  if(targetCard && (force || centeredCard !== targetCard)){
-    targetCard.classList.add("center-active");
-    centeredCard = targetCard;
-  }
-}
-
   if(!targetCard){
     if(centeredCard){
       centeredCard.classList.remove("center-active");
