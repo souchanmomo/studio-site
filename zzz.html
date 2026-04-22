@@ -913,10 +913,35 @@ body.intro-start .works-wrap{
   pointer-events:auto;
 }
 
-body.intro-start .work-section .media,
-body.intro-start .work-section .work-info{
-  animation:cardSlideIn .9s cubic-bezier(.22,1,.36,1) both;
+/* 初期状態（全カードを右に待機） */
+.intro-hold .media,
+.intro-hold .work-info{
+  opacity:0;
+  transform:translate3d(60px,0,0);
+  filter:blur(6px);
 }
+
+/* 表示時 */
+body.intro-start .media,
+body.intro-start .work-info{
+  animation:cardSlideIn .8s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* 順番ディレイ（上から順に） */
+body.intro-start .media:nth-of-type(1){ animation-delay:.05s; }
+body.intro-start .media:nth-of-type(2){ animation-delay:.12s; }
+body.intro-start .media:nth-of-type(3){ animation-delay:.19s; }
+body.intro-start .media:nth-of-type(4){ animation-delay:.26s; }
+body.intro-start .media:nth-of-type(5){ animation-delay:.33s; }
+body.intro-start .media:nth-of-type(6){ animation-delay:.40s; }
+body.intro-start .media:nth-of-type(7){ animation-delay:.47s; }
+body.intro-start .media:nth-of-type(8){ animation-delay:.54s; }
+
+body.intro-start .work-info:nth-of-type(1){ animation-delay:.10s; }
+body.intro-start .work-info:nth-of-type(2){ animation-delay:.17s; }
+body.intro-start .work-info:nth-of-type(3){ animation-delay:.24s; }
+body.intro-start .work-info:nth-of-type(4){ animation-delay:.31s; }
+body.intro-start .work-info:nth-of-type(5){ animation-delay:.38s; }
 
 body.intro-start .work-section:nth-of-type(1) .media,
 body.intro-start .work-section:nth-of-type(1) .work-info{ animation-delay:.08s; }
@@ -933,8 +958,13 @@ body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.32s; 
 @keyframes cardSlideIn{
   0%{
     opacity:0;
-    transform:translate3d(42px,0,0);
-    filter:blur(6px);
+    transform:translate3d(80px,0,0);
+    filter:blur(8px);
+  }
+  60%{
+    opacity:1;
+    transform:translate3d(-4px,0,0);
+    filter:blur(0);
   }
   100%{
     opacity:1;
