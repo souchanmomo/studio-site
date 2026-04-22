@@ -958,13 +958,13 @@ body::after{
 .modal-cast-image.base{
   opacity:1;
   visibility:visible;
-  transition:opacity .18s ease;
+  transition:opacity .32s ease;
 }
 
 .modal-cast-image.hover{
   opacity:0;
   visibility:hidden;
-  transition:opacity .18s ease;
+  transition:opacity .32s ease;
 }
 
 .modal-cast-card.center-active .modal-cast-image.base{
@@ -1793,6 +1793,8 @@ let loopTicking = false;
 let loopStarted = false;
 let centeredCard = null;
 let centerTicking = false;
+let centerSwitchTimer = null;
+let pendingCard = null;
 
 function getFallbackCards(title){
   return [
@@ -1872,7 +1874,9 @@ function updateCenterCard(force = false){
 
   const wrapRect = modalCastWrap.getBoundingClientRect();
   const wrapCenter = wrapRect.top + (wrapRect.height / 2);
-  const activeRange = wrapRect.height * 0.18;
+
+  /* 中央付近だけ反応する範囲 */
+  const activeRange = wrapRect.height * 0.14;
 
   let targetCard = null;
   let nearestDistance = Infinity;
@@ -1888,7 +1892,13 @@ function updateCenterCard(force = false){
     }
   }
 
+  /* 中央付近に誰もいないなら解除 */
   if(!targetCard || nearestDistance > activeRange){
+    pendingCard = null;
+    if(centerSwitchTimer){
+      clearTimeout(centerSwitchTimer);
+      centerSwitchTimer = null;
+    }
     if(centeredCard){
       centeredCard.classList.remove("center-active");
       centeredCard = null;
@@ -1896,16 +1906,47 @@ function updateCenterCard(force = false){
     return;
   }
 
-  if(centeredCard && centeredCard !== targetCard){
-    centeredCard.classList.remove("center-active");
-  }
+  /* すでにそのカードが有効なら何もしない */
+  if(centeredCard === targetCard) return;
 
-  if(force || centeredCard !== targetCard){
+  /* 強制時は即切り替え */
+  if(force){
+    if(centerSwitchTimer){
+      clearTimeout(centerSwitchTimer);
+      centerSwitchTimer = null;
+    }
+    pendingCard = null;
+
+    if(centeredCard){
+      centeredCard.classList.remove("center-active");
+    }
     targetCard.classList.add("center-active");
     centeredCard = targetCard;
+    return;
+  }
+
+  /* 同じ候補に少し留まったときだけ切り替える */
+  if(pendingCard !== targetCard){
+    pendingCard = targetCard;
+
+    if(centerSwitchTimer){
+      clearTimeout(centerSwitchTimer);
+    }
+
+    centerSwitchTimer = setTimeout(() => {
+      if(centeredCard && centeredCard !== pendingCard){
+        centeredCard.classList.remove("center-active");
+      }
+
+      if(pendingCard){
+        pendingCard.classList.add("center-active");
+        centeredCard = pendingCard;
+      }
+
+      centerSwitchTimer = null;
+    }, 90);
   }
 }
-  
 
 function requestCenterUpdate(force = false){
   if(centerTicking && !force) return;
