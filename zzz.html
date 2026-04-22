@@ -1460,14 +1460,31 @@ body::after{
 </div>
 
 <script>
-window.addEventListener("load", () => {
+(function(){
   const loader = document.getElementById("loader");
-  requestAnimationFrame(() => {
+  let loaderHidden = false;
+
+  function hideLoader(){
+    if(loaderHidden || !loader) return;
+    loaderHidden = true;
+    loader.classList.add("hide");
     setTimeout(() => {
-      loader.classList.add("hide");
-    }, 450);
+      if(loader && loader.parentNode){
+        loader.parentNode.removeChild(loader);
+      }
+    }, 800);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    requestAnimationFrame(() => {
+      setTimeout(hideLoader, 250);
+    });
   });
-});
+
+  window.addEventListener("load", hideLoader);
+
+  setTimeout(hideLoader, 1800);
+})();
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
