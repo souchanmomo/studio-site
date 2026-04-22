@@ -21,6 +21,7 @@ html,body{
   width:100%;
   min-height:100%;
   background:#e7c8f2;
+  overflow-x:hidden;
 }
 
 :root{
@@ -65,12 +66,12 @@ body::after{
 .page-bg::before{
   content:"";
   position:absolute;
-  inset:-3% 0 -3% 0;
+  inset:0;
   background-image:var(--zzz-bg-image);
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.04);
+  transform:translate3d(0, var(--bg-shift), 0) scale(1.03);
   will-change:transform;
 }
 
@@ -1839,22 +1840,7 @@ body.intro-start .work-section:nth-of-type(4) .work-info{ animation-delay:.32s; 
   setTimeout(hideLoader, 1800);
 })();
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if(entry.isIntersecting){
-      entry.target.classList.add("show");
-    }else{
-      entry.target.classList.remove("show");
-    }
-  });
-},{
-  threshold:0.16,
-  rootMargin:"0px 0px -8% 0px"
-});
 
-document.querySelectorAll(".reveal").forEach((el) => {
-  observer.observe(el);
-});
 
 const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
@@ -2536,7 +2522,10 @@ const observer = new IntersectionObserver((entries) => {
   threshold:0.16,
   rootMargin:"0px 0px -8% 0px"
 });
-  
+
+  document.querySelectorAll(".reveal").forEach((el) => {
+  observer.observe(el);
+});
 </script>
 
 </body>
