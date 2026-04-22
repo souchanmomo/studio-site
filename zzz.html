@@ -74,6 +74,7 @@ body::after{
   background-position:center center;
   transform:translate3d(0, var(--bg-shift), 0) scale(1.03);
   will-change:transform;
+  transition:transform .22s linear;
 }
 
 .page-bg::after{
@@ -888,8 +889,8 @@ body::after{
 }
 
 .reveal{
-  opacity:0;
-  transform:translate3d(0,34px,0);
+  opacity:1;
+  transform:none;
   transition:
     opacity .72s ease,
     transform .9s cubic-bezier(.22,1,.36,1);
@@ -899,7 +900,7 @@ body::after{
 
 .reveal.show{
   opacity:1;
-  transform:translate3d(0,0,0);
+  transform:none;
 }
 
 /* ===== 安全なイントロ演出 ===== */
@@ -940,11 +941,6 @@ body::after{
     opacity:0;
     transform:translate3d(72px,0,0);
     filter:blur(6px);
-  }
-  62%{
-    opacity:1;
-    transform:translate3d(6px,0,0);
-    filter:blur(0);
   }
   100%{
     opacity:1;
@@ -1296,13 +1292,14 @@ body::after{
   }
 
   .page-bg::before{
-    inset:0;
-    background-image:var(--zzz-bg-image);
-    background-repeat:no-repeat;
-    background-size:cover;
-    background-position:center center;
-    transform:translate3d(0, var(--bg-shift), 0) scale(1.02);
-  }
+  inset:0;
+  background-image:var(--zzz-bg-image);
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center center;
+  transform:translate3d(0, var(--bg-shift), 0) scale(1.02);
+  transition:transform .22s linear;
+}
 
   .page-title{
     padding:0 64px 0 8px;
@@ -2402,7 +2399,7 @@ function updateBackgroundMotion(){
 
   requestAnimationFrame(() => {
     const y = window.scrollY || window.pageYOffset || 0;
-    const shift = Math.max(-10, Math.min(22, y * 0.03));
+    const shift = Math.max(-6, Math.min(12, y * 0.015));
     document.documentElement.style.setProperty("--bg-shift", `${shift}px`);
     bgTicking = false;
   });
