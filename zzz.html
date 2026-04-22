@@ -951,44 +951,30 @@ body::after{
 }
 
 .modal-cast-card.center-active{
-  transform:scale(1.01);
+  transform:scale(1.008);
   box-shadow:0 14px 30px rgba(0,0,0,0.10);
-}
-
-.modal-cast-image-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16 / 9;
-  overflow:hidden;
-  background:rgba(255,255,255,0.08);
-}
-
-.modal-cast-image{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  backface-visibility:hidden;
-  transform:translateZ(0);
 }
 
 .modal-cast-image.base{
   opacity:1;
-  transition:opacity .28s ease;
+  visibility:visible;
+  transition:opacity .18s ease;
 }
 
 .modal-cast-image.hover{
   opacity:0;
-  transition:opacity .28s ease;
+  visibility:hidden;
+  transition:opacity .18s ease;
 }
 
 .modal-cast-card.center-active .modal-cast-image.base{
   opacity:0;
+  visibility:hidden;
 }
 
 .modal-cast-card.center-active .modal-cast-image.hover{
   opacity:1;
+  visibility:visible;
 }
 
 .modal-cast-body{
@@ -1809,12 +1795,28 @@ function getFallbackCards(title){
   ];
 }
 
+function preloadCastImages(list){
+  const seen = new Set();
+
+  list.forEach((item) => {
+    [item.image, item.image2 || item.image].forEach((src) => {
+      if(!src || seen.has(src)) return;
+      seen.add(src);
+
+      const img = new Image();
+      img.decoding = "async";
+      img.loading = "eager";
+      img.src = src;
+    });
+  });
+}
+  
 function createCardsHTML(list){
   return list.map((item) => `
     <div class="modal-cast-card">
       <div class="modal-cast-image-wrap">
-        <img class="modal-cast-image base" src="${item.image}" alt="${item.name}" loading="lazy" decoding="async">
-        <img class="modal-cast-image hover" src="${item.image2 || item.image}" alt="${item.name}" loading="lazy" decoding="async">
+        <img class="modal-cast-image base" src="${item.image}" alt="${item.name}" decoding="async" fetchpriority="high">
+        <img class="modal-cast-image hover" src="${item.image2 || item.image}" alt="${item.name}" decoding="async" fetchpriority="high">
       </div>
       <div class="modal-cast-body">
         <div class="modal-cast-role">${item.role}</div>
@@ -1832,24 +1834,48 @@ function clearCenterCard(){
   }
 }
 
-function updateCenterCard(){
+function updateCenterCard(force = false){
   const cards = modalCastTrack.querySelectorAll(".modal-cast-card");
   if(!cards.length) return;
 
-  const centerLine = modalCastWrap.scrollTop + (modalCastWrap.clientHeight / 2);
+  const wrapTop = modalCastWrap.scrollTop;
+  const wrapHeight = modalCastWrap.clientHeight;
+  const wrapCenter = wrapTop + (wrapHeight / 2);
 
-  let nearestCard = null;
+  /* 中央のかなり狭い帯だけ反応させる */
+  const centerBandHalf = Math.min(110, wrapHeight * 0.16);
+
+  let targetCard = null;
   let nearestDistance = Infinity;
 
   for(const card of cards){
-    const cardCenter = card.offsetTop + (card.offsetHeight / 2);
-    const distance = Math.abs(centerLine - cardCenter);
+    const cardTop = card.offsetTop;
+    const cardCenter = cardTop + (card.offsetHeight / 2);
+    const distance = Math.abs(wrapCenter - cardCenter);
 
-    if(distance < nearestDistance){
+    if(distance <= centerBandHalf && distance < nearestDistance){
       nearestDistance = distance;
-      nearestCard = card;
+      targetCard = card;
     }
   }
+
+  if(!targetCard){
+    if(centeredCard){
+      centeredCard.classList.remove("center-active");
+      centeredCard = null;
+    }
+    return;
+  }
+
+  if(centeredCard && centeredCard !== targetCard){
+    centeredCard.classList.remove("center-active");
+  }
+
+  if(force || centeredCard !== targetCard){
+    targetCard.classList.add("center-active");
+    centeredCard = targetCard;
+  }
+}
 
   if(centeredCard && centeredCard !== nearestCard){
     centeredCard.classList.remove("center-active");
@@ -1861,20 +1887,22 @@ function updateCenterCard(){
   }
 }
 
-function requestCenterUpdate(){
-  if(centerTicking) return;
+function requestCenterUpdate(force = false){
+  if(centerTicking && !force) return;
   centerTicking = true;
 
   requestAnimationFrame(() => {
-    updateCenterCard();
+    updateCenterCard(force);
     centerTicking = false;
   });
 }
 
 function buildCastCards(title){
   const original = modalCastData[title] || getFallbackCards(title);
-  const loopList = [...original, ...original, ...original];
 
+  preloadCastImages(original);
+
+  const loopList = [...original, ...original, ...original];
   modalCastTrack.innerHTML = createCardsHTML(loopList);
 
   requestAnimationFrame(() => {
@@ -1892,7 +1920,8 @@ function buildCastCards(title){
     loopSetHeight = total;
     modalCastWrap.scrollTop = loopSetHeight;
     loopStarted = true;
-    requestCenterUpdate();
+
+    requestCenterUpdate(true);
   });
 }
 
