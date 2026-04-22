@@ -33,6 +33,9 @@ html,body{
   --zzz-glass-deep:rgba(124,76,124,0.54);
   --zzz-bg-image:url("images/ガチャ背景.png");
   --bg-shift:0px;
+  --bg-shift:0px;
+  --title-bar-bg:rgba(16,18,28,0.58);
+  --title-bar-border:rgba(255,255,255,0.10);
 }
 
 body{
@@ -67,14 +70,14 @@ body::after{
 .page-bg::before{
   content:"";
   position:absolute;
-  inset:0;
+  inset:-2% 0 -2% 0;
   background-image:var(--zzz-bg-image);
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.03);
+  transform:translate3d(0, var(--bg-shift), 0) scale(1.035);
   will-change:transform;
-  transition:transform .22s linear;
+  backface-visibility:hidden;
 }
 
 .page-bg::after{
@@ -480,10 +483,14 @@ body::after{
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(255,245,250,0.46);
-  backdrop-filter:blur(14px) saturate(112%);
-  -webkit-backdrop-filter:blur(14px) saturate(112%);
-  border-bottom:1px solid rgba(255,255,255,0.26);
+  background:
+    linear-gradient(180deg, rgba(28,30,42,0.78), rgba(14,16,24,0.66));
+  backdrop-filter:blur(16px) saturate(120%);
+  -webkit-backdrop-filter:blur(16px) saturate(120%);
+  border-bottom:1px solid var(--title-bar-border);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .page-title-logo{
@@ -496,10 +503,9 @@ body::after{
   display:block;
   object-fit:contain;
   filter:
-    drop-shadow(0 2px 8px rgba(255,255,255,0.10))
-    drop-shadow(0 4px 14px rgba(89,35,78,0.10));
+    drop-shadow(0 4px 14px rgba(0,0,0,0.24))
+    drop-shadow(0 0 14px rgba(168,126,255,0.08));
 }
-
 .page-title-text{
   width:100%;
   text-align:center;
@@ -507,11 +513,11 @@ body::after{
   font-family:"Space Grotesk",sans-serif;
   font-size:17px;
   font-weight:700;
-  letter-spacing:0.13em;
-  color:#5a1f4c;
+  letter-spacing:0.16em;
+  color:#f4f1f8;
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.26),
-    0 0 12px rgba(255,255,255,0.10);
+    0 1px 0 rgba(255,255,255,0.06),
+    0 0 18px rgba(164,122,255,0.08);
   white-space:nowrap;
   padding:0 132px 0 156px;
 }
@@ -1292,13 +1298,13 @@ body::after{
   }
 
   .page-bg::before{
-  inset:0;
+  inset:-2% 0 -2% 0;
   background-image:var(--zzz-bg-image);
   background-repeat:no-repeat;
   background-size:cover;
   background-position:center center;
-  transform:translate3d(0, var(--bg-shift), 0) scale(1.02);
-  transition:transform .22s linear;
+  transform:translate3d(0, var(--bg-shift), 0) scale(1.025);
+  backface-visibility:hidden;
 }
 
   .page-title{
@@ -2393,14 +2399,40 @@ function handleLoopScroll(){
   });
 }
 
+let bgTicking = false;
+let bgCurrent = 0;
+let bgTarget = 0;
+let bgAnimating = false;
+
+function animateBackground(){
+  bgAnimating = true;
+  bgCurrent += (bgTarget - bgCurrent) * 0.085;
+
+  if(Math.abs(bgTarget - bgCurrent) < 0.08){
+    bgCurrent = bgTarget;
+  }
+
+  document.documentElement.style.setProperty("--bg-shift", `${bgCurrent.toFixed(2)}px`);
+
+  if(Math.abs(bgTarget - bgCurrent) > 0.08){
+    requestAnimationFrame(animateBackground);
+  }else{
+    bgAnimating = false;
+  }
+}
+
 function updateBackgroundMotion(){
   if(bgTicking) return;
   bgTicking = true;
 
   requestAnimationFrame(() => {
     const y = window.scrollY || window.pageYOffset || 0;
-    const shift = Math.max(-6, Math.min(12, y * 0.015));
-    document.documentElement.style.setProperty("--bg-shift", `${shift}px`);
+    bgTarget = Math.max(-4, Math.min(10, y * 0.012));
+
+    if(!bgAnimating){
+      animateBackground();
+    }
+
     bgTicking = false;
   });
 }
