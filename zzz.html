@@ -1208,6 +1208,10 @@ body::after{
   opacity:1;
   transform:scale(1);
 }
+
+.modal-cast-card{
+  touch-action:manipulation;
+}
   
 </style>
 </head>
@@ -1578,26 +1582,37 @@ const modalCastData = {
       role: "柚子こしょう",
       name: "浮波柚葉",
       image: "images/柚葉.png",
+      image2: "images/柚葉(完凸).png",
       text: "黄色系の強い背景でも輪郭が崩れにくく、主役としてかなり成立しやすいキャラクターです。構図の中心に置いた時の強さが大きいです。"
     },
     {
       role: "T・A・T",
       name: "アリス・タイムフィールド",
       image: "images/アリス.png",
+      image2: "images/アリス(完凸).png",
       text: "オレンジ〜ゴールド帯の空気感と相性が良く、画面に少し遊びや熱量を足したい時に噛み合います。固すぎない見え方を作る要員です。"
     },
     {
       role: "夜魔の語り部",
       name: "リュシア・エロウェン",
       image: "images/リュシア.png",
+      image2: "images/リュシア(完凸).png",
       text: "都市感や機械感のあるビジュアルに重さを加える役割です。背景が軽すぎる時に、全体の密度感を引き上げるために使いやすいです。"
     },
     {
-      role: "Tone Keeper",
-      name: "Ben",
-      image: "images/character-ben.jpg",
+      role: "不良のカシラ",
+      name: "狛野 真斗",
+      image: "images/真斗.jpg",
+      image2: "images/真斗(完凸).png",
       text: "ビジュアルの力強さを下支えしてくれる存在です。派手な色面の中でも安定感が出るので、構図に芯を持たせたい時に効きます。"
-    }
+    },
+    {
+      role: "いちごパフェ",
+      name: "イドリー・マーフィー",
+      image: "images/イドリー.png",
+      image2: "images/イドリー(完凸).png",
+      text: "都市感や機械感のあるビジュアルに重さを加える役割です。背景が軽すぎる時に、全体の密度感を引き上げるために使いやすいです。"
+    },
   ],
 
   "Layered Atmosphere": [
@@ -1940,18 +1955,40 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
- document.addEventListener("touchstart", (e) => {
-  const card = e.target.closest(".modal-cast-card");
-  if(card){
-    card.classList.add("active");
-  }
-}, {passive:true});
+ let activeCard = null;
 
-document.addEventListener("touchend", (e) => {
-  document.querySelectorAll(".modal-cast-card").forEach(c=>{
-    c.classList.remove("active");
-  });
-});   
+/* 押した瞬間 */
+document.addEventListener("pointerdown", (e) => {
+  const card = e.target.closest(".modal-cast-card");
+  if(!card) return;
+
+  activeCard = card;
+  card.classList.add("active");
+});
+
+/* 指が離れた */
+document.addEventListener("pointerup", () => {
+  if(activeCard){
+    activeCard.classList.remove("active");
+    activeCard = null;
+  }
+});
+
+/* 指が外に出た / キャンセル */
+document.addEventListener("pointercancel", () => {
+  if(activeCard){
+    activeCard.classList.remove("active");
+    activeCard = null;
+  }
+});
+
+/* スクロール開始時も強制解除（←超重要） */
+modalCastWrap.addEventListener("scroll", () => {
+  if(activeCard){
+    activeCard.classList.remove("active");
+    activeCard = null;
+  }
+}, { passive:true });
 </script>    
 
 </body>
