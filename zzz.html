@@ -1874,9 +1874,6 @@ function updateCenterCard(force = false){
   const wrapHeight = modalCastWrap.clientHeight;
   const wrapCenter = wrapTop + (wrapHeight / 2);
 
-  /* 中央のかなり狭い帯だけ反応させる */
-  const centerBandHalf = Math.min(110, wrapHeight * 0.16);
-
   let targetCard = null;
   let nearestDistance = Infinity;
 
@@ -1885,11 +1882,21 @@ function updateCenterCard(force = false){
     const cardCenter = cardTop + (card.offsetHeight / 2);
     const distance = Math.abs(wrapCenter - cardCenter);
 
-    if(distance <= centerBandHalf && distance < nearestDistance){
+    if(distance < nearestDistance){
       nearestDistance = distance;
       targetCard = card;
     }
   }
+
+  if(centeredCard && centeredCard !== targetCard){
+    centeredCard.classList.remove("center-active");
+  }
+
+  if(targetCard && (force || centeredCard !== targetCard)){
+    targetCard.classList.add("center-active");
+    centeredCard = targetCard;
+  }
+}
 
   if(!targetCard){
     if(centeredCard){
