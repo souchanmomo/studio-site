@@ -31,7 +31,6 @@ html,body{
   --zzz-accent-soft:#7b3a68;
   --zzz-glass:rgba(255,250,255,0.22);
   --zzz-glass-deep:rgba(124,76,124,0.54);
-  --zzz-bg-image:url("images/ガチャ背景.png");
   --bg-shift:0px;
   --title-bar-bg:rgba(16,18,28,0.58);
   --title-bar-border:rgba(255,255,255,0.10);
@@ -70,11 +69,7 @@ body::after{
     url("images/ガチャ背景.webp") center center / cover no-repeat;
 }
 
-.page-bg::before{
-  content:none !important;
-  display:none !important;
-}
-
+.page-bg::before,
 .page-bg::after{
   content:none !important;
   display:none !important;
