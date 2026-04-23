@@ -63,31 +63,21 @@ body::after{
   z-index:0;
   pointer-events:none;
   overflow:hidden;
-  background:#0b1330;
-}
-
-.page-bg::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:var(--zzz-bg-image);
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center center;
-  transform:none;
-  will-change:auto;
-  backface-visibility:hidden;
-}
-
-.page-bg::after{
-  content:"";
-  position:absolute;
-  inset:0;
   background:
     linear-gradient(180deg, rgba(7,12,28,0.24) 0%, rgba(7,12,28,0.48) 100%),
     radial-gradient(circle at 22% 16%, rgba(255,255,255,0.05), transparent 18%),
-    radial-gradient(circle at 80% 68%, rgba(255,255,255,0.035), transparent 20%);
-  opacity:1;
+    radial-gradient(circle at 80% 68%, rgba(255,255,255,0.035), transparent 20%),
+    url("images/ガチャ背景.png") center center / cover no-repeat;
+}
+
+.page-bg::before{
+  content:none !important;
+  display:none !important;
+}
+
+.page-bg::after{
+  content:none !important;
+  display:none !important;
 }
 
 /* ローディング */
@@ -1280,15 +1270,7 @@ body::after{
     background:#0b1330;
   }
 
-  .page-bg::before{
-    inset:0;
-    background-image:var(--zzz-bg-image);
-    background-repeat:no-repeat;
-    background-size:cover;
-    background-position:center center;
-    transform:none;
-    backface-visibility:hidden;
-  }
+
 
   .page-title{
     padding:0 64px 0 8px;
