@@ -33,7 +33,6 @@ html,body{
   --zzz-glass-deep:rgba(124,76,124,0.54);
   --zzz-bg-image:url("images/ガチャ背景.png");
   --bg-shift:0px;
-  --bg-shift:0px;
   --title-bar-bg:rgba(16,18,28,0.58);
   --title-bar-border:rgba(255,255,255,0.10);
 }
@@ -104,7 +103,7 @@ body::after{
   z-index:9999;
   transition:opacity .7s ease, visibility .7s ease;
   overflow:hidden;
-  pointer-events:none;
+  pointer-events:auto;
 }
 
 #loader.hide{
@@ -506,6 +505,7 @@ body::after{
     drop-shadow(0 4px 14px rgba(0,0,0,0.24))
     drop-shadow(0 0 14px rgba(168,126,255,0.08));
 }
+
 .page-title-text{
   width:100%;
   text-align:center;
@@ -675,24 +675,7 @@ body::after{
 }
 
 .media-logo-wrap::before{
-  content:"";
-  position:absolute;
-  inset:-10px -12px;
-  border-radius:18px;
-  background:linear-gradient(
-    135deg,
-    rgba(255,255,255,0.15),
-    rgba(255,255,255,0.03)
-  );
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:
-    0 14px 28px rgba(0,0,0,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-  opacity:0;
-  transform:scale(.96);
-  transition:
-    opacity .38s ease,
-    transform .38s ease;
+  content:none !important;
 }
 
 .media-logo{
@@ -727,8 +710,8 @@ body::after{
 }
 
 .media-logo-wrap.has-plate::before{
-  opacity:1;
-  transform:scale(1);
+  opacity:0 !important;
+  transform:none !important;
 }
 
 .media:hover .media-logo-wrap{
@@ -736,8 +719,8 @@ body::after{
 }
 
 .media:hover .media-logo-wrap.has-plate::before{
-  opacity:1;
-  transform:scale(1.03);
+  opacity:0 !important;
+  transform:none !important;
 }
 
 .media-overlay{
@@ -1298,14 +1281,14 @@ body::after{
   }
 
   .page-bg::before{
-  inset:0;
-  background-image:var(--zzz-bg-image);
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center center;
-  transform:none;
-  backface-visibility:hidden;
-}
+    inset:0;
+    background-image:var(--zzz-bg-image);
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center center;
+    transform:none;
+    backface-visibility:hidden;
+  }
 
   .page-title{
     padding:0 64px 0 8px;
@@ -1421,11 +1404,6 @@ body::after{
     width:min(34vw, 120px);
   }
 
-  .media-logo-wrap::before{
-    inset:-7px -8px;
-    border-radius:14px;
-  }
-
   .stamp{
     width:70px;
   }
@@ -1480,11 +1458,6 @@ body::after{
     clip-path:polygon(17% 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
-.media-logo-wrap::before{
-  content:none !important;
-}
-  
 </style>
 </head>
 
@@ -1499,7 +1472,7 @@ body::after{
   <div class="loader-glow"></div>
   <div class="loader-lines"></div>
   <div class="loader-core">
-    <div class="loader-text">LOADING ZZZ</div>
+    <div class="loader-text" id="loaderText">LOADING ZZZ</div>
     <div class="loader-bar"></div>
   </div>
 </div>
@@ -1812,30 +1785,8 @@ body::after{
 </div>
 
 <script>
-(function(){
-  const loader = document.getElementById("loader");
-  let loaderHidden = false;
-
-  function hideLoader(){
-    if(loaderHidden || !loader) return;
-    loaderHidden = true;
-    loader.classList.add("hide");
-    setTimeout(() => {
-      if(loader && loader.parentNode){
-        loader.parentNode.removeChild(loader);
-      }
-    }, 800);
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    requestAnimationFrame(() => {
-      setTimeout(hideLoader, 250);
-    });
-  });
-
-  window.addEventListener("load", hideLoader);
-  setTimeout(hideLoader, 1800);
-})();
+const loader = document.getElementById("loader");
+const loaderText = document.getElementById("loaderText");
 
 const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
@@ -1848,12 +1799,74 @@ const modalCastTrack = document.getElementById("modalCastTrack");
 
 const menuToggle = document.getElementById("menuToggle");
 const fullscreenMenu = document.getElementById("fullscreenMenu");
-const pageBg = document.getElementById("pageBg");
 const introOverlay = document.getElementById("introOverlay");
 const worksWrap = document.getElementById("worksWrap");
 
 let introRunning = true;
 const isIntro = () => introRunning;
+
+function wait(ms){
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function showLoader(text = "LOADING ZZZ"){
+  if(loaderText) loaderText.textContent = text;
+  loader.classList.remove("hide");
+}
+
+function hideLoader(){
+  loader.classList.add("hide");
+}
+
+function preloadImage(src){
+  return new Promise((resolve) => {
+    if(!src){
+      resolve();
+      return;
+    }
+
+    const img = new Image();
+    img.decoding = "async";
+
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+
+    img.src = src;
+
+    if(img.complete){
+      resolve();
+    }
+  });
+}
+
+async function preloadImages(srcList){
+  const unique = [...new Set(
+    srcList
+      .filter(Boolean)
+      .map((src) => String(src).trim())
+      .filter(Boolean)
+  )];
+
+  await Promise.all(unique.map(preloadImage));
+}
+
+function collectInitialImageSources(){
+  const sources = [
+    "images/ガチャ背景.png"
+  ];
+
+  document.querySelectorAll("img").forEach((img) => {
+    const src = img.getAttribute("src");
+    if(src) sources.push(src);
+  });
+
+  document.querySelectorAll(".work-item").forEach((item) => {
+    const src = item.dataset.image;
+    if(src) sources.push(src);
+  });
+
+  return sources;
+}
 
 const modalCastData = {
   "雲嶽山": [
@@ -2126,7 +2139,6 @@ let lastScrollTop = 0;
 let lastScrollTime = 0;
 let scrollVelocity = 0;
 
-
 function getFallbackCards(title){
   return [
     {
@@ -2158,22 +2170,6 @@ function getFallbackCards(title){
       text: "最後の1人は、全体の締まりや補完関係を説明する枠として使うと収まりが良いです。"
     }
   ];
-}
-
-function preloadCastImages(list){
-  const seen = new Set();
-
-  list.forEach((item) => {
-    [item.image, item.image2 || item.image].forEach((src) => {
-      if(!src || seen.has(src)) return;
-      seen.add(src);
-
-      const img = new Image();
-      img.decoding = "async";
-      img.loading = "eager";
-      img.src = src;
-    });
-  });
 }
 
 function createCardsHTML(list){
@@ -2318,11 +2314,8 @@ function requestCenterUpdate(force = false){
   });
 }
 
-function buildCastCards(title){
-  const original = modalCastData[title] || getFallbackCards(title);
-
-  preloadCastImages(original);
-
+function buildCastCards(title, originalList){
+  const original = originalList || modalCastData[title] || getFallbackCards(title);
   const loopList = [...original, ...original, ...original];
   modalCastTrack.innerHTML = createCardsHTML(loopList);
 
@@ -2403,28 +2396,45 @@ function handleLoopScroll(){
   });
 }
 
-
-
-
-
 modalCastWrap.addEventListener("scroll", () => {
   updateScrollVelocity();
   handleLoopScroll();
   requestCenterUpdate();
 }, { passive:true });
 
+async function openWorkModal(item){
+  const title = item.dataset.title;
+  const castList = modalCastData[title] || getFallbackCards(title);
 
+  const modalSources = [
+    item.dataset.image,
+    ...castList.flatMap((cast) => [cast.image, cast.image2 || cast.image])
+  ];
 
-document.querySelectorAll(".work-item").forEach((item) => {
-  item.addEventListener("click", () => {
+  showLoader("LOADING CAST");
+  document.body.style.overflow = "hidden";
+
+  try{
+    await Promise.all([
+      preloadImages(modalSources),
+      wait(350)
+    ]);
+
     modalImg.src = item.dataset.image;
     modalLabel.textContent = item.dataset.label;
     modalTitle.textContent = item.dataset.title;
 
-    buildCastCards(item.dataset.title);
+    buildCastCards(title, castList);
 
     modal.classList.add("show");
-    document.body.style.overflow = "hidden";
+  }finally{
+    hideLoader();
+  }
+}
+
+document.querySelectorAll(".work-item").forEach((item) => {
+  item.addEventListener("click", () => {
+    openWorkModal(item);
   });
 });
 
@@ -2506,16 +2516,31 @@ document.querySelectorAll(".reveal").forEach((el) => {
   observer.observe(el);
 });
 
-/* 安全なイントロ開始 */
-window.addEventListener("load", () => {
-  setTimeout(() => {
+/* 初回表示：必要画像を読み込んでから見せる */
+window.addEventListener("load", async () => {
+  showLoader("LOADING ZZZ");
+
+  try{
+    const initialSources = collectInitialImageSources();
+
+    await Promise.all([
+      preloadImages(initialSources),
+      wait(900)
+    ]);
+
+    hideLoader();
+
+    setTimeout(() => {
+      worksWrap.classList.add("start");
+      introOverlay.classList.add("hide");
+      introRunning = false;
+    }, 180);
+  }catch(e){
+    hideLoader();
     worksWrap.classList.add("start");
     introOverlay.classList.add("hide");
     introRunning = false;
-    document.querySelectorAll(".reveal").forEach((el) => {
-      observer.observe(el);
-    });
-  }, 1800);
+  }
 });
 </script>
 
