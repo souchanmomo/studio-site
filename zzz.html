@@ -2635,7 +2635,12 @@ function closeMenu(){
     unlockScroll();
   }
 }
-
+fullscreenMenu.addEventListener("touchmove", (e) => {
+  if(fullscreenMenu.classList.contains("open")){
+    e.preventDefault();
+  }
+}, { passive:false });
+  
 menuToggle.addEventListener("click", () => {
   if(fullscreenMenu.classList.contains("open")){
     closeMenu();
