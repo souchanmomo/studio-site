@@ -56,12 +56,22 @@ body::after{
   display:none !important;
 }
 
+
 html,
 body{
   background:#e7c8f2 !important;
-  overscroll-behavior:none;
+  overflow-x:hidden;
+  overflow-y:auto;
 }
 
+html{
+  min-height:100%;
+}
+
+body{
+  min-height:100%;
+  touch-action:auto;
+}
 body{
   background:transparent !important;
 }
@@ -73,7 +83,6 @@ body{
   top:0;
   width:100vw;
   height:100vh;
-  height:100svh;
   z-index:0;
   overflow:hidden;
   pointer-events:none;
@@ -1508,7 +1517,7 @@ body{
 }
 
 .modal-header-logo{
-  height:70px !important;
+  height:84px !important;
   width:auto !important;
   max-width:none !important;
   max-height:none !important;
@@ -1522,11 +1531,14 @@ body{
   }
 
   .modal-header-logo{
-    height:64px !important;
+    height:74px !important;
     width:auto !important;
     max-width:none !important;
     max-height:none !important;
   }
+}
+
+  
 }
 </style>
 </head>
