@@ -1517,7 +1517,7 @@ body{
 }
 
 .modal-header-logo{
-  height:84px !important;
+  height:96px !important;
   width:auto !important;
   max-width:none !important;
   max-height:none !important;
@@ -1531,15 +1531,14 @@ body{
   }
 
   .modal-header-logo{
-    height:74px !important;
+    height:82px !important;
     width:auto !important;
     max-width:none !important;
     max-height:none !important;
   }
 }
 
-  
-}
+
 </style>
 </head>
 
@@ -1909,6 +1908,7 @@ function showLoader(text = "LOADING ZZZ"){
 
 function hideLoader(){
   loader.classList.add("hide");
+  unlockScroll();
 }
 
 function preloadImage(src){
@@ -2577,6 +2577,7 @@ function closeModal(){
   if(!fullscreenMenu.classList.contains("open")){
     document.body.style.overflow = "";
   }
+  unlockScroll();
 }
 
 modalClose.addEventListener("click", closeModal);
@@ -2596,8 +2597,9 @@ function openMenu(){
 function closeMenu(){
   menuToggle.classList.remove("active");
   fullscreenMenu.classList.remove("open");
+
   if(!modal.classList.contains("show")){
-    document.body.style.overflow = "";
+    unlockScroll();
   }
 }
 
@@ -2668,6 +2670,11 @@ async function bootPage(){
 
 window.addEventListener("load", bootPage);
 setTimeout(bootPage, 2600);
+
+  function unlockScroll(){
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+}
 </script>
 
 </body>
