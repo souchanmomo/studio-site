@@ -46,7 +46,6 @@ body{
   overflow-x:hidden;
   overflow-y:auto;
   position:relative;
-  isolation:isolate;
   -webkit-overflow-scrolling:touch;
 }
 
@@ -502,9 +501,10 @@ body{
 
 /* タイトルバー */
 .page-title{
-  position:sticky;
+ position:sticky;
   top:0;
-  z-index:1000;
+  z-index:9999;
+  transform:none !important;
   width:100%;
   height:var(--topbar-h);
   margin:0;
@@ -527,7 +527,7 @@ body{
   left:0;
   top:50%;
   transform:translateY(-50%);
-  height:61px;
+  height:72px; /* ←ちょい大きめ */
   width:auto;
   display:block;
   object-fit:contain;
@@ -1084,15 +1084,15 @@ body{
   font-weight:700;
 }
 
+
 .page-title,
 .menu-toggle,
 .fixed-home-btn,
 .fullscreen-menu,
 .modal{
-  transform:translateZ(0);
+  transform:none !important;
   backface-visibility:hidden;
 }
-
 /* modal cast */
 .modal-cast-wrap{
   margin-top:18px;
