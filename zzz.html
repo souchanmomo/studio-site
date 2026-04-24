@@ -56,12 +56,9 @@ body::after{
   display:none !important;
 }
 
-html{
-  background:
-    linear-gradient(180deg, rgba(7,12,28,0.24) 0%, rgba(7,12,28,0.48) 100%),
-    radial-gradient(circle at 22% 16%, rgba(255,255,255,0.05), transparent 18%),
-    radial-gradient(circle at 80% 68%, rgba(255,255,255,0.035), transparent 20%),
-    url("images/ガチャ背景.webp") center center / cover no-repeat fixed !important;
+html,
+body{
+  background:#e7c8f2 !important;
 }
 
 body{
@@ -69,9 +66,27 @@ body{
 }
 
 .page-bg{
-  display:none !important;
+  display:block !important;
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100dvh;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg, rgba(7,12,28,0.24) 0%, rgba(7,12,28,0.48) 100%),
+    radial-gradient(circle at 22% 16%, rgba(255,255,255,0.05), transparent 18%),
+    radial-gradient(circle at 80% 68%, rgba(255,255,255,0.035), transparent 20%),
+    url("images/ガチャ背景.webp") center center / cover no-repeat;
+  transform:translateZ(0);
+  backface-visibility:hidden;
 }
 
+.page-bg::before,
+.page-bg::after{
+  content:none !important;
+  display:none !important;
+}
 .page-bg::before,
 .page-bg::after{
   content:none !important;
@@ -1015,6 +1030,20 @@ body{
     drop-shadow(0 0 10px rgba(255,255,255,0.10));
 }
 
+.modal-header-logo-wrap{
+  width:auto !important;
+  min-width:0 !important;
+  flex:0 0 auto !important;
+}
+
+.modal-header-logo{
+  height:61px !important;
+  width:auto !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:contain !important;
+}
+
 .modal-title{
   font-size:26px;
   margin-bottom:0;
@@ -1458,6 +1487,17 @@ body{
     max-height:34px;
   }
 
+.modal-header-logo-wrap{
+  width:auto !important;
+}
+
+.modal-header-logo{
+  height:56px !important;
+  width:auto !important;
+  max-width:none !important;
+  max-height:none !important;
+}
+  
   .modal-cast-wrap{
     max-height:48vh;
     padding-right:2px;
