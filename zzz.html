@@ -979,9 +979,42 @@ body::after{
   padding:22px 22px 26px;
 }
 
+.modal-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:12px;
+}
+
+.modal-header-left{
+  min-width:0;
+  flex:1 1 auto;
+}
+
+.modal-header-logo-wrap{
+  flex:0 0 auto;
+  width:142px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:flex-start;
+}
+
+.modal-header-logo{
+  display:block;
+  max-width:142px;
+  max-height:42px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  filter:
+    drop-shadow(0 6px 14px rgba(0,0,0,0.25))
+    drop-shadow(0 0 10px rgba(255,255,255,0.10));
+}
+
 .modal-title{
   font-size:26px;
-  margin-bottom:12px;
+  margin-bottom:0;
   color:#47193f;
 }
 
@@ -1262,10 +1295,12 @@ body::after{
   .page-bg{
     position:fixed;
     inset:0;
-    background:#0b1330;
+    background:
+      linear-gradient(180deg, rgba(7,12,28,0.24) 0%, rgba(7,12,28,0.48) 100%),
+      radial-gradient(circle at 22% 16%, rgba(255,255,255,0.05), transparent 18%),
+      radial-gradient(circle at 80% 68%, rgba(255,255,255,0.035), transparent 20%),
+      url("images/ガチャ背景.webp") center center / cover no-repeat;
   }
-
-
 
   .page-title{
     padding:0 64px 0 8px;
@@ -1397,6 +1432,15 @@ body::after{
 
   .modal-title{
     font-size:21px;
+  }
+
+  .modal-header-logo-wrap{
+    width:110px;
+  }
+
+  .modal-header-logo{
+    max-width:110px;
+    max-height:34px;
   }
 
   .modal-cast-wrap{
@@ -1751,8 +1795,15 @@ body::after{
   <div class="modal-panel">
     <img class="modal-img" id="modalImg" src="" alt="">
     <div class="modal-body">
-      <div class="modal-label" id="modalLabel"></div>
-      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <div class="modal-label" id="modalLabel"></div>
+          <div class="modal-title" id="modalTitle"></div>
+        </div>
+        <div class="modal-header-logo-wrap">
+          <img class="modal-header-logo" id="modalLogo" src="" alt="">
+        </div>
+      </div>
 
       <div class="modal-cast-wrap" id="modalCastWrap">
         <div class="modal-cast-track" id="modalCastTrack"></div>
@@ -1769,6 +1820,7 @@ const modal = document.getElementById("workModal");
 const modalImg = document.getElementById("modalImg");
 const modalLabel = document.getElementById("modalLabel");
 const modalTitle = document.getElementById("modalTitle");
+const modalLogo = document.getElementById("modalLogo");
 const modalClose = document.getElementById("modalClose");
 
 const modalCastWrap = document.getElementById("modalCastWrap");
@@ -1801,18 +1853,12 @@ function preloadImage(src){
       resolve();
       return;
     }
-
     const img = new Image();
     img.decoding = "async";
-
-    img.onload = () => resolve();
-    img.onerror = () => resolve();
-
+    img.onload = () => resolve(src);
+    img.onerror = () => resolve(src);
     img.src = src;
-
-    if(img.complete){
-      resolve();
-    }
+    if(img.complete) resolve(src);
   });
 }
 
@@ -1823,27 +1869,58 @@ async function preloadImages(srcList){
       .map((src) => String(src).trim())
       .filter(Boolean)
   )];
-
   await Promise.all(unique.map(preloadImage));
 }
 
 function collectInitialImageSources(){
   const sources = [
-    "images/ガチャ背景.png"
+    "images/ガチャ背景.webp"
   ];
-
   document.querySelectorAll("img").forEach((img) => {
     const src = img.getAttribute("src");
     if(src) sources.push(src);
   });
-
   document.querySelectorAll(".work-item").forEach((item) => {
     const src = item.dataset.image;
     if(src) sources.push(src);
   });
-
   return sources;
 }
+
+const modalLogoMap = {
+  "雲嶽山": "images/雲嶽山ロゴ.png",
+  "怪啖屋": "images/怪啖屋.webp",
+  "対ホロウ六課": "images/対ホロウ六課.png",
+  "モッキンバード": "images/モッキンバード.webp",
+  "Pink / Lavender Background": "images/スターズオブリラ.webp",
+  "Soft City Pop": "images/オボルス小隊.webp",
+  "Dreamy Motion": "images/雲嶽山ロゴ.png",
+  "Soft Neon Finish": "images/雲嶽山ロゴ.png"
+};
+
+const extraCastPlaceholders = [
+  {
+    role: "Extra Role",
+    name: "Placeholder A",
+    image: "images/character-anby.jpg",
+    image2: "images/character-anby.jpg",
+    text: "仮の追加カードです。ここは後から本命キャラに差し替えできます。"
+  },
+  {
+    role: "Extra Role",
+    name: "Placeholder B",
+    image: "images/character-nicole.jpg",
+    image2: "images/character-nicole.jpg",
+    text: "ロゴ追加と合わせて、ポップアップの情報量を増やすための仮枠です。"
+  },
+  {
+    role: "Extra Role",
+    name: "Placeholder C",
+    image: "images/character-ellen.jpg",
+    image2: "images/character-ellen.jpg",
+    text: "ここも仮画像です。好きなキャラ画像へそのまま差し替えできます。"
+  }
+];
 
 const modalCastData = {
   "雲嶽山": [
@@ -1918,7 +1995,7 @@ const modalCastData = {
   "対ホロウ六課": [
     {
       role: "Tech Mood",
-      name: "Grace",
+      name: "雅",
       image: "images/雅.webp",
       image2: "images/雅(完凸).webp",
       text: "緑系ビジュアルとの相性が良く、機械感や都市的な冷たさを自然に入れられるキャラクターです。情報量の多い画面でも埋もれにくいです。"
@@ -2121,32 +2198,37 @@ function getFallbackCards(title){
     {
       role: "Visual Role",
       name: "Character 01",
-      image: "images/placeholder-1.jpg",
-      image2: "images/placeholder-1.jpg",
+      image: "images/character-anby.jpg",
+      image2: "images/character-anby.jpg",
       text: title + " に合わせたキャラ説明をここに入れられます。"
     },
     {
       role: "Support Role",
       name: "Character 02",
-      image: "images/placeholder-2.jpg",
-      image2: "images/placeholder-2.jpg",
+      image: "images/character-nicole.jpg",
+      image2: "images/character-nicole.jpg",
       text: "画面の雰囲気や配色との相性、立ち位置などを説明する用途で使えます。"
     },
     {
       role: "Mood Role",
       name: "Character 03",
-      image: "images/placeholder-3.jpg",
-      image2: "images/placeholder-3.jpg",
+      image: "images/character-ellen.jpg",
+      image2: "images/character-ellen.jpg",
       text: "ページ全体の空気感にどう効くか、視線誘導や印象面の役割も書けます。"
     },
     {
       role: "Balance Role",
       name: "Character 04",
-      image: "images/placeholder-4.jpg",
-      image2: "images/placeholder-4.jpg",
+      image: "images/character-zhuyuan.jpg",
+      image2: "images/character-zhuyuan.jpg",
       text: "最後の1人は、全体の締まりや補完関係を説明する枠として使うと収まりが良いです。"
     }
   ];
+}
+
+function getExtendedCastList(title){
+  const base = (modalCastData[title] || getFallbackCards(title)).map(item => ({...item}));
+  return [...base, ...extraCastPlaceholders.map(item => ({...item}))];
 }
 
 function createCardsHTML(list){
@@ -2193,11 +2275,7 @@ function getCardDistanceFromCenter(card){
 function activateCard(card){
   if(!card) return;
   if(centeredCard === card) return;
-
-  if(centeredCard){
-    centeredCard.classList.remove("center-active");
-  }
-
+  if(centeredCard) centeredCard.classList.remove("center-active");
   card.classList.add("center-active");
   centeredCard = card;
   modalCastTrack.classList.add("has-active");
@@ -2273,9 +2351,7 @@ function updateCenterCard(force = false){
     pendingCard = nearestCard;
 
     centerSwitchTimer = setTimeout(() => {
-      if(pendingCard){
-        activateCard(pendingCard);
-      }
+      if(pendingCard) activateCard(pendingCard);
       clearPendingSwitch();
     }, getAdaptiveSwitchDelay());
   }
@@ -2284,7 +2360,6 @@ function updateCenterCard(force = false){
 function requestCenterUpdate(force = false){
   if(centerTicking && !force) return;
   centerTicking = true;
-
   requestAnimationFrame(() => {
     updateCenterCard(force);
     centerTicking = false;
@@ -2292,7 +2367,7 @@ function requestCenterUpdate(force = false){
 }
 
 function buildCastCards(title, originalList){
-  const original = originalList || modalCastData[title] || getFallbackCards(title);
+  const original = originalList || getExtendedCastList(title);
   const loopList = [...original, ...original, ...original];
   modalCastTrack.innerHTML = createCardsHTML(loopList);
 
@@ -2366,7 +2441,6 @@ function updateScrollVelocity(){
 function handleLoopScroll(){
   if(loopTicking) return;
   loopTicking = true;
-
   requestAnimationFrame(() => {
     normalizeInfiniteScroll();
     loopTicking = false;
@@ -2381,10 +2455,12 @@ modalCastWrap.addEventListener("scroll", () => {
 
 async function openWorkModal(item){
   const title = item.dataset.title;
-  const castList = modalCastData[title] || getFallbackCards(title);
+  const castList = getExtendedCastList(title);
+  const logoSrc = modalLogoMap[title] || "";
 
   const modalSources = [
     item.dataset.image,
+    logoSrc,
     ...castList.flatMap((cast) => [cast.image, cast.image2 || cast.image])
   ];
 
@@ -2397,12 +2473,19 @@ async function openWorkModal(item){
       wait(350)
     ]);
 
-    modalImg.src = item.dataset.image;
-    modalLabel.textContent = item.dataset.label;
-    modalTitle.textContent = item.dataset.title;
+    modalImg.src = item.dataset.image || "";
+    modalLabel.textContent = item.dataset.label || "";
+    modalTitle.textContent = item.dataset.title || "";
+
+    if(logoSrc){
+      modalLogo.src = logoSrc;
+      modalLogo.style.display = "block";
+    }else{
+      modalLogo.removeAttribute("src");
+      modalLogo.style.display = "none";
+    }
 
     buildCastCards(title, castList);
-
     modal.classList.add("show");
   }finally{
     hideLoader();
@@ -2418,6 +2501,8 @@ document.querySelectorAll(".work-item").forEach((item) => {
 function closeModal(){
   modal.classList.remove("show");
   modalCastTrack.innerHTML = "";
+  modalImg.removeAttribute("src");
+  modalLogo.removeAttribute("src");
   loopSetHeight = 0;
   loopStarted = false;
   lastScrollTop = 0;
@@ -2473,7 +2558,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-/* reveal はイントロ後に有効化 */
 const observer = new IntersectionObserver((entries) => {
   if(isIntro()) return;
 
@@ -2493,32 +2577,33 @@ document.querySelectorAll(".reveal").forEach((el) => {
   observer.observe(el);
 });
 
-/* 初回表示：必要画像を読み込んでから見せる */
-window.addEventListener("load", async () => {
+let firstBootDone = false;
+async function bootPage(){
+  if(firstBootDone) return;
+  firstBootDone = true;
+
   showLoader("LOADING ZZZ");
 
   try{
     const initialSources = collectInitialImageSources();
-
     await Promise.all([
       preloadImages(initialSources),
       wait(900)
     ]);
-
-    hideLoader();
-
-    setTimeout(() => {
-      worksWrap.classList.add("start");
-      introOverlay.classList.add("hide");
-      introRunning = false;
-    }, 180);
   }catch(e){
-    hideLoader();
+  }
+
+  hideLoader();
+
+  setTimeout(() => {
     worksWrap.classList.add("start");
     introOverlay.classList.add("hide");
     introRunning = false;
-  }
-});
+  }, 180);
+}
+
+window.addEventListener("load", bootPage);
+setTimeout(bootPage, 2600);
 </script>
 
 </body>
