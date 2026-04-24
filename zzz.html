@@ -1572,6 +1572,42 @@ body.is-locked{
   touch-action:manipulation !important;
 }
 
+/* 上部タイトル帯を確実に追従固定 */
+.page-title{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  z-index:1500 !important;
+  transform:none !important;
+}
+
+/* fixed化で本文が上に潜らないようにする */
+.works-wrap{
+  padding-top:var(--topbar-h);
+}
+
+/* ハンバーガーはタイトル帯より上 */
+.menu-toggle{
+  position:fixed !important;
+  z-index:1600 !important;
+}
+
+/* モーダルはタイトル帯より必ず上に出す */
+.modal{
+  z-index:5000 !important;
+}
+
+/* モーダルの閉じるボタンも最前面 */
+.modal-close{
+  z-index:5100 !important;
+}
+
+/* メニュー展開時はモーダルより下、通常ヘッダーより上 */
+.fullscreen-menu{
+  z-index:1550 !important;
+}
+  
 </style>
 </head>
 
