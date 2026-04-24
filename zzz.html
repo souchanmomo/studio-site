@@ -1541,6 +1541,37 @@ body.is-locked{
   overflow:hidden !important;
 }
 
+  /* ハンバーガーメニュー内スクロール完全停止 */
+.fullscreen-menu{
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+  touch-action:none !important;
+}
+
+.fullscreen-menu.open{
+  overflow:hidden !important;
+}
+
+.menu-inner{
+  height:100vh !important;
+  height:100svh !important;
+  max-height:100svh !important;
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+  touch-action:none !important;
+}
+
+.menu-top,
+.menu-bottom{
+  overflow:hidden !important;
+  overscroll-behavior:none !important;
+}
+
+.menu-card,
+.menu-link{
+  touch-action:manipulation !important;
+}
+
 </style>
 </head>
 
