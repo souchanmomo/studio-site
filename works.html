@@ -91,7 +91,20 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 .manager-stamp.stamp-left{left:20%!important;right:auto!important}
 .manager-stamp.stamp-right{left:auto!important;right:20%!important}
 @media(max-width:700px){.char-head{min-height:124px;padding:18px 84px 15px 22px}.char-close{width:58px;height:58px;right:22px;top:22px}.char-stage{padding:16px 14px 34px}.version-card,.version-card img{height:128px;min-height:128px}.operator-card{grid-template-columns:46% 54%;min-height:210px}.operator-visual{min-height:210px}.operator-copy{padding:22px 15px}.operator-copy h3{font-size:22px}.manager-stamp{width:54%!important}.manager-stamp.stamp-left{left:20%!important;right:auto!important}.manager-stamp.stamp-right{left:auto!important;right:20%!important}.dupe-list{gap:10px}}
-</style></head>
+</style><style>
+/* === CHARACTER ARCHIVE TRANSITIONS: match NAVIGATION motion === */
+.char-view.active .version-card,.char-view.active .operator-card,.char-view.active .dupe-card{opacity:0;will-change:transform,opacity;animation:charCardSlide .84s cubic-bezier(.22,1,.36,1) forwards}
+.char-view.active .version-card:nth-child(odd),.char-view.active .operator-card:nth-child(odd),.char-view.active .dupe-card:nth-child(odd){transform:translate3d(-58px,0,0)}
+.char-view.active .version-card:nth-child(even),.char-view.active .operator-card:nth-child(even),.char-view.active .dupe-card:nth-child(even){transform:translate3d(58px,0,0)}
+.char-view.active .version-card:nth-child(1),.char-view.active .operator-card:nth-child(1),.char-view.active .dupe-card:nth-child(1){animation-delay:.12s}
+.char-view.active .version-card:nth-child(2),.char-view.active .operator-card:nth-child(2),.char-view.active .dupe-card:nth-child(2){animation-delay:.19s}
+.char-view.active .version-card:nth-child(3),.char-view.active .operator-card:nth-child(3),.char-view.active .dupe-card:nth-child(3){animation-delay:.26s}
+.char-view.active .version-card:nth-child(4),.char-view.active .operator-card:nth-child(4),.char-view.active .dupe-card:nth-child(4){animation-delay:.33s}
+.char-view.active .version-card:nth-child(n+5),.char-view.active .operator-card:nth-child(n+5),.char-view.active .dupe-card:nth-child(n+5){animation-delay:.40s}
+@keyframes charCardSlide{0%{opacity:0}100%{opacity:1;transform:translate3d(0,0,0)}}
+@media (prefers-reduced-motion:reduce){.char-view.active .version-card,.char-view.active .operator-card,.char-view.active .dupe-card{animation:none!important;opacity:1!important;transform:none!important}}
+</style>
+</head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
 <button class="menu-toggle intro-ui" id="menuToggle" aria-label="menu"><div class="menu-icon"><span></span><span></span><span></span></div></button>
