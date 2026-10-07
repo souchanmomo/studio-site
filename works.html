@@ -236,3 +236,13 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 .operator-card.layout-right .operator-visual>.manager-stamp{right:20%!important;left:auto!important;transform:translateX(20%)!important}
 @media(max-width:700px){.operator-card{grid-template-columns:46% 54%!important}.operator-card.layout-right{grid-template-columns:54% 46%!important}.operator-card .operator-visual>.manager-stamp{width:82%!important}.operator-card.layout-left .operator-copy{text-align:left;align-items:flex-start}.operator-card.layout-right .operator-copy{text-align:right;align-items:flex-end}}
 </style>
+<style id="operator-half-half-final">
+.operator-card,
+.operator-card.layout-left,
+.operator-card.layout-right{grid-template-columns:50% 50%!important}
+@media(max-width:700px){
+ .operator-card,
+ .operator-card.layout-left,
+ .operator-card.layout-right{grid-template-columns:50% 50%!important}
+}
+</style>
