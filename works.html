@@ -85,6 +85,11 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 /* ===== CHARACTER ARCHIVE : added only to the former Industrial tile ===== */
 .character-entry{cursor:pointer}
 .char-drawer{position:fixed;inset:0;z-index:4100;background:linear-gradient(180deg,#173b67 0%,#102f50 100%);opacity:0;pointer-events:none;transition:opacity .28s ease;overflow:hidden}.char-drawer.open{opacity:1;pointer-events:auto}.char-shell{height:100dvh;display:grid;grid-template-rows:auto 1fr;position:relative}.char-head{min-height:132px;padding:22px 92px 18px 28px;border-bottom:1px solid #ffffff24;background:#ffffff08;backdrop-filter:blur(12px);position:relative}.char-head .kicker{color:#eef7ff}.char-head h2{font:500 clamp(28px,6vw,40px) 'Space Grotesk';letter-spacing:.03em;margin-top:8px}.char-head p{font-size:12px;opacity:.68;margin-top:8px}.char-close{position:absolute;right:26px;top:24px;width:66px;height:66px;border:1px solid #ffffff38;background:#ffffff08;color:white;font-size:34px;font-weight:200;cursor:pointer}.char-stage{min-height:0;overflow:auto;padding:22px max(18px,calc((100vw - 980px)/2)) 42px}.char-view{display:none}.char-view.active{display:block;animation:charIn .48s cubic-bezier(.22,1,.36,1)}@keyframes charIn{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}.char-back{border:0;background:transparent;color:#fff;font:500 11px 'Space Grotesk';letter-spacing:.16em;margin-bottom:18px;cursor:pointer;opacity:.78}.version-list,.operator-list{display:grid;gap:14px}.version-card{position:relative;min-height:150px;overflow:hidden;border:1px solid #ffffff20;background:#ffffff08;cursor:pointer}.version-card img{width:100%;height:150px;object-fit:cover;display:block;filter:saturate(.85) brightness(.82);transition:.45s}.version-card:hover img,.version-card:active img{transform:scale(1.025);filter:saturate(1) brightness(.92)}.version-card::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#102f50e8 0%,#102f5070 46%,transparent 78%)}.version-copy{position:absolute;z-index:2;left:22px;top:50%;transform:translateY(-50%)}.version-no{font:600 10px 'Space Grotesk';letter-spacing:.22em;opacity:.7}.version-name{font:500 25px 'Space Grotesk';margin-top:6px}.operator-card{position:relative;min-height:240px;border:1px solid #ffffff1f;background:linear-gradient(110deg,#ffffff0d,#ffffff04);overflow:hidden;cursor:pointer;display:grid;grid-template-columns:42% 58%;align-items:stretch}.operator-visual{min-height:240px;position:relative;overflow:hidden}.operator-visual>img.operator-main{width:100%;height:100%;object-fit:cover;display:block}.manager-stamp{position:absolute!important;left:20%!important;bottom:3%!important;width:min(42%,180px)!important;height:auto!important;object-fit:contain!important;filter:drop-shadow(0 12px 18px #0008)!important;z-index:3;pointer-events:none}.operator-copy{padding:30px 24px;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(90deg,#173b6766,#173b67e6)}.operator-copy .mini{font:600 9px 'Space Grotesk';letter-spacing:.2em;opacity:.58}.operator-copy h3{font:500 28px 'Space Grotesk';margin:8px 0}.operator-copy p{font-size:12px;line-height:1.8;opacity:.74}.operator-copy .tap{margin-top:20px}.dupe-list{display:grid;gap:14px;max-width:860px;margin:auto}.dupe-card{position:relative;border:1px solid #ffffff22;background:#ffffff08;overflow:hidden}.dupe-card>img{width:100%;height:auto;display:block}.dupe-caption{position:absolute;left:0;right:0;bottom:0;padding:32px 20px 18px;background:linear-gradient(transparent,#0b2747e8)}.dupe-caption b{font:500 17px 'Space Grotesk'}.dupe-caption span{display:block;font-size:11px;opacity:.68;margin-top:4px}.char-empty-img{background:linear-gradient(135deg,#28537c,#163553);display:flex;align-items:center;justify-content:center;color:#ffffff55;font:600 10px 'Space Grotesk';letter-spacing:.16em}
+
+/* rarity entry additions */
+.rarity-entry{cursor:pointer}
+.manager-stamp.stamp-right{left:auto!important;right:20%!important}
+.manager-stamp.stamp-left{left:20%!important;right:auto!important}
 @media(max-width:700px){.char-head{min-height:124px;padding:18px 84px 15px 22px}.char-close{width:58px;height:58px;right:22px;top:22px}.char-stage{padding:16px 14px 34px}.version-card,.version-card img{height:128px;min-height:128px}.operator-card{grid-template-columns:46% 54%;min-height:210px}.operator-visual{min-height:210px}.operator-copy{padding:22px 15px}.operator-copy h3{font-size:22px}.manager-stamp{left:20%!important;width:54%!important}.dupe-list{gap:10px}}
 </style></head>
 <body><div class="bg"></div>
@@ -116,7 +121,7 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 <section class="hero reveal"><img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺"><div class="herocopy"><div class="kicker">ENDFIELD ARCHIVE</div><h1>タロⅡの裏側を情報共有します</h1></div></section>
 <section class="intro reveal"><div class="kicker">TALOS-II / FIELD NOTES</div><h2>タロサイト〜工業発展への道〜</h2><p>中の人はエンジョイ勢です。特殊褒章一覧や工業に役立つ情報を、画像を主役にしたアーカイブとしてまとめます。</p></section>
 <section class="feature reveal"><div class="feature-card" id="openAwards" role="button" tabindex="0"><img src="images/特殊褒章.webp" alt="特殊褒章"><div class="feature-copy"><div class="kicker">SPECIAL COMMENDATIONS</div><h2>特殊褒章一覧</h2><p>イベントや条件達成で手に入る特殊な褒章。タップすると、1褒章＝1枚のビジュアルカードとして横方向に連続閲覧できます。</p><div class="tap"><i></i> TAP TO EXPLORE</div></div></div></section>
-<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="キャラ一覧"><span>キャラ一覧 / Operators</span></div><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div></section>
+<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星6キャラ一覧"><span>キャラ一覧 / ★6 Operators</span></div><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div><div class="tile reveal rarity-entry" id="openFive" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星5キャラ一覧"><span>★5キャラ一覧 / ★5 Operators</span></div><div class="tile reveal rarity-entry" id="openFour" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星4キャラ一覧"><span>★4キャラ一覧 / ★4 Operators</span></div></section>
 </main>
 
 <div class="char-drawer" id="charDrawer" aria-hidden="true">
@@ -130,9 +135,13 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
     <div class="char-stage">
       <section class="char-view active" id="versionView">
         <div class="version-list">
-          <article class="version-card" data-version="1.0" data-name="Version 1.0"><img src="images/version-1.0.webp" alt="Version 1.0" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 01</div><div class="version-name">Version 1.0</div></div></article>
-          <article class="version-card" data-version="1.1" data-name="Version 1.1"><img src="images/version-1.1.webp" alt="Version 1.1" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 02</div><div class="version-name">Version 1.1</div></div></article>
-          <article class="version-card" data-version="1.2" data-name="Version 1.2"><img src="images/version-1.2.webp" alt="Version 1.2" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 03</div><div class="version-name">Version 1.2</div></div></article>
+          <article class="version-card" data-version="1.0"><img src="images/version-1.0.webp" alt="Version 1.0" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 01</div><div class="version-name">Version 1.0</div></div></article>
+          <article class="version-card" data-version="1.1"><img src="images/version-1.1.webp" alt="Version 1.1" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 02</div><div class="version-name">Version 1.1</div></div></article>
+          <article class="version-card" data-version="1.2"><img src="images/version-1.2.webp" alt="Version 1.2" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 03</div><div class="version-name">Version 1.2</div></div></article>
+          <article class="version-card" data-version="1.3"><img src="images/version-1.3.webp" alt="Version 1.3" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 04</div><div class="version-name">Version 1.3</div></div></article>
+          <article class="version-card" data-version="1.4"><img src="images/version-1.4.webp" alt="Version 1.4" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 05</div><div class="version-name">Version 1.4</div></div></article>
+          <article class="version-card" data-version="1.5"><img src="images/version-1.5.webp" alt="Version 1.5" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 06</div><div class="version-name">Version 1.5</div></div></article>
+          <article class="version-card" data-version="1.6"><img src="images/version-1.6.webp" alt="Version 1.6" onerror="this.style.visibility='hidden';this.parentElement.classList.add('char-empty-img')"><div class="version-copy"><div class="version-no">RELEASE / 07</div><div class="version-name">Version 1.6</div></div></article>
         </div>
       </section>
       <section class="char-view" id="operatorView">
@@ -172,27 +181,39 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 <script>
 (()=>{
  const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
- const drawer=$('#charDrawer'), open=$('#openCharacters'), close=$('#closeCharacters');
+ const drawer=$('#charDrawer'), open=$('#openCharacters'), openFive=$('#openFive'), openFour=$('#openFour'), close=$('#closeCharacters');
  if(!drawer||!open)return;
  const views={versions:$('#versionView'),operators:$('#operatorView'),dupes:$('#dupeView')};
  const title=$('#charTitle'), sub=$('#charSub'), list=$('#operatorList'), dupes=$('#dupeList');
- /* ここを増やすだけでキャラ追加可能。画像はすべて images フォルダ。 */
+ const make=(name,ver)=>({name,role:`★6 / VERSION ${ver}`,desc:`${name} / ★6 OPERATOR`,image:`images/${name}.webp`,stamp:'images/管理人.webp',dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]});
  const DATA={
-  '1.0':[{name:'管理人',role:'TALOS-II OPERATOR',desc:'キャラクター紹介テキストをここに入れられます。',image:'images/管理人キャラ.webp',stamp:'images/管理人.webp',dupes:['images/管理人凸1.webp','images/管理人凸2.webp','images/管理人凸3.webp']}],
-  '1.1':[{name:'CHARACTER 02',role:'VERSION 1.1',desc:'名前・属性・役割などの短い説明を配置。',image:'images/character-02.webp',stamp:'images/管理人.webp',dupes:['images/character-02-凸1.webp','images/character-02-凸2.webp','images/character-02-凸3.webp']}],
-  '1.2':[{name:'CHARACTER 03',role:'VERSION 1.2',desc:'同じ形式でキャラクターを追加できます。',image:'images/character-03.webp',stamp:'images/管理人.webp',dupes:['images/character-03-凸1.webp','images/character-03-凸2.webp','images/character-03-凸3.webp']}]
+  '1.0':['管理人','エンバー','リーフォン','アルデリア','ラストライト','ポグラニチニク','レーヴァテイン','ギルベルタ','イヴォンヌ'].map(n=>make(n,'1.0')),
+  '1.1':['タンタン','ロッシ'].map(n=>make(n,'1.1')),
+  '1.2':['ゾアン・ファンイ'].map(n=>make(n,'1.2')),
+  '1.3':['ミ・フ','カミーユ'].map(n=>make(n,'1.3')),
+  '1.4':['オクギ','リーノ'].map(n=>make(n,'1.4')),
+  '1.5':['ティフォロス'].map(n=>make(n,'1.5')),
+  '1.6':['スー','ミンホ'].map(n=>make(n,'1.6'))
  };
- let currentVersion='1.0';
+ const FIVE=['チェン・センユー','ザイヒ','ウルフガード','ダパン','ペリカ','アレッシュ','アイビーエナ','アークライト','スノーシャイン','プチエナ'];
+ const FOUR=['アンタル','アケクリ','エステーラ','キャッチャー','フローライト'];
+ let currentVersion='1.0', currentMode='six';
  function show(which){Object.values(views).forEach(v=>v.classList.remove('active'));views[which].classList.add('active');drawer.querySelector('.char-stage').scrollTop=0}
  function imgFallback(img){img.onerror=()=>{img.style.opacity='.12';img.parentElement.classList.add('char-empty-img')}}
- function renderOperators(v){currentVersion=v;list.innerHTML='';(DATA[v]||[]).forEach((c,i)=>{const a=document.createElement('article');a.className='operator-card';a.innerHTML=`<div class="operator-visual"><img class="operator-main" src="${c.image}" alt="${c.name}"><img class="manager-stamp" src="${c.stamp}" alt=""></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;imgFallback(a.querySelector('.operator-main'));a.onclick=()=>renderDupes(c);list.appendChild(a)});title.textContent='Version '+v;sub.textContent='実装キャラクター / タップして凸画像を表示';show('operators')}
- function renderDupes(c){dupes.innerHTML='';c.dupes.forEach((src,i)=>{const a=document.createElement('article');a.className='dupe-card';a.innerHTML=`<img src="${src}" alt="${c.name} 凸${i+1}"><div class="dupe-caption"><b>${c.name} / 凸${i+1}</b><span>POTENTIAL ${String(i+1).padStart(2,'0')}</span></div>`;imgFallback(a.querySelector('img'));dupes.appendChild(a)});title.textContent=c.name;sub.textContent='POTENTIAL ARCHIVE / 3 IMAGES';show('dupes')}
- function openDrawer(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';title.textContent='キャラ一覧';sub.textContent='実装バージョンを選択してください';show('versions')}
+ function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card';const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="operator-main" src="${c.image}" alt="${c.name}"><img class="manager-stamp ${side}" src="${c.stamp}" alt=""></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;imgFallback(a.querySelector('.operator-main'));a.onclick=()=>renderDupes(c,rarity);return a}
+ function renderOperators(v){currentMode='six';currentVersion=v;list.innerHTML='';(DATA[v]||[]).forEach((c,i)=>list.appendChild(card(c,i,'★6')));title.textContent='Version '+v;sub.textContent='★6 実装キャラクター / タップして凸画像を表示';show('operators')}
+ function renderRarity(star,names){currentMode=star;list.innerHTML='';names.forEach((name,i)=>{const c={name,role:`${star} OPERATOR`,desc:`${name} / ${star} OPERATOR`,image:`images/${name}.webp`,stamp:'images/管理人.webp',dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]};list.appendChild(card(c,i,star))});title.textContent=star+' キャラ一覧';sub.textContent='バージョン区分なし / タップして凸画像を表示';show('operators')}
+ function renderDupes(c,rarity){dupes.innerHTML='';const labels=['1凸','3凸','完凸'];c.dupes.forEach((src,i)=>{const a=document.createElement('article');a.className='dupe-card';a.innerHTML=`<img src="${src}" alt="${c.name} ${labels[i]}"><div class="dupe-caption"><b>${c.name} / ${labels[i]}</b><span>POTENTIAL ARCHIVE</span></div>`;imgFallback(a.querySelector('img'));dupes.appendChild(a)});title.textContent=c.name;sub.textContent=`${rarity} / POTENTIAL ARCHIVE / 3 IMAGES`;show('dupes')}
+ function openSix(){currentMode='six';drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';title.textContent='キャラ一覧 / ★6';sub.textContent='実装バージョンを選択してください';show('versions')}
+ function openRare(star,names){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';renderRarity(star,names)}
  function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true');document.body.style.overflow=''}
- open.onclick=openDrawer;open.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openDrawer()}};close.onclick=closeDrawer;
+ open.onclick=openSix;open.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openSix()}};
+ openFive.onclick=()=>openRare('★5',FIVE);openFour.onclick=()=>openRare('★4',FOUR);
+ [openFive,openFour].forEach((el,idx)=>el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();idx===0?openRare('★5',FIVE):openRare('★4',FOUR)}});
+ close.onclick=closeDrawer;
  $$('.version-card').forEach(x=>x.onclick=()=>renderOperators(x.dataset.version));
- $$('[data-back="versions"]').forEach(x=>x.onclick=()=>{title.textContent='キャラ一覧';sub.textContent='実装バージョンを選択してください';show('versions')});
- $$('[data-back="operators"]').forEach(x=>x.onclick=()=>renderOperators(currentVersion));
+ $$('[data-back="versions"]').forEach(x=>x.onclick=()=>{if(currentMode==='six'){title.textContent='キャラ一覧 / ★6';sub.textContent='実装バージョンを選択してください';show('versions')}else closeDrawer()});
+ $$('[data-back="operators"]').forEach(x=>x.onclick=()=>{if(currentMode==='six')renderOperators(currentVersion);else if(currentMode==='★5')renderRarity('★5',FIVE);else renderRarity('★4',FOUR)});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open'))closeDrawer()});
 })();
 </script>
