@@ -185,7 +185,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  if(!drawer||!open)return;
  const views={versions:$('#versionView'),operators:$('#operatorView'),dupes:$('#dupeView')};
  const title=$('#charTitle'), sub=$('#charSub'), list=$('#operatorList'), dupes=$('#dupeList');
- const make=(name,ver)=>({name,role:`★6 / VERSION ${ver}`,desc:`${name} / ★6 OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:'images/Endfield/管理人.webp',dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]});
+ const make=(name,ver)=>({name,role:`★6 / VERSION ${ver}`,desc:`${name} / ★6 OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:`images/Endfield/${name}.webp`,dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]});
  const DATA={
   '1.0':['管理人','エンバー','リーフォン','アルデリア','ラストライト','ポグラニチニク','レーヴァテイン','ギルベルタ','イヴォンヌ'].map(n=>make(n,'1.0')),
   '1.1':['タンタン','ロッシ'].map(n=>make(n,'1.1')),
@@ -200,9 +200,9 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  let currentVersion='1.0', currentMode='six';
  function show(which){Object.values(views).forEach(v=>v.classList.remove('active'));views[which].classList.add('active');drawer.querySelector('.char-stage').scrollTop=0}
  function imgFallback(img){img.onerror=()=>{img.style.opacity='.12';img.parentElement.classList.add('char-empty-img')}}
- function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card';const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="operator-main" src="${c.image}" alt="${c.name}"></div><img class="manager-stamp ${side}" src="${c.stamp}" alt=""><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;imgFallback(a.querySelector('.operator-main'));a.onclick=()=>renderDupes(c,rarity);return a}
+ function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card '+(i%2===0?'layout-left':'layout-right');const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="manager-stamp ${side}" src="${c.stamp}" alt="${c.name}"></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;a.onclick=()=>renderDupes(c,rarity);return a}
  function renderOperators(v){currentMode='six';currentVersion=v;list.innerHTML='';(DATA[v]||[]).forEach((c,i)=>list.appendChild(card(c,i,'★6')));title.textContent='Version '+v;sub.textContent='★6 実装キャラクター / タップして凸画像を表示';show('operators')}
- function renderRarity(star,names){currentMode=star;list.innerHTML='';names.forEach((name,i)=>{const c={name,role:`${star} OPERATOR`,desc:`${name} / ${star} OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:'images/Endfield/管理人.webp',dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]};list.appendChild(card(c,i,star))});title.textContent=star+' キャラ一覧';sub.textContent='バージョン区分なし / タップして凸画像を表示';show('operators')}
+ function renderRarity(star,names){currentMode=star;list.innerHTML='';names.forEach((name,i)=>{const c={name,role:`${star} OPERATOR`,desc:`${name} / ${star} OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:`images/Endfield/${name}.webp`,dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]};list.appendChild(card(c,i,star))});title.textContent=star+' キャラ一覧';sub.textContent='バージョン区分なし / タップして凸画像を表示';show('operators')}
  function renderDupes(c,rarity){dupes.innerHTML='';const labels=['1凸','3凸','完凸'];c.dupes.forEach((src,i)=>{const a=document.createElement('article');a.className='dupe-card';a.innerHTML=`<img src="${src}" alt="${c.name} ${labels[i]}"><div class="dupe-caption"><b>${c.name} / ${labels[i]}</b><span>POTENTIAL ARCHIVE</span></div>`;imgFallback(a.querySelector('img'));dupes.appendChild(a)});title.textContent=c.name;sub.textContent=`${rarity} / POTENTIAL ARCHIVE / 3 IMAGES`;show('dupes')}
  function openSix(){currentMode='six';drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';title.textContent='キャラ一覧 / ★6';sub.textContent='実装バージョンを選択してください';show('versions')}
  function openRare(star,names){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';renderRarity(star,names)}
@@ -221,4 +221,18 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 
 <style>
 .operator-card>.manager-stamp{position:absolute!important;bottom:3%!important;width:min(18%,180px)!important;height:auto!important;object-fit:contain!important;z-index:6!important;pointer-events:none!important}.operator-card>.manager-stamp.stamp-left{left:20%!important;right:auto!important;transform:translateX(-50%)!important}.operator-card>.manager-stamp.stamp-right{right:20%!important;left:auto!important;transform:translateX(50%)!important}@media(max-width:700px){.operator-card>.manager-stamp{width:24%!important}}
+</style>
+
+<style id="operator-alternate-fix">
+.operator-card{display:grid!important;grid-template-columns:42% 58%!important}
+.operator-card.layout-left .operator-visual{grid-column:1;grid-row:1}
+.operator-card.layout-left .operator-copy{grid-column:2;grid-row:1;text-align:left}
+.operator-card.layout-right{grid-template-columns:58% 42%!important}
+.operator-card.layout-right .operator-copy{grid-column:1;grid-row:1;text-align:right;align-items:flex-end}
+.operator-card.layout-right .operator-visual{grid-column:2;grid-row:1}
+.operator-card .operator-visual{position:relative!important;overflow:visible!important;background:linear-gradient(135deg,#ffffff08,#ffffff02)}
+.operator-card .operator-visual>.manager-stamp{position:absolute!important;bottom:3%!important;width:min(72%,220px)!important;height:auto!important;object-fit:contain!important;z-index:6!important;filter:drop-shadow(0 12px 18px #0008)!important}
+.operator-card.layout-left .operator-visual>.manager-stamp{left:20%!important;right:auto!important;transform:translateX(-20%)!important}
+.operator-card.layout-right .operator-visual>.manager-stamp{right:20%!important;left:auto!important;transform:translateX(20%)!important}
+@media(max-width:700px){.operator-card{grid-template-columns:46% 54%!important}.operator-card.layout-right{grid-template-columns:54% 46%!important}.operator-card .operator-visual>.manager-stamp{width:82%!important}.operator-card.layout-left .operator-copy{text-align:left;align-items:flex-start}.operator-card.layout-right .operator-copy{text-align:right;align-items:flex-end}}
 </style>
