@@ -418,6 +418,43 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 @media(max-width:700px){.operator-card{min-height:270px}.operator-card .operator-visual{min-height:270px}.operator-card .operator-index{font-size:clamp(75px,20vw,130px);left:5%;top:13%}.operator-card .operator-copy{padding:28px 12px}.operator-card .operator-copy:before{left:12px}.operator-card.layout-right .operator-copy:before{right:12px;left:auto}.operator-card .operator-copy h3{font-size:clamp(19px,5vw,27px)}.operator-card .operator-copy .mini{font-size:8px}.operator-card .operator-copy .tap{font-size:8px;letter-spacing:.12em}.operator-card:after{font-size:6px}}
 @media(prefers-reduced-motion:reduce){.operator-card .operator-splash,.operator-card .operator-copy .tap{transition:none}}
 </style>
+
+<style id="archive-final-viewport-fixes">
+/* Retain the original splash framing and geometry; remove only added color/fade effects. */
+#operatorList .operator-card .operator-art .operator-splash{
+ opacity:1!important;filter:none!important;mix-blend-mode:normal!important;
+ mask-image:none!important;-webkit-mask-image:none!important;
+}
+#operatorList .operator-card .operator-art::before,
+#operatorList .operator-card .operator-art::after{content:none!important;display:none!important}
+/* Keep the hero below the fixed navigation, including on mobile reload. */
+html{scroll-padding-top:var(--topbar-h)}
+body>main{padding-top:var(--topbar-h)!important;margin-top:0!important}
+body>main>.hero{margin-top:0!important;transform:none!important}
+/* Potential gallery: a single viewport, three equally sized images, no scrolling. */
+.char-drawer:has(#dupeView.active) .char-shell{height:100dvh;grid-template-rows:auto minmax(0,1fr)!important}
+.char-drawer:has(#dupeView.active) .char-head{min-height:0!important;padding-top:10px!important;padding-bottom:10px!important}
+.char-drawer:has(#dupeView.active) .char-head h2{font-size:clamp(20px,4vw,28px)!important;margin-top:3px!important}
+.char-drawer:has(#dupeView.active) .char-head p{margin-top:2px!important}
+.char-drawer:has(#dupeView.active) .char-stage{min-height:0!important;overflow:hidden!important;display:flex;flex-direction:column;padding:8px 12px max(8px,env(safe-area-inset-bottom))!important}
+#dupeView.active{min-height:0!important;flex:1;display:flex!important;flex-direction:column;overflow:hidden!important}
+#dupeView.active .char-back{flex:none;margin-bottom:7px!important}
+#dupeView.active .dupe-list{flex:1;min-height:0;width:100%;max-width:860px;display:grid!important;grid-template-columns:1fr!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:7px!important;overflow:hidden!important}
+#dupeView.active .dupe-card{min-height:0!important;height:100%!important;overflow:hidden!important;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.035)!important}
+#dupeView.active .dupe-card>img{display:block;width:100%!important;height:100%!important;object-fit:contain!important}
+#dupeView.active .dupe-caption{display:none!important}
+@media(max-width:700px){.char-drawer:has(#dupeView.active) .char-head{padding:8px 65px 8px 16px!important}.char-drawer:has(#dupeView.active) .char-close{top:9px!important;right:12px!important;width:38px!important;height:38px!important}.char-drawer:has(#dupeView.active) .char-head .kicker{font-size:8px!important}}
+</style>
+<script id="hero-reload-position-fix">
+/* A mobile browser may restore the previous scroll offset on reload. */
+try {
+ const nav=performance.getEntriesByType('navigation')[0];
+ if(nav && nav.type==='reload'){
+   history.scrollRestoration='manual';
+   window.addEventListener('load',()=>{window.scrollTo({top:0,left:0,behavior:'instant'});requestAnimationFrame(()=>window.scrollTo(0,0));},{once:true});
+ }
+} catch(e) {}
+</script>
 </body></html>
 
 <style>
