@@ -382,3 +382,53 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  .operator-card.layout-right{grid-template-columns:50% 50%!important}
 }
 </style>
+
+
+<style id="operator-gallery-refinement-v3">
+/* Operator archive only: retain exact 50/50 split and alternating sides. */
+#operatorList{gap:12px!important}
+#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{
+ display:grid!important;grid-template-columns:50% 50%!important;
+ height:clamp(200px,26vw,270px)!important;min-height:0!important;
+ border:0!important;border-radius:0!important;overflow:hidden!important;
+ background:#dce9f0!important;box-shadow:0 9px 26px rgba(3,20,37,.13)!important;
+}
+#operatorList .operator-card::before,#operatorList .operator-card::after{display:none!important}
+#operatorList .operator-card .operator-art{position:relative!important;inset:auto!important;grid-column:1!important;grid-row:1!important;overflow:hidden!important;z-index:2!important;background:radial-gradient(ellipse at 50% 45%,#f1f6f6 0%,#c5d9e3 85%)!important}
+#operatorList .operator-card.layout-right .operator-art{grid-column:2!important}
+#operatorList .operator-card .operator-art .operator-splash{
+ position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+ object-fit:cover!important;object-position:center!important;opacity:1!important;
+ filter:saturate(1.1) contrast(1.04)!important;mix-blend-mode:normal!important;
+ transform:scale(1.18)!important;transition:transform .7s cubic-bezier(.22,1,.36,1)!important;
+}
+#operatorList .operator-card:hover .operator-art .operator-splash{transform:scale(1.24)!important}
+#operatorList .operator-card .operator-visual,#operatorList .operator-card>.manager-stamp{display:none!important}
+#operatorList .operator-card .operator-copy,#operatorList .operator-card.layout-right .operator-copy{
+ position:relative!important;inset:auto!important;width:auto!important;height:100%!important;
+ grid-column:2!important;grid-row:1!important;display:flex!important;flex-direction:column!important;
+ justify-content:center!important;align-items:flex-start!important;text-align:left!important;
+ padding:20px 17px!important;background:linear-gradient(145deg,#f1f4f2,#dce7e8)!important;color:#17354b!important;z-index:4!important;
+}
+#operatorList .operator-card.layout-right .operator-copy{grid-column:1!important;align-items:flex-end!important;text-align:right!important;background:linear-gradient(225deg,#f1f4f2,#dce7e8)!important}
+#operatorList .operator-copy::before{display:none!important}
+#operatorList .operator-overline{font-size:8px!important;letter-spacing:.10em!important;color:#608398!important;white-space:normal!important}
+#operatorList .operator-sequence{font-size:9px!important;letter-spacing:.09em!important;color:#4c849e!important}
+#operatorList .operator-heading{width:100%!important;margin:18px 0 16px!important}
+#operatorList .operator-copy h3{font-size:clamp(25px,3vw,37px)!important;line-height:1.25!important;margin:5px 0!important;font-weight:600!important;color:#153b52!important}
+#operatorList .operator-rule,#operatorList .operator-copy p,#operatorList .operator-footnote{display:none!important}
+#operatorList .operator-action{width:100%!important;padding-top:11px!important;border-top:1px solid rgba(39,89,109,.18)!important;color:#4c7184!important;font-size:9px!important;letter-spacing:.08em!important}
+#operatorList .operator-arrow{width:27px!important;height:27px!important;border:1px solid #9bb9c5!important;color:#315e73!important;font-size:16px!important}
+.char-drawer{background:linear-gradient(155deg,#183c53,#102c43 62%,#123b52)!important}
+.char-stage{background:radial-gradient(ellipse at 10% 5%,rgba(171,215,224,.12),transparent 48%)!important}
+@media(max-width:700px){
+ #operatorList{gap:11px!important}
+ #operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{height:clamp(192px,25dvh,220px)!important}
+ #operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{padding:13px 13px!important}
+ #operatorList .operator-heading{margin:12px 0 11px!important}
+ #operatorList .operator-copy h3{font-size:clamp(23px,6vw,29px)!important}
+ #operatorList .operator-overline{font-size:7px!important}
+ #operatorList .operator-action{font-size:8px!important;padding-top:8px!important}
+ #operatorList .operator-card .operator-art .operator-splash{transform:scale(1.23)!important}
+}
+</style>
