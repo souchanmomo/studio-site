@@ -213,7 +213,7 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  let currentVersion='1.0', currentMode='six';
  function show(which){Object.values(views).forEach(v=>v.classList.remove('active'));views[which].classList.add('active');drawer.querySelector('.char-stage').scrollTop=0}
  function imgFallback(img){img.onerror=()=>{img.style.opacity='.12';img.parentElement.classList.add('char-empty-img')}}
- function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card '+(i%2===0?'layout-left':'layout-right');const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="manager-stamp ${side}" src="${c.stamp}" alt="${c.name}"></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;a.onclick=()=>renderDupes(c,rarity);return a}
+ function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card '+(i%2===0?'layout-left':'layout-right');const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="operator-splash" src="images/Endfield/${c.name}(2D).webp" alt="" loading="lazy" onerror="this.style.display='none'"><span class="operator-index">${String(i+1).padStart(2,'0')}</span><img class="manager-stamp ${side}" src="${c.stamp}" alt="${c.name}"></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;a.onclick=()=>renderDupes(c,rarity);return a}
  function renderOperators(v){currentMode='six';currentVersion=v;list.innerHTML='';(DATA[v]||[]).forEach((c,i)=>list.appendChild(card(c,i,'★6')));title.textContent='Version '+v;sub.textContent='★6 実装キャラクター / タップして凸画像を表示';show('operators')}
  function renderRarity(star,names){currentMode=star;list.innerHTML='';names.forEach((name,i)=>{const c={name,role:`${star} OPERATOR`,desc:`${name} / ${star} OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:`images/Endfield/${name}.webp`,dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]};list.appendChild(card(c,i,star))});title.textContent=star+' キャラ一覧';sub.textContent='バージョン区分なし / タップして凸画像を表示';show('operators')}
  function renderDupes(c,rarity){dupes.innerHTML='';const labels=['1凸','3凸','完凸'];c.dupes.forEach((src,i)=>{const a=document.createElement('article');a.className='dupe-card';a.innerHTML=`<img src="${src}" alt="${c.name} ${labels[i]}"><div class="dupe-caption"><b>${c.name} / ${labels[i]}</b><span>POTENTIAL ARCHIVE</span></div>`;imgFallback(a.querySelector('img'));dupes.appendChild(a)});title.textContent=c.name;sub.textContent=`${rarity} / POTENTIAL ARCHIVE / 3 IMAGES`;show('dupes')}
@@ -230,6 +230,28 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open'))closeDrawer()});
 })();
 </script>
+
+<style id="operator-editorial-2026">
+/* Editorial operator cards — additive styling, preserves original layout and behavior */
+.operator-card{isolation:isolate;min-height:clamp(260px,37vw,390px);background:linear-gradient(130deg,#254e78,#102e51);border:1px solid rgba(201,227,255,.19);box-shadow:0 14px 32px rgba(3,20,41,.15);transition:border-color .3s,box-shadow .3s}
+.operator-card:hover{border-color:rgba(213,237,255,.48);box-shadow:0 18px 42px rgba(3,20,41,.28)}
+.operator-card:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 47px,rgba(221,239,255,.028) 48px),repeating-linear-gradient(90deg,transparent 0 47px,rgba(221,239,255,.028) 48px)}
+.operator-card:after{content:"TALOS-II  /  OPERATOR RECORD";position:absolute;left:13px;bottom:11px;font:600 7px 'Space Grotesk',sans-serif;letter-spacing:.2em;color:rgba(235,247,255,.3);pointer-events:none;z-index:8}
+.operator-card .operator-visual{isolation:isolate;overflow:hidden!important;min-height:clamp(260px,37vw,390px);background:radial-gradient(ellipse at 50% 45%,rgba(132,192,237,.22),transparent 65%)}
+.operator-card .operator-splash{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:.32;filter:saturate(1.3) contrast(1.12);mix-blend-mode:multiply;mask-image:radial-gradient(ellipse at center,#000 20%,transparent 82%);-webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 82%);pointer-events:none;z-index:1;transform:scale(1.38);transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.operator-card:hover .operator-splash{transform:scale(1.46)}
+.operator-card .operator-index{position:absolute;left:8%;top:7%;z-index:2;font:500 clamp(70px,13vw,180px)/1 'Space Grotesk',sans-serif;letter-spacing:-.09em;color:rgba(225,244,255,.12);pointer-events:none}
+.operator-card .operator-visual>.manager-stamp{z-index:5!important;max-height:100%;filter:drop-shadow(0 15px 22px rgba(0,12,28,.42))!important}
+.operator-card .operator-copy{position:relative;z-index:3;background:linear-gradient(115deg,rgba(23,59,103,.5),rgba(15,45,79,.85));border-left:1px solid rgba(255,255,255,.045)}
+.operator-card .operator-copy:before{content:"";width:22px;height:2px;background:#a5d9f8;position:absolute;top:19px;left:24px;opacity:.85}
+.operator-card.layout-right .operator-copy:before{left:auto;right:24px}
+.operator-card .operator-copy .mini{font-size:10px;letter-spacing:.24em;color:#b4d8f5;opacity:.85}
+.operator-card .operator-copy h3{font-size:clamp(21px,3vw,35px);line-height:1.35;letter-spacing:.025em;text-wrap:balance}
+.operator-card .operator-copy .tap{font-size:9px;letter-spacing:.2em;opacity:.86;transition:opacity .25s,gap .25s}
+.operator-card:hover .operator-copy .tap{opacity:1;gap:16px}
+@media(max-width:700px){.operator-card{min-height:270px}.operator-card .operator-visual{min-height:270px}.operator-card .operator-index{font-size:clamp(75px,20vw,130px);left:5%;top:13%}.operator-card .operator-copy{padding:28px 12px}.operator-card .operator-copy:before{left:12px}.operator-card.layout-right .operator-copy:before{right:12px;left:auto}.operator-card .operator-copy h3{font-size:clamp(19px,5vw,27px)}.operator-card .operator-copy .mini{font-size:8px}.operator-card .operator-copy .tap{font-size:8px;letter-spacing:.12em}.operator-card:after{font-size:6px}}
+@media(prefers-reduced-motion:reduce){.operator-card .operator-splash,.operator-card .operator-copy .tap{transition:none}}
+</style>
 </body></html>
 
 <style>
