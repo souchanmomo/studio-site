@@ -196,6 +196,43 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 #operatorList .operator-arrow{width:24px!important;height:24px!important;border-color:#adc9d9!important;color:#315d78!important;font-size:14px!important}
 @media(max-width:700px){.char-head{min-height:105px!important;padding:14px 70px 12px 17px!important}.char-head h2{font-size:26px!important;margin-top:5px!important}.char-head p{font-size:10px!important;margin-top:4px!important}.char-close{width:43px!important;height:43px!important;top:17px!important;right:16px!important;font-size:26px!important}.char-stage{padding:12px 13px 26px!important}.char-back{margin-bottom:12px!important}#operatorList{gap:10px!important}#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{height:clamp(148px,21dvh,175px)!important}#operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{padding:13px 12px!important}#operatorList .operator-overline{font-size:7px!important}#operatorList .operator-copy h3{font-size:clamp(20px,5.2vw,27px)!important}}
 </style>
+
+<style id="operator-tech-frame-2026">
+/* Tech-frame refinement. Splash image and its positioning are intentionally untouched. */
+#operatorList{gap:12px!important}
+#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{
+ border:1px solid rgba(102,191,229,.36)!important;
+ border-radius:2px!important;
+ background:#112d48!important;
+ box-shadow:0 8px 24px rgba(0,9,27,.23),inset 0 0 0 1px rgba(255,255,255,.045)!important;
+}
+#operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{
+ position:relative!important;
+ color:#e8f5ff!important;
+ background:
+  linear-gradient(90deg,rgba(111,190,223,.055) 1px,transparent 1px) 0 0/25px 25px,
+  linear-gradient(0deg,rgba(111,190,223,.05) 1px,transparent 1px) 0 0/25px 25px,
+  radial-gradient(ellipse at 85% 10%,rgba(62,148,193,.20),transparent 72%),
+  linear-gradient(145deg,#183d5b,#0c233c)!important;
+ border-left:1px solid rgba(135,205,235,.30)!important;
+}
+#operatorList .operator-card.layout-right .operator-copy{border-left:0!important;border-right:1px solid rgba(135,205,235,.30)!important}
+#operatorList .operator-copy:after{
+ content:"";position:absolute;inset:7px;pointer-events:none;
+ background:linear-gradient(#76c9ed,#76c9ed) left top/17px 1px no-repeat,
+ linear-gradient(#76c9ed,#76c9ed) left top/1px 17px no-repeat,
+ linear-gradient(#76c9ed,#76c9ed) right bottom/17px 1px no-repeat,
+ linear-gradient(#76c9ed,#76c9ed) right bottom/1px 17px no-repeat;
+ opacity:.62;
+}
+#operatorList .operator-overline{color:#9cc9e1!important}
+#operatorList .operator-sequence{color:#7bb9d9!important}
+#operatorList .operator-copy h3{color:#f0f8ff!important;font-weight:600!important;text-shadow:0 2px 15px rgba(69,177,228,.14)}
+#operatorList .operator-action{color:#b8d9ea!important;border-top:1px solid rgba(145,209,236,.27)!important}
+#operatorList .operator-arrow{color:#d9f3ff!important;border-color:rgba(136,207,238,.48)!important;background:rgba(89,169,209,.08)!important}
+#operatorList .operator-dash{background:#78c8eb!important}
+@media(max-width:700px){#operatorList{gap:11px!important}}
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
