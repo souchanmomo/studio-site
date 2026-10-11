@@ -295,7 +295,23 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 #dupeView.active .dupe-caption b{display:block!important;font:600 clamp(11px,2.8vw,14px)/1.2 'Space Grotesk',sans-serif!important;color:#fff!important;white-space:nowrap!important}
 #dupeView.active .dupe-caption span{display:none!important}
 </style>
-</head>
+<style id="home-collage-and-performance-nav">
+/* Only homepage category tiles are changed; the archive splash art is untouched. */
+.grid .tile.performance-entry{display:flex;flex-direction:column;justify-content:center;min-height:240px;text-decoration:none;color:#e9f9ff;background:linear-gradient(135deg,#102f50,#235a76 65%,#0d3049);border:1px solid #76d9f0;box-shadow:inset 0 0 0 5px #0c2d44,inset 0 0 0 6px #5ab9d488;padding:28px;gap:12px}
+.grid .tile.performance-entry:after{display:none}.performance-entry .performance-tile-kicker,.performance-entry .performance-tile-title,.performance-entry .performance-tile-sub{position:static;z-index:2;left:auto;bottom:auto}
+.performance-entry .performance-tile-kicker{font:600 10px 'Space Grotesk';letter-spacing:.18em;color:#8eddf3}
+.performance-entry .performance-tile-title{font:600 clamp(27px,4vw,44px) Manrope,sans-serif;letter-spacing:.04em}.performance-entry .performance-tile-title small{font-size:.7em;color:#6be2f7}
+.performance-entry .performance-tile-sub{font:500 11px 'Space Grotesk';letter-spacing:.08em;color:#c4e9f7}
+.grid .tile:has(.operator-collage){aspect-ratio:1.75/1;min-height:190px;background:#153b57}
+.grid .tile:has(.operator-collage)>span{z-index:4;text-shadow:0 2px 12px #071c35}
+.grid .tile:has(.operator-collage):after{z-index:3;background:linear-gradient(0deg,#061b31b8,transparent 55%)}
+.operator-collage{position:absolute;inset:0;display:flex;overflow:hidden}
+.collage-slice{position:relative;flex:1 1 20%;height:100%;margin-left:-1.3%;overflow:hidden;clip-path:polygon(14% 0,100% 0,86% 100%,0 100%);background:#204965;border-right:2px solid #7ee7ff}
+.collage-slice:first-child{margin-left:0;clip-path:polygon(0 0,100% 0,86% 100%,0 100%)}
+.collage-slice:last-child{clip-path:polygon(14% 0,100% 0,100% 100%,0 100%)}
+.collage-slice img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:none!important;opacity:1!important;transform:none!important}
+@media(max-width:760px){.grid .tile:has(.operator-collage){min-height:175px;aspect-ratio:1.8/1}.grid .tile.performance-entry{min-height:190px}}
+</style></head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
 <button class="menu-toggle intro-ui" id="menuToggle" aria-label="menu"><div class="menu-icon"><span></span><span></span><span></span></div></button>
@@ -325,18 +341,8 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 <section class="hero reveal"><img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺"><div class="herocopy"><div class="kicker">ENDFIELD ARCHIVE</div><h1>タロⅡの裏側を情報共有します</h1></div></section>
 <section class="intro reveal"><div class="kicker">TALOS-II / FIELD NOTES</div><h2>タロサイト〜工業発展への道〜</h2><p>中の人はエンジョイ勢です。特殊褒章一覧や工業に役立つ情報を、画像を主役にしたアーカイブとしてまとめます。</p></section>
 <section class="feature reveal"><div class="feature-card" id="openAwards" role="button" tabindex="0"><img src="images/特殊褒章.webp" alt="特殊褒章"><div class="feature-copy"><div class="kicker">SPECIAL COMMENDATIONS</div><h2>特殊褒章一覧</h2><p>イベントや条件達成で手に入る特殊な褒章。タップすると、1褒章＝1枚のビジュアルカードとして横方向に連続閲覧できます。</p><div class="tap"><i></i> TAP TO EXPLORE</div></div></div></section>
-<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星6キャラ一覧"><span>キャラ一覧 / ★6 Operators</span></div><div class="tile reveal rarity-entry" id="openFive" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星5キャラ一覧"><span>★5キャラ一覧 / ★5 Operators</span></div><div class="tile reveal rarity-entry" id="openFour" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星4キャラ一覧"><span>★4キャラ一覧 / ★4 Operators</span></div><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div></section>
-<section class="performance-section reveal" id="operatorPerformance">
-  <div class="performance-heading"><div class="performance-eyebrow">TALOS-II / COMBAT DATABASE <span>04 / SKILL MATRIX</span></div>
-    <h2>キャラ性能 <small>ATTRIBUTE APPLICATION</small></h2>
-    <p>通常攻撃・戦技・連携技・必殺技の属性付着を一覧で確認。<strong>「自然」は表示例</strong>で、未確認の技は「—」としています。</p>
-  </div>
-  <div class="performance-legend"><span class="nature-icon">✦</span> 自然付着（表示例） <span class="legend-unknown">— 未確認（付着なしを意味しません）</span></div>
-  <div class="performance-scroll" role="region" aria-label="キャラクター属性付着一覧" tabindex="0">
-    <table class="performance-table"><thead><tr><th scope="col">OPERATOR</th><th scope="col">通常</th><th scope="col">戦技</th><th scope="col">連携技</th><th scope="col">必殺技</th></tr></thead><tbody id="performanceRows"></tbody></table>
-  </div>
-  <div class="performance-note">※ 属性付着データは未検証です。例示セル以外は未確認として表示しています。正確な付着情報が確認でき次第、順次反映できます。</div>
-</section>\n</main>
+<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><div class="operator-collage" aria-hidden="true"><div class="collage-slice"><img src="images/Endfield/管理人(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/エンバー(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/レーヴァテイン(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/ギルベルタ(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/イヴォンヌ(2D).webp" alt="" loading="lazy"></div></div><span>キャラ一覧 / ★6 Operators</span></div><div class="tile reveal rarity-entry" id="openFive" role="button" tabindex="0"><div class="operator-collage" aria-hidden="true"><div class="collage-slice"><img src="images/Endfield/チェン・センユー(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/ザイヒ(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/ウルフガード(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/ダパン(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/ペリカ(2D).webp" alt="" loading="lazy"></div></div><span>★5キャラ一覧 / ★5 Operators</span></div><div class="tile reveal rarity-entry" id="openFour" role="button" tabindex="0"><div class="operator-collage" aria-hidden="true"><div class="collage-slice"><img src="images/Endfield/アンタル(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/アケクリ(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/エステーラ(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/キャッチャー(2D).webp" alt="" loading="lazy"></div><div class="collage-slice"><img src="images/Endfield/フローライト(2D).webp" alt="" loading="lazy"></div></div><span>★4キャラ一覧 / ★4 Operators</span></div><a class="tile reveal performance-entry" href="#performance" id="openPerformance"><span class="performance-tile-kicker">TALOS-II / COMBAT DATABASE</span><span class="performance-tile-title">キャラ性能 <small>↗</small></span><span class="performance-tile-sub">通常 / 戦技 / 連携技 / 必殺技</span></a><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div></section>
+\n</main>
 
 <div class="char-drawer" id="charDrawer" aria-hidden="true">
   <div class="char-shell">
@@ -499,32 +505,87 @@ try {
  }
 } catch(e) {}
 </script>
-<script id="performance-matrix-data">
-(()=>{
- const six=['管理人','エンバー','リーフォン','アルデリア','ラストライト','ポグラニチニク','レーヴァテイン','ギルベルタ','イヴォンヌ','タンタン','ロッシ','ゾアン・ファンイ','ミ・フ','カミーユ','オクギ','リーノ','ティフォロス','スー','ミンホ'];
- const five=['チェン・センユー','ザイヒ','ウルフガード','ダパン','ペリカ','アレッシュ','アイビーエナ','アークライト','スノーシャイン','プチエナ'];
- const four=['アンタル','アケクリ','エステーラ','キャッチャー','フローライト'];
+\n
+<style id="performance-embedded-style">
+#performanceScreen{position:fixed;inset:0;z-index:99999;background:#102f50;display:none;flex-direction:column}
+#performanceScreen.is-open{display:flex}
+#performanceScreen .performance-toolbar{height:60px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#163a53;border-bottom:1px solid rgba(135,216,240,.4);color:#effaff;font:600 13px system-ui;letter-spacing:.08em}
+#performanceScreen .performance-close{appearance:none;border:1px solid #77bfd1;background:transparent;color:white;font-size:25px;width:43px;height:43px;cursor:pointer}
+#performanceScreen iframe{display:block;border:0;width:100%;flex:1;min-height:0;background:#102f50}
+</style>
+<div id="performanceScreen" role="dialog" aria-modal="true" aria-label="キャラ性能" aria-hidden="true">
+ <div class="performance-toolbar"><span>TALOS-II / キャラ性能</span><button type="button" class="performance-close" id="closePerformance" aria-label="閉じる">×</button></div>
+ <iframe id="performanceFrame" title="キャラ性能一覧" loading="lazy" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;ja&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;meta name=&quot;theme-color&quot; content=&quot;#102f50&quot;&gt;&lt;title&gt;キャラ性能 | Arknights: Endfield&lt;/title&gt;&lt;link href=&quot;https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap&quot; rel=&quot;stylesheet&quot;&gt;&lt;style&gt;*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 85% 0%,#285778 0%,transparent 45%),linear-gradient(160deg,#102f50,#071d31);font-family:Manrope,sans-serif;color:#eef7ff}.performance-section{margin:0 auto!important}.back-nav{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,48px);max-width:1220px;margin:auto;border-bottom:1px solid #a4d6ec40}.back-nav a{color:#d5f4ff;text-decoration:none;font:600 12px &#x27;Space Grotesk&#x27;;letter-spacing:.13em}.back-nav span{font:500 10px &#x27;Space Grotesk&#x27;;letter-spacing:.17em;color:#8dcce5}.performance-table tbody tr:hover:not(.rarity-row){background:#72cbea14}&lt;/style&gt;&lt;style&gt;
+.performance-section{margin:0 auto 90px;padding:42px clamp(16px,4vw,48px) 60px;max-width:1220px;color:#e8f6ff}
+.performance-heading{border-top:2px solid #80d8fa;padding-top:20px}
+.performance-eyebrow{display:flex;justify-content:space-between;gap:12px;font:600 10px &#x27;Space Grotesk&#x27;,sans-serif;letter-spacing:.19em;color:#d5f2ff}
+.performance-eyebrow span{opacity:.65}
+.performance-heading h2{font-size:clamp(27px,5vw,48px);font-weight:600;letter-spacing:.04em;margin:14px 0}
+.performance-heading h2 small{display:block;font:500 10px &#x27;Space Grotesk&#x27;,sans-serif;letter-spacing:.2em;margin-top:9px;color:#c0e6f8}
+.performance-heading p{font-size:12px;line-height:1.9;color:#e3f3fc;max-width:650px}
+.performance-legend{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:11px;padding:23px 0 15px}
+.nature-icon{display:inline-grid;place-items:center;width:23px;height:23px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:#78dcb1;color:#104d37;font-size:17px;font-weight:700}
+.legend-unknown{margin-left:auto;opacity:.7}
+.performance-scroll{overflow-x:auto;border:1px solid #73c7e28c;background:linear-gradient(140deg,#0a2841f2,#153e59ef);box-shadow:0 22px 55px #12304c38}
+.performance-table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:350px}
+.performance-table th,.performance-table td{border-bottom:1px solid #83bcd329;border-right:1px solid #83bcd31a;padding:13px 6px;text-align:center}
+.performance-table thead th{position:sticky;top:0;background:#17445e;color:#d2f4ff;font:600 10px &#x27;Space Grotesk&#x27;,sans-serif;letter-spacing:.07em}
+.performance-table th:first-child{width:36%;text-align:left;padding-left:13px}
+.performance-table tbody th{font-size:clamp(10px,2.5vw,13px);font-weight:600;white-space:nowrap;color:#f3fbff}
+.performance-table tbody td{height:50px}
+.performance-table tbody tr:nth-child(even){background:#b9e9ff08}
+.performance-table .rarity-row th{background:#32738b66;color:#bfeeff;font:600 10px &#x27;Space Grotesk&#x27;,sans-serif;letter-spacing:.13em;padding:9px 13px}
+.performance-table .rarity-row td{background:#32738b66}
+.performance-table .unknown{color:#86a9bc;font-size:17px}
+.performance-table .example{background:#6fc8a31a}
+.performance-table .example .nature-icon{margin:auto}
+.performance-note{font-size:10px;line-height:1.8;color:#e2f3ffb8;margin-top:14px}
+@media(max-width:700px){.performance-section{padding:25px 14px 45px;margin-bottom:35px}.performance-table th:first-child{width:36%}.performance-table th,.performance-table td{padding:11px 3px}.performance-table tbody th{padding-left:8px!important;letter-spacing:-.035em}.performance-eyebrow span{display:none}.legend-unknown{margin-left:0}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;nav class=&quot;back-nav&quot;&gt;&lt;a href=&quot;works.html&quot;&gt;← BACK TO ARCHIVE&lt;/a&gt;&lt;span&gt;TALOS-II / DATABASE&lt;/span&gt;&lt;/nav&gt;&lt;section class=&quot;performance-section&quot; id=&quot;operatorPerformance&quot;&gt;
+  &lt;div class=&quot;performance-heading&quot;&gt;&lt;div class=&quot;performance-eyebrow&quot;&gt;TALOS-II / COMBAT DATABASE &lt;span&gt;04 / SKILL MATRIX&lt;/span&gt;&lt;/div&gt;
+    &lt;h2&gt;キャラ性能 &lt;small&gt;ATTRIBUTE APPLICATION&lt;/small&gt;&lt;/h2&gt;
+    &lt;p&gt;通常攻撃・戦技・連携技・必殺技の属性付着を一覧で確認。&lt;strong&gt;「自然」は表示例&lt;/strong&gt;で、未確認の技は「—」としています。&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;performance-legend&quot;&gt;&lt;span class=&quot;nature-icon&quot;&gt;✦&lt;/span&gt; 自然付着（表示例） &lt;span class=&quot;legend-unknown&quot;&gt;— 未確認（付着なしを意味しません）&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;performance-scroll&quot; role=&quot;region&quot; aria-label=&quot;キャラクター属性付着一覧&quot; tabindex=&quot;0&quot;&gt;
+    &lt;table class=&quot;performance-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;OPERATOR&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;通常&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;戦技&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;連携技&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;必殺技&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;performanceRows&quot;&gt;&lt;/tbody&gt;&lt;/table&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;performance-note&quot;&gt;※ 属性付着データは未検証です。例示セル以外は未確認として表示しています。正確な付着情報が確認でき次第、順次反映できます。&lt;/div&gt;
+&lt;/section&gt;&lt;script id=&quot;performance-matrix-data&quot;&gt;
+(()=&gt;{
+ const six=[&#x27;管理人&#x27;,&#x27;エンバー&#x27;,&#x27;リーフォン&#x27;,&#x27;アルデリア&#x27;,&#x27;ラストライト&#x27;,&#x27;ポグラニチニク&#x27;,&#x27;レーヴァテイン&#x27;,&#x27;ギルベルタ&#x27;,&#x27;イヴォンヌ&#x27;,&#x27;タンタン&#x27;,&#x27;ロッシ&#x27;,&#x27;ゾアン・ファンイ&#x27;,&#x27;ミ・フ&#x27;,&#x27;カミーユ&#x27;,&#x27;オクギ&#x27;,&#x27;リーノ&#x27;,&#x27;ティフォロス&#x27;,&#x27;スー&#x27;,&#x27;ミンホ&#x27;];
+ const five=[&#x27;チェン・センユー&#x27;,&#x27;ザイヒ&#x27;,&#x27;ウルフガード&#x27;,&#x27;ダパン&#x27;,&#x27;ペリカ&#x27;,&#x27;アレッシュ&#x27;,&#x27;アイビーエナ&#x27;,&#x27;アークライト&#x27;,&#x27;スノーシャイン&#x27;,&#x27;プチエナ&#x27;];
+ const four=[&#x27;アンタル&#x27;,&#x27;アケクリ&#x27;,&#x27;エステーラ&#x27;,&#x27;キャッチャー&#x27;,&#x27;フローライト&#x27;];
  // Data shape: name: [normal, skill, combo, ultimate]. null = unverified.
  // Only a visual demonstration, NOT a factual claim about any operator.
- const example={ '管理人': [null,'自然',null,null] };
- const tbody=document.getElementById('performanceRows');if(!tbody)return;
- [['★6',six],['★5',five],['★4',four]].forEach(([rarity,names])=>{
-   const group=document.createElement('tr');group.className='rarity-row';
-   group.innerHTML='<th scope="rowgroup">'+rarity+' OPERATORS</th><td colspan="4"></td>';tbody.appendChild(group);
-   names.forEach(name=>{
-     const tr=document.createElement('tr');
-     const label=document.createElement('th');label.scope='row';label.textContent=name;tr.appendChild(label);
-     (example[name]||[null,null,null,null]).forEach(value=>{
-       const td=document.createElement('td');
-       if(value==='自然'){td.className='example';td.innerHTML='<span class="nature-icon" role="img" aria-label="自然付着（表示例）">✦</span>'}
-       else{td.className='unknown';td.textContent='—';td.setAttribute('aria-label','未確認')}
+ const example={ &#x27;管理人&#x27;: [null,&#x27;自然&#x27;,null,null] };
+ const tbody=document.getElementById(&#x27;performanceRows&#x27;);if(!tbody)return;
+ [[&#x27;★6&#x27;,six],[&#x27;★5&#x27;,five],[&#x27;★4&#x27;,four]].forEach(([rarity,names])=&gt;{
+   const group=document.createElement(&#x27;tr&#x27;);group.className=&#x27;rarity-row&#x27;;
+   group.innerHTML=&#x27;&lt;th scope=&quot;rowgroup&quot;&gt;&#x27;+rarity+&#x27; OPERATORS&lt;/th&gt;&lt;td colspan=&quot;4&quot;&gt;&lt;/td&gt;&#x27;;tbody.appendChild(group);
+   names.forEach(name=&gt;{
+     const tr=document.createElement(&#x27;tr&#x27;);
+     const label=document.createElement(&#x27;th&#x27;);label.scope=&#x27;row&#x27;;label.textContent=name;tr.appendChild(label);
+     (example[name]||[null,null,null,null]).forEach(value=&gt;{
+       const td=document.createElement(&#x27;td&#x27;);
+       if(value===&#x27;自然&#x27;){td.className=&#x27;example&#x27;;td.innerHTML=&#x27;&lt;span class=&quot;nature-icon&quot; role=&quot;img&quot; aria-label=&quot;自然付着（表示例）&quot;&gt;✦&lt;/span&gt;&#x27;}
+       else{td.className=&#x27;unknown&#x27;;td.textContent=&#x27;—&#x27;;td.setAttribute(&#x27;aria-label&#x27;,&#x27;未確認&#x27;)}
        tr.appendChild(td);
      });
      tbody.appendChild(tr);
    });
  });
 })();
-</script>\n</body></html>
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+</div>
+<script id="performance-screen-controller">
+(()=>{const panel=document.getElementById('performanceScreen');const opener=document.getElementById('openPerformance');const closer=document.getElementById('closePerformance');if(!panel||!opener)return;
+const show=e=>{if(e)e.preventDefault();panel.classList.add('is-open');panel.setAttribute('aria-hidden','false');document.body.dataset.previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';};
+const hide=()=>{panel.classList.remove('is-open');panel.setAttribute('aria-hidden','true');document.body.style.overflow=document.body.dataset.previousOverflow||'';};
+opener.addEventListener('click',show);closer.addEventListener('click',hide);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('is-open'))hide()});
+})();
+</script>
+</body></html>
 
 <style>
 .operator-card>.manager-stamp{position:absolute!important;bottom:3%!important;width:min(18%,180px)!important;height:auto!important;object-fit:contain!important;z-index:6!important;pointer-events:none!important}.operator-card>.manager-stamp.stamp-left{left:20%!important;right:auto!important;transform:translateX(-50%)!important}.operator-card>.manager-stamp.stamp-right{right:20%!important;left:auto!important;transform:translateX(50%)!important}@media(max-width:700px){.operator-card>.manager-stamp{width:24%!important}}
