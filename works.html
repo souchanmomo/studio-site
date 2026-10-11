@@ -261,6 +261,40 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
  #operatorList .operator-action{font-size:7px!important}
 }
 </style>
+<style id="performance-matrix-style">
+.performance-section{margin:0 auto 90px;padding:42px clamp(16px,4vw,48px) 60px;max-width:1220px;color:#e8f6ff}
+.performance-heading{border-top:2px solid #80d8fa;padding-top:20px}
+.performance-eyebrow{display:flex;justify-content:space-between;gap:12px;font:600 10px 'Space Grotesk',sans-serif;letter-spacing:.19em;color:#d5f2ff}
+.performance-eyebrow span{opacity:.65}
+.performance-heading h2{font-size:clamp(27px,5vw,48px);font-weight:600;letter-spacing:.04em;margin:14px 0}
+.performance-heading h2 small{display:block;font:500 10px 'Space Grotesk',sans-serif;letter-spacing:.2em;margin-top:9px;color:#c0e6f8}
+.performance-heading p{font-size:12px;line-height:1.9;color:#e3f3fc;max-width:650px}
+.performance-legend{display:flex;align-items:center;flex-wrap:wrap;gap:9px;font-size:11px;padding:23px 0 15px}
+.nature-icon{display:inline-grid;place-items:center;width:23px;height:23px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:#78dcb1;color:#104d37;font-size:17px;font-weight:700}
+.legend-unknown{margin-left:auto;opacity:.7}
+.performance-scroll{overflow-x:auto;border:1px solid #73c7e28c;background:linear-gradient(140deg,#0a2841f2,#153e59ef);box-shadow:0 22px 55px #12304c38}
+.performance-table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:350px}
+.performance-table th,.performance-table td{border-bottom:1px solid #83bcd329;border-right:1px solid #83bcd31a;padding:13px 6px;text-align:center}
+.performance-table thead th{position:sticky;top:0;background:#17445e;color:#d2f4ff;font:600 10px 'Space Grotesk',sans-serif;letter-spacing:.07em}
+.performance-table th:first-child{width:36%;text-align:left;padding-left:13px}
+.performance-table tbody th{font-size:clamp(10px,2.5vw,13px);font-weight:600;white-space:nowrap;color:#f3fbff}
+.performance-table tbody td{height:50px}
+.performance-table tbody tr:nth-child(even){background:#b9e9ff08}
+.performance-table .rarity-row th{background:#32738b66;color:#bfeeff;font:600 10px 'Space Grotesk',sans-serif;letter-spacing:.13em;padding:9px 13px}
+.performance-table .rarity-row td{background:#32738b66}
+.performance-table .unknown{color:#86a9bc;font-size:17px}
+.performance-table .example{background:#6fc8a31a}
+.performance-table .example .nature-icon{margin:auto}
+.performance-note{font-size:10px;line-height:1.8;color:#e2f3ffb8;margin-top:14px}
+@media(max-width:700px){.performance-section{padding:25px 14px 45px;margin-bottom:35px}.performance-table th:first-child{width:36%}.performance-table th,.performance-table td{padding:11px 3px}.performance-table tbody th{padding-left:8px!important;letter-spacing:-.035em}.performance-eyebrow span{display:none}.legend-unknown{margin-left:0}}
+</style>\n
+<style id="potential-labels-restored">
+/* Only restore the potential-stage labels. Keep the three-image viewport intact. */
+#dupeView.active .dupe-card{position:relative!important}
+#dupeView.active .dupe-caption{display:block!important;position:absolute!important;top:9px!important;left:9px!important;right:auto!important;bottom:auto!important;z-index:6!important;padding:5px 10px!important;background:rgba(9,35,57,.84)!important;border:1px solid rgba(124,222,244,.75)!important;border-left:3px solid #74e4f3!important;backdrop-filter:none!important;pointer-events:none!important}
+#dupeView.active .dupe-caption b{display:block!important;font:600 clamp(11px,2.8vw,14px)/1.2 'Space Grotesk',sans-serif!important;color:#fff!important;white-space:nowrap!important}
+#dupeView.active .dupe-caption span{display:none!important}
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
@@ -291,8 +325,18 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 <section class="hero reveal"><img src="images/Screenshot_エンドフィールド_20260324_074442~2.jpg" alt="エンドフィールド名刺"><div class="herocopy"><div class="kicker">ENDFIELD ARCHIVE</div><h1>タロⅡの裏側を情報共有します</h1></div></section>
 <section class="intro reveal"><div class="kicker">TALOS-II / FIELD NOTES</div><h2>タロサイト〜工業発展への道〜</h2><p>中の人はエンジョイ勢です。特殊褒章一覧や工業に役立つ情報を、画像を主役にしたアーカイブとしてまとめます。</p></section>
 <section class="feature reveal"><div class="feature-card" id="openAwards" role="button" tabindex="0"><img src="images/特殊褒章.webp" alt="特殊褒章"><div class="feature-copy"><div class="kicker">SPECIAL COMMENDATIONS</div><h2>特殊褒章一覧</h2><p>イベントや条件達成で手に入る特殊な褒章。タップすると、1褒章＝1枚のビジュアルカードとして横方向に連続閲覧できます。</p><div class="tap"><i></i> TAP TO EXPLORE</div></div></div></section>
-<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星6キャラ一覧"><span>キャラ一覧 / ★6 Operators</span></div><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div><div class="tile reveal rarity-entry" id="openFive" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星5キャラ一覧"><span>★5キャラ一覧 / ★5 Operators</span></div><div class="tile reveal rarity-entry" id="openFour" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星4キャラ一覧"><span>★4キャラ一覧 / ★4 Operators</span></div></section>
-</main>
+<section class="grid"><div class="tile reveal character-entry" id="openCharacters" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星6キャラ一覧"><span>キャラ一覧 / ★6 Operators</span></div><div class="tile reveal rarity-entry" id="openFive" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星5キャラ一覧"><span>★5キャラ一覧 / ★5 Operators</span></div><div class="tile reveal rarity-entry" id="openFour" role="button" tabindex="0"><img src="images/Screenshot_エンドフィールド_20260324_082020~2.jpg" alt="星4キャラ一覧"><span>★4キャラ一覧 / ★4 Operators</span></div><div class="tile reveal"><img src="images/Screenshot_エンドフィールド_20260402_163743~2.jpg" alt="Archive"><span>探索 / Field Archive</span></div></section>
+<section class="performance-section reveal" id="operatorPerformance">
+  <div class="performance-heading"><div class="performance-eyebrow">TALOS-II / COMBAT DATABASE <span>04 / SKILL MATRIX</span></div>
+    <h2>キャラ性能 <small>ATTRIBUTE APPLICATION</small></h2>
+    <p>通常攻撃・戦技・連携技・必殺技の属性付着を一覧で確認。<strong>「自然」は表示例</strong>で、未確認の技は「—」としています。</p>
+  </div>
+  <div class="performance-legend"><span class="nature-icon">✦</span> 自然付着（表示例） <span class="legend-unknown">— 未確認（付着なしを意味しません）</span></div>
+  <div class="performance-scroll" role="region" aria-label="キャラクター属性付着一覧" tabindex="0">
+    <table class="performance-table"><thead><tr><th scope="col">OPERATOR</th><th scope="col">通常</th><th scope="col">戦技</th><th scope="col">連携技</th><th scope="col">必殺技</th></tr></thead><tbody id="performanceRows"></tbody></table>
+  </div>
+  <div class="performance-note">※ 属性付着データは未検証です。例示セル以外は未確認として表示しています。正確な付着情報が確認でき次第、順次反映できます。</div>
+</section>\n</main>
 
 <div class="char-drawer" id="charDrawer" aria-hidden="true">
   <div class="char-shell">
@@ -455,7 +499,32 @@ try {
  }
 } catch(e) {}
 </script>
-</body></html>
+<script id="performance-matrix-data">
+(()=>{
+ const six=['管理人','エンバー','リーフォン','アルデリア','ラストライト','ポグラニチニク','レーヴァテイン','ギルベルタ','イヴォンヌ','タンタン','ロッシ','ゾアン・ファンイ','ミ・フ','カミーユ','オクギ','リーノ','ティフォロス','スー','ミンホ'];
+ const five=['チェン・センユー','ザイヒ','ウルフガード','ダパン','ペリカ','アレッシュ','アイビーエナ','アークライト','スノーシャイン','プチエナ'];
+ const four=['アンタル','アケクリ','エステーラ','キャッチャー','フローライト'];
+ // Data shape: name: [normal, skill, combo, ultimate]. null = unverified.
+ // Only a visual demonstration, NOT a factual claim about any operator.
+ const example={ '管理人': [null,'自然',null,null] };
+ const tbody=document.getElementById('performanceRows');if(!tbody)return;
+ [['★6',six],['★5',five],['★4',four]].forEach(([rarity,names])=>{
+   const group=document.createElement('tr');group.className='rarity-row';
+   group.innerHTML='<th scope="rowgroup">'+rarity+' OPERATORS</th><td colspan="4"></td>';tbody.appendChild(group);
+   names.forEach(name=>{
+     const tr=document.createElement('tr');
+     const label=document.createElement('th');label.scope='row';label.textContent=name;tr.appendChild(label);
+     (example[name]||[null,null,null,null]).forEach(value=>{
+       const td=document.createElement('td');
+       if(value==='自然'){td.className='example';td.innerHTML='<span class="nature-icon" role="img" aria-label="自然付着（表示例）">✦</span>'}
+       else{td.className='unknown';td.textContent='—';td.setAttribute('aria-label','未確認')}
+       tr.appendChild(td);
+     });
+     tbody.appendChild(tr);
+   });
+ });
+})();
+</script>\n</body></html>
 
 <style>
 .operator-card>.manager-stamp{position:absolute!important;bottom:3%!important;width:min(18%,180px)!important;height:auto!important;object-fit:contain!important;z-index:6!important;pointer-events:none!important}.operator-card>.manager-stamp.stamp-left{left:20%!important;right:auto!important;transform:translateX(-50%)!important}.operator-card>.manager-stamp.stamp-right{right:20%!important;left:auto!important;transform:translateX(50%)!important}@media(max-width:700px){.operator-card>.manager-stamp{width:24%!important}}
