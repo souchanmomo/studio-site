@@ -173,6 +173,29 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 @media(prefers-reduced-motion:reduce){.operator-card,.operator-card *{transition:none!important}}
 
 </style>
+<style id="operator-compact-gallery-2026">
+/* Compact art-book gallery: scoped to character cards only. */
+#operatorList{gap:11px!important}
+#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{display:grid!important;grid-template-columns:50% 50%!important;min-height:0!important;height:clamp(158px,22vw,205px)!important;aspect-ratio:auto!important;border:1px solid rgba(225,242,255,.22)!important;background:#e4eef5!important;box-shadow:0 5px 20px rgba(0,13,32,.12)!important;isolation:isolate}
+#operatorList .operator-card:before,#operatorList .operator-card:after{display:none!important}
+#operatorList .operator-art{position:relative!important;inset:auto!important;grid-column:1;grid-row:1;z-index:2!important;overflow:hidden!important;background:linear-gradient(145deg,#d7e9f4,#b5d2e5)!important}
+#operatorList .operator-card.layout-right .operator-art{grid-column:2}
+#operatorList .operator-art .operator-splash{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;opacity:1!important;filter:none!important;mix-blend-mode:normal!important;transform:none!important}
+#operatorList .operator-card:hover .operator-art .operator-splash{transform:scale(1.045)!important}
+#operatorList .operator-visual{display:none!important}
+#operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{position:relative!important;inset:auto!important;width:auto!important;height:100%!important;grid-column:2;grid-row:1;z-index:3!important;padding:17px 16px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:space-between!important;text-align:left!important;background:#f5f8fa!important;color:#183650!important}
+#operatorList .operator-card.layout-right .operator-copy{grid-column:1;align-items:flex-end!important;text-align:right!important}
+#operatorList .operator-copy:before{display:none!important}
+#operatorList .operator-overline{font-size:8px!important;letter-spacing:.11em!important;color:#577c95!important;white-space:normal!important}
+#operatorList .operator-dash{width:12px!important;background:#3a91bd!important}
+#operatorList .operator-heading{width:100%}
+#operatorList .operator-sequence{font-size:8px!important;letter-spacing:.06em!important;color:#6395b1!important}
+#operatorList .operator-copy h3{font-size:clamp(21px,4.5vw,30px)!important;line-height:1.2!important;margin:5px 0 0!important;color:#173752!important;font-weight:600!important}
+#operatorList .operator-rule,#operatorList .operator-copy p,#operatorList .operator-footnote{display:none!important}
+#operatorList .operator-action{width:100%;font-size:8px!important;letter-spacing:.09em!important;color:#315d78!important;border-top:1px solid #d0dfe9!important;padding-top:6px!important}
+#operatorList .operator-arrow{width:24px!important;height:24px!important;border-color:#adc9d9!important;color:#315d78!important;font-size:14px!important}
+@media(max-width:700px){.char-head{min-height:105px!important;padding:14px 70px 12px 17px!important}.char-head h2{font-size:26px!important;margin-top:5px!important}.char-head p{font-size:10px!important;margin-top:4px!important}.char-close{width:43px!important;height:43px!important;top:17px!important;right:16px!important;font-size:26px!important}.char-stage{padding:12px 13px 26px!important}.char-back{margin-bottom:12px!important}#operatorList{gap:10px!important}#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{height:clamp(148px,21dvh,175px)!important}#operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{padding:13px 12px!important}#operatorList .operator-overline{font-size:7px!important}#operatorList .operator-copy h3{font-size:clamp(20px,5.2vw,27px)!important}}
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
