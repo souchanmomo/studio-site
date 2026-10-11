@@ -233,6 +233,34 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 #operatorList .operator-dash{background:#78c8eb!important}
 @media(max-width:700px){#operatorList{gap:11px!important}}
 </style>
+
+<style id="operator-tech-frame-v4">
+/* Editorial technical framing: splash image rendering deliberately untouched. */
+#operatorList{gap:13px!important}
+#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{
+ border:1px solid #75b5cb!important;
+ box-shadow:0 0 0 3px #102d43,0 0 0 4px rgba(121,211,234,.33),0 10px 22px rgba(0,13,31,.24)!important;
+ background:#dce8e9!important;
+}
+#operatorList .operator-card:before{display:block!important;content:""!important;position:absolute!important;inset:5px!important;z-index:6!important;pointer-events:none!important;background:linear-gradient(#3b9fb9,#3b9fb9) left top/23px 2px no-repeat,linear-gradient(#3b9fb9,#3b9fb9) left top/2px 23px no-repeat,linear-gradient(#3b9fb9,#3b9fb9) right bottom/23px 2px no-repeat,linear-gradient(#3b9fb9,#3b9fb9) right bottom/2px 23px no-repeat!important;opacity:.85!important}
+#operatorList .operator-card:after{display:block!important;content:""!important;position:absolute!important;inset:0!important;z-index:5!important;pointer-events:none!important;background:linear-gradient(90deg,transparent calc(50% - 1px),rgba(25,104,130,.48) 50%,transparent calc(50% + 1px))!important}
+#operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{
+ background:repeating-linear-gradient(0deg,transparent 0 32px,rgba(54,130,151,.045) 32px 33px),linear-gradient(140deg,#d9e7e8,#cbdde1)!important;
+ box-shadow:inset 0 0 0 1px rgba(255,255,255,.42)!important;
+}
+#operatorList .operator-copy h3{font-size:clamp(17px,3.65vw,30px)!important;letter-spacing:-.055em!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:keep-all!important;text-wrap:nowrap!important;line-height:1.2!important}
+#operatorList .operator-overline{color:#346c80!important}
+#operatorList .operator-action{border-top:1px solid #81adba!important;color:#24546a!important}
+#operatorList .operator-arrow{border:1px solid #4389a1!important;background:rgba(73,156,182,.11)!important;color:#235b72!important}
+@media(max-width:700px){
+ #operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{height:clamp(180px,24dvh,218px)!important}
+ #operatorList .operator-copy,#operatorList .operator-card.layout-right .operator-copy{padding:18px 10px 15px!important}
+ #operatorList .operator-copy h3{font-size:clamp(15px,4.05vw,23px)!important;letter-spacing:-.065em!important}
+ #operatorList .operator-overline{font-size:6.5px!important;letter-spacing:0!important}
+ #operatorList .operator-sequence{font-size:7px!important}
+ #operatorList .operator-action{font-size:7px!important}
+}
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
@@ -468,4 +496,53 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  #operatorList .operator-action{font-size:8px!important;padding-top:8px!important}
  #operatorList .operator-card .operator-art .operator-splash{transform:scale(1.23)!important}
 }
+</style>
+
+
+<style id="operator-industrial-frame-v4">
+/* LAST cascade layer: operator cards only. Artwork rules deliberately untouched. */
+#operatorList{gap:13px!important}
+#operatorList .operator-card,#operatorList .operator-card.layout-left,#operatorList .operator-card.layout-right{
+ grid-template-columns:50% 50%!important;
+ border:2px solid #3b9cc1!important;border-radius:0!important;
+ background:#183d52!important;
+ box-shadow:0 0 0 2px #102e43,0 0 0 3px rgba(118,216,244,.42),0 12px 26px rgba(0,15,35,.28)!important;
+}
+#operatorList .operator-card .operator-copy,#operatorList .operator-card.layout-right .operator-copy{
+ color:#e9f7fc!important;
+ background:
+ repeating-linear-gradient(0deg,transparent 0 19px,rgba(128,204,228,.085) 20px,transparent 21px),
+ linear-gradient(125deg,rgba(102,193,219,.18),transparent 50%),
+ linear-gradient(155deg,#2c5266 0%,#19384d 54%,#102d43 100%)!important;
+ border-left:2px solid rgba(117,215,243,.65)!important;
+}
+#operatorList .operator-card.layout-right .operator-copy{border-left:0!important;border-right:2px solid rgba(117,215,243,.65)!important}
+#operatorList .operator-card .operator-copy::after{
+ content:""!important;display:block!important;position:absolute!important;inset:6px!important;
+ pointer-events:none!important;z-index:9!important;opacity:1!important;
+ background:
+ linear-gradient(#78d8f2,#78d8f2) left top/25px 3px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) left top/3px 25px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) right top/25px 3px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) right top/3px 25px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) left bottom/25px 3px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) left bottom/3px 25px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) right bottom/25px 3px no-repeat,
+ linear-gradient(#78d8f2,#78d8f2) right bottom/3px 25px no-repeat!important;
+ box-shadow:inset 0 0 0 1px rgba(137,217,242,.27)!important;
+}
+#operatorList .operator-overline{color:#a9d4e5!important}
+#operatorList .operator-sequence{color:#8fd6ef!important}
+#operatorList .operator-copy h3{color:#f5fbff!important;text-shadow:0 2px 12px rgba(0,10,30,.22)!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:keep-all!important;letter-spacing:-.045em!important;font-size:clamp(17px,4.1vw,31px)!important}
+#operatorList .operator-action{color:#bde4f1!important;border-top:1px solid rgba(141,215,240,.48)!important}
+#operatorList .operator-arrow{color:#e8faff!important;border-color:#7ac9e5!important;background:rgba(84,177,213,.16)!important}
+#operatorList .operator-dash{background:#72d7f3!important}
+@media(max-width:700px){
+ #operatorList .operator-copy h3{font-size:clamp(15px,4.2vw,23px)!important;letter-spacing:-.075em!important}
+ #operatorList .operator-card .operator-copy,#operatorList .operator-card.layout-right .operator-copy{padding:12px 11px!important}
+ #operatorList .operator-card .operator-copy::after{inset:5px!important}
+}
+/* Ensure the hero starts below the fixed site navigation after reload. */
+main{padding-top:var(--topbar-h)!important}
+.hero{scroll-margin-top:var(--topbar-h)}
 </style>
