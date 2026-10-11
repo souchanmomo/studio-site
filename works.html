@@ -104,6 +104,75 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 @keyframes charCardSlide{0%{opacity:0}100%{opacity:1;transform:translate3d(0,0,0)}}
 @media (prefers-reduced-motion:reduce){.char-view.active .version-card,.char-view.active .operator-card,.char-view.active .dupe-card{animation:none!important;opacity:1!important;transform:none!important}}
 </style>
+<style>
+
+/* ==============================================================
+   OPERATOR EDITORIAL / V2 — cinematic full-bleed archive cards
+   All other drawers, routes and award UI remain untouched.
+   ============================================================== */
+.char-drawer{background:linear-gradient(155deg,#142f50 0%,#091d34 100%)}
+.char-stage{background:radial-gradient(ellipse at 100% 0%,rgba(100,165,210,.075),transparent 45%)}
+.operator-list{gap:clamp(15px,2.6vw,28px)}
+.operator-card,.operator-card.layout-left,.operator-card.layout-right{
+ --accent:#a9d6ef;position:relative!important;display:block!important;
+ width:100%;min-height:clamp(320px,43vw,440px)!important;
+ isolation:isolate;overflow:hidden!important;cursor:pointer;
+ border:1px solid rgba(198,225,245,.22)!important;
+ background:linear-gradient(120deg,#24486b,#102e50 65%,#0c2542)!important;
+ box-shadow:0 16px 40px rgba(0,12,31,.18);
+ transition:border-color .4s,box-shadow .4s,transform .4s;
+}
+.operator-card:hover{border-color:rgba(221,242,255,.55)!important;box-shadow:0 22px 50px rgba(0,12,31,.3)}
+.operator-card:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,rgba(8,29,53,.08),rgba(8,29,53,.30) 48%,rgba(8,29,53,.93) 83%)}
+.operator-card.layout-right:before{background:linear-gradient(270deg,rgba(8,29,53,.08),rgba(8,29,53,.30) 48%,rgba(8,29,53,.93) 83%)}
+.operator-card:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.07),transparent 20%,transparent 78%,rgba(2,15,31,.35));border:0!important}
+.operator-art{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.operator-art .operator-splash{position:absolute;inset:-10% -10%;width:120%;height:120%;object-fit:contain;opacity:.28;filter:saturate(1.1) contrast(1.2);mix-blend-mode:screen;transform:scale(1.02);transition:transform 1.2s cubic-bezier(.22,1,.36,1)}
+.operator-card:hover .operator-art .operator-splash{transform:scale(1.10)}
+.operator-card .operator-visual{position:absolute!important;inset:0!important;z-index:3;min-height:0!important;overflow:hidden!important;background:none!important;pointer-events:none}
+.operator-card .operator-visual>.manager-stamp{position:absolute!important;left:0!important;right:auto!important;bottom:-1%!important;top:auto!important;transform:none!important;width:57%!important;height:99%!important;max-height:none!important;max-width:none!important;object-fit:contain!important;object-position:bottom left!important;filter:drop-shadow(8px 16px 18px rgba(1,12,30,.25))!important;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.operator-card.layout-right .operator-visual>.manager-stamp{left:auto!important;right:0!important;object-position:bottom right!important}
+.operator-card:hover .operator-visual>.manager-stamp{transform:scale(1.045)!important}
+.operator-card .operator-index{position:absolute!important;top:10%!important;left:4%!important;font:400 clamp(95px,18vw,230px)/.8 'Space Grotesk',sans-serif!important;letter-spacing:-.095em;color:rgba(226,243,255,.14)!important;z-index:0!important}
+.operator-card.layout-right .operator-index{left:auto!important;right:5%!important}
+.operator-card .operator-copy{position:absolute!important;inset:0 0 0 auto!important;width:49%!important;z-index:5!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:space-between!important;text-align:left!important;padding:clamp(22px,3vw,36px)!important;background:transparent!important;border:0!important}
+.operator-card.layout-right .operator-copy{inset:0 auto 0 0!important;text-align:left!important;align-items:stretch!important}
+.operator-card .operator-copy:before{display:none!important}
+.operator-overline,.operator-sequence,.operator-action,.operator-footnote{font-family:'Space Grotesk',sans-serif}
+.operator-overline{font-size:clamp(8px,1vw,10px);font-weight:600;letter-spacing:.18em;color:rgba(221,240,255,.78);white-space:nowrap}
+.operator-dash{display:inline-block;vertical-align:middle;width:20px;height:1px;background:var(--accent);margin-right:9px}
+.operator-separator{opacity:.4;margin:0 .4em}
+.operator-sequence{font-size:clamp(8px,.95vw,10px);letter-spacing:.19em;color:var(--accent);font-weight:600}
+.operator-card .operator-copy h3{font-size:clamp(26px,3.4vw,45px)!important;font-weight:500!important;line-height:1.3!important;letter-spacing:.025em!important;margin:11px 0 17px!important;overflow-wrap:anywhere;text-wrap:pretty}
+.operator-rule{height:1px;width:34px;background:rgba(216,240,255,.72);margin-bottom:13px}
+.operator-card .operator-copy p{font-size:clamp(9px,1vw,11px)!important;letter-spacing:.13em;opacity:.6!important;line-height:1.6!important}
+.operator-action{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:12px;border-top:1px solid rgba(223,241,255,.27);font-size:clamp(9px,1vw,11px);font-weight:600;letter-spacing:.16em;color:#fff}
+.operator-arrow{display:grid;place-items:center;width:34px;height:34px;border:1px solid rgba(219,240,255,.4);border-radius:50%;font-size:18px;font-weight:400;transition:background .3s,transform .3s}
+.operator-card:hover .operator-arrow{background:rgba(222,244,255,.2);transform:translate(2px,-2px)}
+.operator-footnote{position:absolute;bottom:15px;left:17px;z-index:4;font-size:8px;letter-spacing:.18em;color:rgba(227,242,255,.45);pointer-events:none}
+.operator-card.layout-right .operator-footnote{left:auto;right:17px}
+@media(max-width:700px){
+ .char-stage{padding:18px 14px 38px}
+ .operator-list{gap:17px}
+ .operator-card,.operator-card.layout-left,.operator-card.layout-right{min-height:345px!important}
+ .operator-card .operator-copy{width:50%!important;padding:24px 15px 25px!important}
+ .operator-card .operator-visual>.manager-stamp{width:61%!important;height:93%!important}
+ .operator-card .operator-index{font-size:clamp(85px,23vw,145px)!important;top:12%!important}
+ .operator-card .operator-copy h3{font-size:clamp(23px,6vw,31px)!important;margin:12px 0 16px!important}
+ .operator-overline{font-size:7px;letter-spacing:.09em}
+ .operator-dash{width:11px;margin-right:4px}
+ .operator-sequence{font-size:8px;letter-spacing:.08em}
+ .operator-card .operator-copy p{font-size:8px!important;letter-spacing:.08em}
+ .operator-action{font-size:8px;letter-spacing:.08em}
+ .operator-arrow{width:29px;height:29px;font-size:16px;flex-shrink:0}
+ .operator-footnote{font-size:6px;bottom:11px;left:10px}
+ .operator-card.layout-right .operator-footnote{right:10px}
+ .operator-card:before{background:linear-gradient(90deg,rgba(7,25,47,.04),rgba(7,25,47,.25) 43%,rgba(7,25,47,.93) 78%)}
+ .operator-card.layout-right:before{background:linear-gradient(270deg,rgba(7,25,47,.04),rgba(7,25,47,.25) 43%,rgba(7,25,47,.93) 78%)}
+}
+@media(prefers-reduced-motion:reduce){.operator-card,.operator-card *{transition:none!important}}
+
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
@@ -213,7 +282,16 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
  let currentVersion='1.0', currentMode='six';
  function show(which){Object.values(views).forEach(v=>v.classList.remove('active'));views[which].classList.add('active');drawer.querySelector('.char-stage').scrollTop=0}
  function imgFallback(img){img.onerror=()=>{img.style.opacity='.12';img.parentElement.classList.add('char-empty-img')}}
- function card(c,i,rarity){const a=document.createElement('article');a.className='operator-card '+(i%2===0?'layout-left':'layout-right');const side=i%2===0?'stamp-left':'stamp-right';a.innerHTML=`<div class="operator-visual"><img class="operator-splash" src="images/Endfield/${c.name}(2D).webp" alt="" loading="lazy" onerror="this.style.display='none'"><span class="operator-index">${String(i+1).padStart(2,'0')}</span><img class="manager-stamp ${side}" src="${c.stamp}" alt="${c.name}"></div><div class="operator-copy"><div class="mini">${c.role}</div><h3>${c.name}</h3><p>${c.desc}</p><div class="tap"><i></i> TAP FOR POTENTIAL</div></div>`;a.onclick=()=>renderDupes(c,rarity);return a}
+ function card(c,i,rarity){
+  const a=document.createElement('article');
+  a.className='operator-card '+(i%2===0?'layout-left':'layout-right');
+  const num=String(i+1).padStart(2,'0');
+  a.innerHTML=`<div class="operator-art" aria-hidden="true"><img class="operator-splash" src="images/Endfield/${c.name}(2D).webp" alt="" loading="lazy" onerror="this.style.display='none'"></div><div class="operator-visual"><span class="operator-index">${num}</span><img class="manager-stamp" src="${c.stamp}" alt="" loading="lazy" onerror="this.style.display='none'"></div><div class="operator-copy"><div class="operator-overline"><span class="operator-dash"></span> TALOS-II <span class="operator-separator">/</span> ${rarity} ARCHIVE</div><div class="operator-heading"><span class="operator-sequence">OPERATOR ${num} — ${c.role.replace('★6 / VERSION ','VER. ')}</span><h3>${c.name}</h3><div class="operator-rule"></div><p>CHARACTER RECORD <span class="operator-separator">/</span> ${rarity}</p></div><div class="operator-action"><span>VIEW POTENTIAL</span><span class="operator-arrow">↗</span></div></div><span class="operator-footnote">ENDFIELD <span>—</span> PERSONNEL FILE ${num}</span>`;
+  a.onclick=()=>renderDupes(c,rarity);
+  a.tabIndex=0;a.setAttribute('role','button');a.setAttribute('aria-label',c.name+'の凸画像を見る');
+  a.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();renderDupes(c,rarity)}};
+  return a
+ }
  function renderOperators(v){currentMode='six';currentVersion=v;list.innerHTML='';(DATA[v]||[]).forEach((c,i)=>list.appendChild(card(c,i,'★6')));title.textContent='Version '+v;sub.textContent='★6 実装キャラクター / タップして凸画像を表示';show('operators')}
  function renderRarity(star,names){currentMode=star;list.innerHTML='';names.forEach((name,i)=>{const c={name,role:`${star} OPERATOR`,desc:`${name} / ${star} OPERATOR`,image:`images/Endfield/${name}.webp`,stamp:`images/Endfield/${name}.webp`,dupes:[`images/Endfield/${name}(1凸).webp`,`images/Endfield/${name}(3凸).webp`,`images/Endfield/${name}(完凸).webp`]};list.appendChild(card(c,i,star))});title.textContent=star+' キャラ一覧';sub.textContent='バージョン区分なし / タップして凸画像を表示';show('operators')}
  function renderDupes(c,rarity){dupes.innerHTML='';const labels=['1凸','3凸','完凸'];c.dupes.forEach((src,i)=>{const a=document.createElement('article');a.className='dupe-card';a.innerHTML=`<img src="${src}" alt="${c.name} ${labels[i]}"><div class="dupe-caption"><b>${c.name} / ${labels[i]}</b><span>POTENTIAL ARCHIVE</span></div>`;imgFallback(a.querySelector('img'));dupes.appendChild(a)});title.textContent=c.name;sub.textContent=`${rarity} / POTENTIAL ARCHIVE / 3 IMAGES`;show('dupes')}
