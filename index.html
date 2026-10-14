@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070b"><title>STUDIO — The Faceted Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script><style>
+:root{color-scheme:dark;--accent:#b5e9ff;--muted:#8b97a6}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#05070b;color:#f4f5f7;font-family:'Manrope',sans-serif}
+.screen{position:relative;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;
+background:radial-gradient(ellipse at 52% 54%,#18202a 0%,#0b1018 36%,#05070b 76%)}
+.screen:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(ellipse at 52% 58%,rgba(186,220,255,.085),transparent 49%),
+linear-gradient(110deg,transparent 20%,rgba(255,255,255,.025) 50%,transparent 80%)}
+ .screen:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(ellipse 48% 36% at 74% 35%,rgba(100,153,190,.14),transparent 85%),
+radial-gradient(ellipse 44% 32% at 20% 77%,rgba(123,99,150,.12),transparent 85%),
+repeating-linear-gradient(122deg,transparent 0px,transparent 115px,rgba(183,216,245,.027) 116px,transparent 117px);
+mask-image:linear-gradient(to bottom,transparent 4%,black 35%,black 85%,transparent)}
+.atmosphere{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.atmosphere:before{content:"";position:absolute;width:68vmax;height:68vmax;left:50%;top:45%;transform:translate(-50%,-50%);border:1px solid rgba(186,216,241,.09);border-radius:50%;box-shadow:0 0 0 90px rgba(200,230,255,.009),0 0 0 210px rgba(200,230,255,.008)}
+.atmosphere:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 15%,rgba(206,228,255,.045) 48%,transparent 68%);opacity:.65}
+.topbar{position:absolute;top:clamp(26px,5vh,65px);left:clamp(23px,5vw,84px);right:clamp(23px,5vw,84px);z-index:12;
+display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:500 clamp(24px,3vw,38px)/1 'Space Grotesk';letter-spacing:-.08em;text-decoration:none;color:#f2f5f8}
+.logo span{color:var(--accent)}
+.nav{display:flex;gap:clamp(12px,2.5vw,40px)}
+.nav a{text-decoration:none;color:#c6cbd3;font:500 clamp(10px,1vw,13px) 'Space Grotesk';letter-spacing:.12em;
+border-bottom:1px solid #66717c;padding-bottom:9px;transition:color .3s}
+.nav a:hover{color:white;border-color:var(--accent)}
+.edition{position:absolute;top:clamp(100px,16vh,170px);left:clamp(25px,5vw,84px);z-index:6;
+font:500 10px 'Space Grotesk';letter-spacing:.3em;color:#a3b0c0}
+.hero-word{position:absolute;z-index:1;top:39%;left:50%;transform:translate(-50%,-50%);
+width:100%;text-align:center;white-space:nowrap;pointer-events:none;
+font:400 clamp(78px,16vw,245px)/.9 Georgia,'Times New Roman',serif;letter-spacing:-.085em;
+color:rgba(221,235,246,.16);user-select:none}
+.scene{position:absolute;inset:0;z-index:3;touch-action:none;cursor:grab}
+.scene:active{cursor:grabbing}.scene canvas{width:100%;height:100%;display:block}
+.editorial{position:absolute;z-index:7;bottom:clamp(90px,13vh,155px);left:clamp(25px,5vw,84px);
+pointer-events:none;max-width:calc(100% - 50px)}
+.kicker{font:500 10px 'Space Grotesk';letter-spacing:.32em;color:var(--accent);margin-bottom:12px}
+.editorial h1{margin:0;font:400 clamp(47px,8.2vw,145px)/.94 Georgia,'Times New Roman',serif;
+letter-spacing:-.055em;max-width:92vw;text-shadow:0 5px 35px #03060ac4;overflow-wrap:normal}
+.edition-index{margin-top:18px;font:500 11px 'Space Grotesk';letter-spacing:.25em;color:#a6b5c5}
+.enter{position:absolute;z-index:10;bottom:clamp(32px,5vh,60px);right:clamp(24px,5vw,84px);
+display:flex;align-items:center;gap:18px;text-decoration:none;color:#f7fbff;
+font:600 12px 'Space Grotesk';letter-spacing:.2em}
+.enter .circle{width:60px;height:60px;border:1px solid var(--accent);border-radius:50%;
+display:grid;place-items:center;font-size:24px;transition:background .3s,transform .3s}
+.enter:hover .circle{background:#ffffff22;transform:rotate(-35deg)}
+.hint{position:absolute;z-index:7;bottom:clamp(42px,6vh,65px);left:clamp(25px,5vw,84px);
+font:500 10px 'Space Grotesk';letter-spacing:.23em;color:#9ba7b6;pointer-events:none}
+.hover-name{position:absolute;z-index:8;left:50%;top:61%;transform:translateX(-50%);
+font:600 12px 'Space Grotesk';letter-spacing:.16em;opacity:0;pointer-events:none;transition:opacity .2s}
+.hover-name.show{opacity:1}
+.fallback{display:none;position:absolute;z-index:20;inset:0;background:#070b11;align-items:center;
+justify-content:center;text-align:center;padding:40px;line-height:2}
+.fallback a{color:#b5e9ff}
+@media(max-width:700px){
+.topbar{top:30px}.logo{font-size:28px}.nav{gap:13px}.nav a{font-size:10px;letter-spacing:.02em}
+.edition{top:13%;font-size:8px}.hero-word{top:38%;font-size:clamp(76px,21vw,150px);opacity:.85;letter-spacing:-.07em}
+.editorial{bottom:18%;left:7%}.editorial h1{font-size:clamp(43px,10.2vw,72px);max-width:90vw}
+.editorial h1.long{font-size:clamp(38px,8vw,65px)}
+.hint{bottom:5%;left:7%;font-size:8px}.enter{bottom:4%;right:7%;font-size:10px;gap:9px}
+.enter .circle{width:48px;height:48px}.hover-name{top:62%}
+}
+
+/* Unified editorial serif for every game heading and navigation label */
+.editorial h1,.nav a{font-family:Georgia,'Times New Roman',serif!important;font-weight:400!important}
+.nav a{font-size:clamp(12px,1.3vw,17px)!important;letter-spacing:.025em!important}
+.editorial h1{font-size:clamp(46px,8vw,125px);overflow-wrap:normal}
+.editorial h1.long{font-size:clamp(30px,5.7vw,90px);letter-spacing:-.065em}
+@media(max-width:700px){.nav a{font-size:12px!important}.editorial h1{font-size:clamp(43px,10.2vw,72px)}.editorial h1.long{font-size:clamp(29px,7vw,47px)}}
+</style></head><body><main class="screen">
+<header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
+<nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
+<div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
+<div class="atmosphere" aria-hidden="true"></div><div class="hero-word" aria-hidden="true">STUDIO</div>
+<div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
+<div class="hover-name" id="hoverName"></div>
+<section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
+<h1 id="activeTitle">ENDFIELD</h1><div class="edition-index" id="activeNumber">01 / 04</div></section>
+<div class="hint">← DRAG TO ROTATE THE CRYSTAL →</div>
+<a class="enter" id="activeLink" href="works.html">EXPLORE <span class="circle">↗</span></a>
+<div class="fallback" id="fallback">3Dを表示できませんでした。<br><a href="works.html">ENDFIELD</a> / <a href="zzz.html">ZZZ</a> / <a href="鳴潮.html">鳴潮</a></div>
+</main><script type="module">
+import * as THREE from 'three';
+const host=document.getElementById('scene'), hoverName=document.getElementById('hoverName');
+const activeTitle=document.getElementById('activeTitle'),activeNumber=document.getElementById('activeNumber'),activeLink=document.getElementById('activeLink'),activeKicker=document.getElementById('activeKicker');
+let currentSector=-1;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.28;
+host.appendChild(renderer.domElement);
+
+// Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
+const studio=new THREE.Scene();studio.background=new THREE.Color('#020408');
+function reflector(x,y,z,w,h,color,intensity,ry=0){
+ const mat=new THREE.MeshBasicMaterial({color:new THREE.Color(color).multiplyScalar(intensity),side:THREE.DoubleSide});
+ const panel=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);
+ panel.position.set(x,y,z);panel.rotation.y=ry;studio.add(panel);
+}
+reflector(-5,6,5,2.2,4.2,'#ffffff',2.0,.38);
+
+
+
+
+const pmrem=new THREE.PMREMGenerator(renderer);
+try{scene.environment=pmrem.fromScene(studio,.045).texture}catch(e){console.warn("Environment reflection unavailable",e)}
+scene.add(new THREE.AmbientLight(0xffffff,.10));
+function light(color,power,x,y,z){const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)}
+light(0xffffff,3.0,-4,7,6);
+
+// True cut silhouette: left culet, pavilion, girdle, crown, right-hand flat table.
+// Four sectors, each comprising exactly four of the 16 radial facets.
+const N=16, TAU=Math.PI*2, radius=2.2;
+const sectors=[
+ {name:'ENDFIELD',url:'works.html',tint:0xd6f3ff},
+ {name:'ZZZ',url:'zzz.html',tint:0xd8d2ff},
+ {name:'鳴潮',url:'鳴潮.html',tint:0xc5fff1},
+ {name:'ARCHIVE',url:null,tint:0xffe8c4}
+];
+const diamond=new THREE.Group(), tilt=new THREE.Group();
+scene.add(tilt);tilt.add(diamond);
+// Tilt is static. Only the diamond spins around its own local X axis.
+tilt.rotation.set(.12,-.29,-.25);
+const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
+const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
+// Each cut face gets its own physically shaded surface: no white translucent overlay.
+// Restrained crystal optics: clear facets with a single off-axis key light.
+// Opacity is intentionally low: the dark background remains visible through the stone.
+
+ // Procedural faceted gemstone: no embedded GLB, decoder or model request.
+ // Solid geometry and physically shaded facets remain visible on mobile GPUs.
+ const pickTargets=[];
+ const faces=[];
+ function facet(a,b,c,group){
+   const g=new THREE.BufferGeometry();
+   g.setAttribute('position',new THREE.Float32BufferAttribute([
+     ...a.toArray(),...b.toArray(),...c.toArray()],3));
+   g.computeVertexNormals();
+   const palette=[0xd9f4ff,0xe7e2ff,0xcafff0,0xffe8ce];
+   const material=new THREE.MeshPhysicalMaterial({
+     color:palette[group],metalness:0.06,roughness:0.055,
+     transparent:true,opacity:0.58,depthWrite:false,side:THREE.DoubleSide,
+     clearcoat:1,clearcoatRoughness:0.025,envMapIntensity:2.8,
+     emissive:palette[group],emissiveIntensity:0.055
+   });
+   const mesh=new THREE.Mesh(g,material);
+   mesh.renderOrder=2;diamond.add(mesh);faces.push(mesh);
+ }
+ const edgePositions=[];
+ function edge(a,b){edgePositions.push(...a.toArray(),...b.toArray())}
+ for(let i=0;i<N;i++){
+   const a=i*TAU/N,b=(i+1)*TAU/N,m=(a+b)/2;
+   const group=Math.floor(i/4);
+   const tip=p(-2.45,0,a),lowA=p(-.40,2.05,a),lowB=p(-.40,2.05,b);
+   const upperA=p(-.22,2.05,a),upperB=p(-.22,2.05,b);
+   const crownA=p(.64,1.18,a),crownB=p(.64,1.18,b);
+   const tableA=p(.64,.0,a);
+   facet(tip,lowA,lowB,group);
+   facet(lowA,upperA,upperB,group);facet(lowA,upperB,lowB,group);
+   facet(upperA,crownA,crownB,group);facet(upperA,crownB,upperB,group);
+   facet(crownA,tableA,crownB,group);
+   edge(tip,lowA);edge(lowA,lowB);edge(upperA,crownA);edge(crownA,crownB);
+   edge(lowA,upperA);edge(crownA,tableA);
+ }
+ const edgeGeo=new THREE.BufferGeometry();
+ edgeGeo.setAttribute('position',new THREE.Float32BufferAttribute(edgePositions,3));
+ const edgeMesh=new THREE.LineSegments(edgeGeo,new THREE.LineBasicMaterial({
+   color:0xe8f8ff,transparent:true,opacity:.37,depthWrite:false
+ }));
+ edgeMesh.renderOrder=3;diamond.add(edgeMesh);
+ // A restrained central reflection gives the crystal readable volume.
+ const inner=new THREE.Mesh(new THREE.IcosahedronGeometry(1.16,1),
+   new THREE.MeshPhongMaterial({color:0x8fb9d1,specular:0xffffff,shininess:125,
+     transparent:true,opacity:.085,depthWrite:false,side:THREE.DoubleSide}));
+ inner.scale.set(1.18,1.42,1.42);diamond.add(inner);
+ // Invisible, geometrically aligned hit zones keep the original four game destinations.
+ function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
+ for(let sector=0;sector<4;sector++){
+  const triangles=[];
+  for(let i=sector*4;i<(sector+1)*4;i++){
+   const a=i*TAU/N,b=(i+1)*TAU/N;
+   addTriangle(triangles,p(-2.45,0,a),p(-.40,2.05,a),p(-.40,2.05,b));
+   addTriangle(triangles,p(-.22,2.05,a),p(.64,1.18,a),p(.64,1.18,b));
+   addTriangle(triangles,p(-.22,2.05,a),p(.64,1.18,b),p(-.22,2.05,b));
+  }
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(triangles,3));geo.computeVertexNormals();
+  const hit=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+  diamond.add(hit);pickTargets.push({object:hit,...sectors[sector]});
+ }
+const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
+let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
+function pick(e){
+ const r=host.getBoundingClientRect();
+ pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height*2-1));
+ ray.setFromCamera(pointer,camera);
+ const hits=ray.intersectObjects(pickTargets.map(x=>x.object),false);
+ return hits.length?pickTargets.find(x=>x.object===hits[0].object):null;
+}
+host.addEventListener('pointerdown',e=>{
+ dragging=true;travel=0;startX=lastX=e.clientX;startY=e.clientY;velocity=0;
+ host.setPointerCapture(e.pointerId);
+});
+host.addEventListener('pointermove',e=>{
+ if(dragging){
+  const dx=e.clientX-lastX;
+  travel=Math.max(travel,Math.hypot(e.clientX-startX,e.clientY-startY));
+  diamond.rotation.x+=dx*.010;velocity=dx*.005;lastX=e.clientX;
+ }else{
+  const target=pick(e);
+  hoverName.textContent=target?.url?target.name+' ↗':'';
+  hoverName.classList.toggle('show',!!target?.url);
+  host.style.cursor=target?.url?'pointer':'grab';
+ }
+});
+host.addEventListener('pointerup',e=>{
+ if(travel<9){const target=pick(e);if(target?.url)window.location.href=target.url}
+ dragging=false;
+});
+host.addEventListener('pointercancel',()=>dragging=false);
+function resize(){
+ const w=host.clientWidth,h=host.clientHeight;
+ camera.aspect=w/h;camera.position.set(0,0,w<700?12.8:10.2);
+ camera.fov=w<700?39:32;camera.updateProjectionMatrix();
+ renderer.setSize(w,h,false);
+ // Larger than previous iteration; keep title and caption clear.
+ tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
+ tilt.scale.setScalar(w<700?1.43:1.48);
+}
+window.addEventListener('resize',resize);resize();
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let prev=performance.now();
+function animate(now){
+ const dt=Math.min((now-prev)/1000,.05);prev=now;
+ if(!dragging&&!reduced){
+  diamond.rotation.x+=(spin+velocity)*dt;
+  velocity*=Math.pow(.90,dt*60);
+ }
+ 
+ const angle=((diamond.rotation.x%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
+  const sector=Math.floor(((angle+Math.PI/4)%(Math.PI*2))/(Math.PI/2));
+  if(sector!==currentSector){
+    currentSector=sector;
+    const names=['ENDFIELD','ZENLESS ZONE ZERO','WUTHERING WAVES','THE ARCHIVE'];
+    const urls=['works.html','zzz.html','鳴潮.html',null];
+    activeTitle.textContent=names[sector];
+    activeTitle.classList.toggle('long',names[sector].length>13);
+    activeNumber.textContent='0'+(sector+1)+' / 04';
+    activeKicker.textContent=sector===3?'CURATED COLLECTION':'EXPLORE THE WORLD';
+    activeLink.href=urls[sector]||'#';
+    activeLink.style.visibility=urls[sector]?'visible':'hidden';
+    document.documentElement.style.setProperty('--accent',['#b5e9ff','#e3cfff','#b5f9e5','#e8d5b8'][sector]);
+  }
+  renderer.render(scene,camera);requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+</script><script>window.addEventListener('error',e=>{if(e.message&&e.message.includes('module'))document.getElementById('fallback').style.display='flex'});</script></body></html>
