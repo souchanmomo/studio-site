@@ -1,47 +1,86 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07101a"><title>STUDIO — Creative Visual Archive</title>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05070b"><title>STUDIO — The Faceted Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--gold:#dfc9a0;--ice:#e4faff}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}body{font-family:Manrope,sans-serif;color:#f5f6f8;background:#060d17}.screen{height:100vh;height:100dvh;position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(ellipse at 45% 50%,#1a2c3e 0%,#0b1625 40%,#060b13 80%)}.screen:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 25%,#ffffff06 50%,transparent 70%),radial-gradient(circle at 74% 23%,#f4d5a012,transparent 35%);z-index:0}.noise{position:absolute;inset:0;pointer-events:none;opacity:.13;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E")}.brand{position:absolute;right:clamp(22px,6vw,100px);top:clamp(30px,8vh,90px);z-index:5;text-align:right;pointer-events:none}.brand .micro{font:500 10px 'Space Grotesk';letter-spacing:.35em;color:var(--gold)}.brand h1{font:300 clamp(40px,7vw,108px)/1.1 'Space Grotesk';letter-spacing:.17em;margin:17px -.17em 8px 0}.brand p{font:400 10px 'Space Grotesk';letter-spacing:.26em;color:#aab6c1}.brand .rule{height:1px;width:90px;margin:22px 0 0 auto;background:linear-gradient(90deg,transparent,var(--gold))}.scene{position:absolute;inset:0;z-index:2;touch-action:none;cursor:grab}.scene:active{cursor:grabbing}.scene canvas{display:block;width:100%;height:100%}.caption{position:absolute;left:clamp(22px,5vw,78px);bottom:clamp(30px,7vh,78px);z-index:5;pointer-events:none}.caption .overline{color:var(--gold);font:500 10px 'Space Grotesk';letter-spacing:.25em}.caption h2{font:300 clamp(22px,3vw,39px) 'Space Grotesk';letter-spacing:.035em;margin:12px 0}.caption p{font-size:11px;color:#9eacba;letter-spacing:.06em;line-height:1.9}.instructions{position:absolute;right:clamp(22px,6vw,100px);bottom:clamp(35px,7vh,80px);z-index:5;text-align:right;color:#a6b7c5;font:500 10px 'Space Grotesk';letter-spacing:.17em;pointer-events:none}.instructions span{display:block;margin-top:9px;color:var(--gold);font-size:18px;letter-spacing:0}.links{position:absolute;top:22px;left:clamp(20px,4vw,65px);display:flex;gap:16px;z-index:6}.links a{color:#d5e1ea;text-decoration:none;font:500 10px 'Space Grotesk';letter-spacing:.16em;padding:10px 0;border-bottom:1px solid #ffffff35;transition:color .2s,border-color .2s}.links a:hover{color:var(--gold);border-color:var(--gold)}.hover-name{position:absolute;z-index:6;left:50%;top:72%;transform:translateX(-50%);font:500 11px 'Space Grotesk';letter-spacing:.2em;color:#fff;pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap}.hover-name.show{opacity:1}.fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:30px;color:#e8faff;z-index:4}.fallback a{color:var(--gold)}.bottomline{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#a4cbd766,var(--gold),transparent);z-index:5;opacity:.6}
-@media(max-width:700px){.brand{top:12%;right:7%}.brand h1{font-size:clamp(38px,11vw,64px)}.brand .micro{font-size:8px}.brand p{font-size:8px}.scene{inset:0}.caption{left:7%;bottom:10%}.caption h2{font-size:21px}.caption p{font-size:10px}.instructions{right:7%;bottom:10%;font-size:8px}.links{left:7%;top:3%;gap:12px}.links a{font-size:9px}.hover-name{top:73%}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-
-/* Art-directed monochrome gallery: typographic architecture */
-.screen{background:radial-gradient(ellipse at 51% 46%,#172a39 0%,#080f1b 43%,#03060c 85%)}
-.screen:before{background:radial-gradient(ellipse at 50% 50%,#9edbff16,transparent 49%),linear-gradient(110deg,transparent 30%,#ffffff07 48%,transparent 65%)}
-.noise{opacity:.09}
-.brand{top:clamp(35px,7vh,76px)}.brand h1{font-size:clamp(35px,5.2vw,78px);letter-spacing:.12em}
-.links{top:clamp(20px,4vh,44px);gap:clamp(15px,2.4vw,38px)}
-.links a{font-size:clamp(12px,1.05vw,16px);font-weight:600;letter-spacing:.12em;padding-bottom:13px}
-.editorial{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;overflow:hidden}
-.editorial-word{font:300 clamp(80px,16vw,310px)/.85 Georgia,'Times New Roman',serif;letter-spacing:-.095em;white-space:nowrap;color:#c9e4f1;opacity:.16;transform:translateY(9vh) scaleX(1.02);transition:opacity .65s,filter .65s;filter:blur(.3px);user-select:none}
-.editorial-index{position:absolute;left:clamp(22px,5vw,78px);top:48%;font:500 10px 'Space Grotesk';letter-spacing:.35em;color:#c3d8e5a8;writing-mode:vertical-rl}
-.editorial-side{position:absolute;right:clamp(22px,5vw,78px);top:48%;font:500 10px 'Space Grotesk';letter-spacing:.26em;color:#c3d8e5a8;writing-mode:vertical-rl}
-.game-title{position:absolute;z-index:6;left:50%;bottom:clamp(102px,15vh,158px);transform:translateX(-50%);pointer-events:none;text-align:center;width:90%;}
-.game-title .eyebrow{font:600 10px 'Space Grotesk';letter-spacing:.38em;color:#c5d9e9}
-.game-title .name{font:400 clamp(31px,5.1vw,72px)/1.1 'Space Grotesk';letter-spacing:.10em;margin-top:9px;background:linear-gradient(105deg,#fff 7%,#98d8f5 35%,#f9e7c4 53%,#b9caff 76%,#fff);background-clip:text;-webkit-background-clip:text;color:transparent;text-shadow:0 7px 42px #c1eaff22}
-.game-title .enter{display:inline-block;margin-top:13px;font:600 11px 'Space Grotesk';letter-spacing:.25em;color:#f2e4c8;border-bottom:1px solid #d8c9aa99;padding-bottom:8px}
-.caption{bottom:clamp(22px,5vh,50px)}.caption h2{font-size:clamp(18px,2.3vw,28px)}
-.instructions{bottom:clamp(28px,5vh,50px)}
-.scene{z-index:3}.scene canvas{filter:drop-shadow(0 0 36px #b7e7ff1a)}
-@media(max-width:700px){.brand{top:12%;right:7%}.brand h1{font-size:clamp(37px,10vw,58px)}.editorial-word{font-size:clamp(82px,21vw,160px);transform:translateY(4vh);opacity:.2}.game-title{bottom:22%}.game-title .name{font-size:clamp(29px,8vw,49px)}.caption{bottom:7%}.caption h2{font-size:17px}.caption p{font-size:9px}.instructions{bottom:7%}.editorial-index,.editorial-side{display:none}.links{gap:14px}.links a{font-size:12px;letter-spacing:.035em}}
-</style>
-</head>
-<body><main class="screen"><div class="noise"></div><div class="editorial" aria-hidden="true"><div class="editorial-word" id="editorialWord">ENDFIELD</div><div class="editorial-index">OBJECT / 001—004</div><div class="editorial-side">A DIGITAL COLLECTION — 2026</div></div><nav class="links" aria-label="ゲームページ"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav><header class="brand"><div class="micro">CURATED DIGITAL GALLERY / 001</div><h1>STUDIO</h1><p>CREATIVE SOUND &amp; VISUAL PRODUCTION</p><div class="rule"></div></header><div class="scene" id="scene" aria-label="回転するダイヤモンド。ドラッグで回転し、ゲーム名の面をタップするとページを開きます"></div><div class="hover-name" id="hoverName"></div><div class="game-title" id="gameTitle"><div class="eyebrow">SELECTED WORLD / 01 — 04</div><div class="name" id="activeGame">ENDFIELD</div><div class="enter" id="enterHint">TAP FACET TO EXPLORE ↗</div></div><div class="caption"><div class="overline">THE FACETED ARCHIVE</div><h2>Every facet, a world.</h2><p>光の断片に、異なる世界を映す。<br>宝石を回して、ゲームの面を選択。</p></div><div class="instructions">DRAG TO ROTATE / TAP TO ENTER<span>⟷</span></div><div class="fallback" id="fallback">3D表示を読み込めませんでした。<br><a href="works.html">ENDFIELD</a> / <a href="zzz.html">ZZZ</a> / <a href="鳴潮.html">鳴潮</a></div><div class="bottomline"></div></main>
-<script type="module">
+:root{color-scheme:dark;--accent:#b5e9ff;--muted:#8b97a6}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#05070b;color:#f4f5f7;font-family:'Manrope',sans-serif}
+.screen{position:relative;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;
+background:radial-gradient(ellipse at 52% 54%,#18202a 0%,#0b1018 36%,#05070b 76%)}
+.screen:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(ellipse at 52% 58%,rgba(186,220,255,.085),transparent 49%),
+linear-gradient(110deg,transparent 20%,rgba(255,255,255,.025) 50%,transparent 80%)}
+.topbar{position:absolute;top:clamp(26px,5vh,65px);left:clamp(23px,5vw,84px);right:clamp(23px,5vw,84px);z-index:12;
+display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:500 clamp(24px,3vw,38px)/1 'Space Grotesk';letter-spacing:-.08em;text-decoration:none;color:#f2f5f8}
+.logo span{color:var(--accent)}
+.nav{display:flex;gap:clamp(12px,2.5vw,40px)}
+.nav a{text-decoration:none;color:#c6cbd3;font:500 clamp(10px,1vw,13px) 'Space Grotesk';letter-spacing:.12em;
+border-bottom:1px solid #66717c;padding-bottom:9px;transition:color .3s}
+.nav a:hover{color:white;border-color:var(--accent)}
+.edition{position:absolute;top:clamp(100px,16vh,170px);left:clamp(25px,5vw,84px);z-index:6;
+font:500 10px 'Space Grotesk';letter-spacing:.3em;color:#a3b0c0}
+.hero-word{position:absolute;z-index:1;top:44%;left:50%;transform:translate(-50%,-50%);
+width:100%;text-align:center;white-space:nowrap;pointer-events:none;
+font:400 clamp(100px,21vw,380px)/.8 Georgia,'Times New Roman',serif;letter-spacing:-.085em;
+color:rgba(221,235,246,.13);user-select:none}
+.scene{position:absolute;inset:0;z-index:3;touch-action:none;cursor:grab}
+.scene:active{cursor:grabbing}.scene canvas{width:100%;height:100%;display:block}
+.editorial{position:absolute;z-index:7;bottom:clamp(90px,13vh,155px);left:clamp(25px,5vw,84px);
+pointer-events:none;max-width:calc(100% - 50px)}
+.kicker{font:500 10px 'Space Grotesk';letter-spacing:.32em;color:var(--accent);margin-bottom:12px}
+.editorial h1{margin:0;font:400 clamp(47px,8.2vw,145px)/.94 Georgia,'Times New Roman',serif;
+letter-spacing:-.055em;max-width:92vw;text-shadow:0 5px 35px #03060ac4;overflow-wrap:normal}
+.edition-index{margin-top:18px;font:500 11px 'Space Grotesk';letter-spacing:.25em;color:#a6b5c5}
+.enter{position:absolute;z-index:10;bottom:clamp(32px,5vh,60px);right:clamp(24px,5vw,84px);
+display:flex;align-items:center;gap:18px;text-decoration:none;color:#f7fbff;
+font:600 12px 'Space Grotesk';letter-spacing:.2em}
+.enter .circle{width:60px;height:60px;border:1px solid var(--accent);border-radius:50%;
+display:grid;place-items:center;font-size:24px;transition:background .3s,transform .3s}
+.enter:hover .circle{background:#ffffff22;transform:rotate(-35deg)}
+.hint{position:absolute;z-index:7;bottom:clamp(42px,6vh,65px);left:clamp(25px,5vw,84px);
+font:500 10px 'Space Grotesk';letter-spacing:.23em;color:#9ba7b6;pointer-events:none}
+.hover-name{position:absolute;z-index:8;left:50%;top:61%;transform:translateX(-50%);
+font:600 12px 'Space Grotesk';letter-spacing:.16em;opacity:0;pointer-events:none;transition:opacity .2s}
+.hover-name.show{opacity:1}
+.fallback{display:none;position:absolute;z-index:20;inset:0;background:#070b11;align-items:center;
+justify-content:center;text-align:center;padding:40px;line-height:2}
+.fallback a{color:#b5e9ff}
+@media(max-width:700px){
+.topbar{top:30px}.logo{font-size:28px}.nav{gap:13px}.nav a{font-size:10px;letter-spacing:.02em}
+.edition{top:13%;font-size:8px}.hero-word{top:43%;font-size:39vw;opacity:.85}
+.editorial{bottom:18%;left:7%}.editorial h1{font-size:clamp(43px,10.2vw,72px);max-width:90vw}
+.editorial h1.long{font-size:clamp(38px,8vw,65px)}
+.hint{bottom:5%;left:7%;font-size:8px}.enter{bottom:4%;right:7%;font-size:10px;gap:9px}
+.enter .circle{width:48px;height:48px}.hover-name{top:62%}
+}
+</style></head><body><main class="screen">
+<header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
+<nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
+<div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
+<div class="hero-word" aria-hidden="true">STUDIO</div>
+<div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
+<div class="hover-name" id="hoverName"></div>
+<section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
+<h1 id="activeTitle">ENDFIELD</h1><div class="edition-index" id="activeNumber">01 / 04</div></section>
+<div class="hint">← DRAG TO ROTATE THE CRYSTAL →</div>
+<a class="enter" id="activeLink" href="works.html">EXPLORE <span class="circle">↗</span></a>
+<div class="fallback" id="fallback">3Dを表示できませんでした。<br><a href="works.html">ENDFIELD</a> / <a href="zzz.html">ZZZ</a> / <a href="鳴潮.html">鳴潮</a></div>
+</main><script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
 const host=document.getElementById('scene'), hoverName=document.getElementById('hoverName');
+const activeTitle=document.getElementById('activeTitle'),activeNumber=document.getElementById('activeNumber'),activeLink=document.getElementById('activeLink'),activeKicker=document.getElementById('activeKicker');
+let currentSector=-1;
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(32,1,.1,100);
 const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.72;
+renderer.toneMappingExposure=1.75;
 host.appendChild(renderer.domElement);
 
 // Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
@@ -56,7 +95,6 @@ reflector(5,2,-3,2,7,'#b1dfff',3,-.7);
 reflector(0,-5,3,9,1.6,'#ffffff',2.4);
 reflector(3,4,4,2,1.2,'#fff0c7',3);
 reflector(-3,-1,-5,3,5,'#a1caff',1.8);
-reflector(1,6,-1,6,.45,'#ffffff',5);reflector(-6,-2,2,.6,7,'#c8eaff',4);reflector(4,-4,5,5,.7,'#e2c6ff',3);
 const pmrem=new THREE.PMREMGenerator(renderer);
 scene.environment=pmrem.fromScene(studio,.045).texture;
 scene.add(new THREE.AmbientLight(0xffffff,1.1));
@@ -80,9 +118,9 @@ const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
 const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
 const facetMat=new THREE.MeshPhysicalMaterial({
  color:0xffffff,roughness:.012,metalness:0,transmission:1,
- thickness:1.3,ior:2.42,clearcoat:1,clearcoatRoughness:0,
- envMapIntensity:5.3,side:THREE.DoubleSide,flatShading:true,
- transparent:true,opacity:.88,depthWrite:false
+ thickness:1.35,ior:2.42,clearcoat:1,clearcoatRoughness:0,
+ envMapIntensity:5.0,side:THREE.DoubleSide,flatShading:true,
+ transparent:true,opacity:.78,depthWrite:false
 });
 const pickTargets=[];
 function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
@@ -109,24 +147,17 @@ for(let sector=0;sector<4;sector++){
  for(let j=0;j<=20;j++)boundary.push(p(-.25,radius*1.006,a+j*0)); 
  const seam=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
   p(-2.65,0,a),p(-.42,radius,a),p(-.25,radius,a),p(.64,1.28,a)
- ]),new THREE.LineBasicMaterial({color:0xe5faff,transparent:true,opacity:.82,depthWrite:false}));
+ ]),new THREE.LineBasicMaterial({color:0xe5faff,transparent:true,opacity:.76,depthWrite:false}));
  diamond.add(seam);
-}
-// Iridescent boundaries divide the four game regions.
-const spectrum=[0xb9faff,0xf4c9ff,0xa9ffeb,0xffe1ad];
-for(let k=0;k<4;k++){
- const a=k*TAU/4,pts=[];
- for(let j=0;j<=24;j++)pts.push(p(-.252,radius*1.009,a+(TAU/4)*j/24));
- diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:spectrum[k],transparent:true,opacity:.82,depthWrite:false})));
 }
 const rimPoints=[];
 for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
 diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
- new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.76,depthWrite:false})));
+ new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.72,depthWrite:false})));
 // Labels: one label per quarter, rather than three arbitrary isolated facets.
 function labelTexture(name){
  const c=document.createElement('canvas');c.width=1024;c.height=256;
- const ctx=c.getContext('2d');ctx.font='700 96px Arial,sans-serif';
+ const ctx=c.getContext('2d');ctx.font='700 92px Arial,sans-serif';
  ctx.textAlign='center';ctx.textBaseline='middle';
  ctx.shadowColor='#001524';ctx.shadowBlur=22;ctx.fillStyle='#ffffff';
  ctx.fillText(name,512,132);
@@ -139,13 +170,13 @@ for(let i=0;i<4;i++){
   depthTest:false,opacity:sectors[i].url?.92:.42
  }));
  sprite.position.copy(p(-.14,2.22,angle));
- sprite.scale.set(sectors[i].name==='ENDFIELD'?1.65:1.22,.36,1);
+ sprite.scale.set(sectors[i].name==='ENDFIELD'?1.45:1.03,.32,1);
  sprite.renderOrder=10;diamond.add(sprite);
 }
 // Controlled specular glints, following the facet edges.
 const glints=[];
-for(let i=0;i<16;i++){
- const a=(i+.2)*TAU/N;
+for(let i=0;i<28;i++){
+ const a=(i+.2)*TAU/28;
  const star=new THREE.Sprite(new THREE.SpriteMaterial({map:(()=>{
   const c=document.createElement('canvas');c.width=c.height=128;
   const x=c.getContext('2d'),g=x.createRadialGradient(64,64,0,64,64,62);
@@ -153,12 +184,11 @@ for(let i=0;i<16;i++){
   g.addColorStop(.22,'rgba(202,235,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');
   x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
  })(),transparent:true,depthWrite:false,depthTest:false,blending:THREE.AdditiveBlending,opacity:0}));
- star.position.copy(p(-.27,radius*1.01,a));star.scale.set(.53,.53,1);star.renderOrder=12;
+ star.position.copy(p(-.27,radius*1.01,a));star.scale.set(.47,.47,1);star.renderOrder=12;
  diamond.add(star);glints.push(star);
 }
 const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
 let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
-const editorialWord=document.getElementById('editorialWord'),activeGame=document.getElementById('activeGame'),enterHint=document.getElementById('enterHint');let selected=-1;
 function pick(e){
  const r=host.getBoundingClientRect();
  pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height*2-1));
@@ -189,12 +219,12 @@ host.addEventListener('pointerup',e=>{
 host.addEventListener('pointercancel',()=>dragging=false);
 function resize(){
  const w=host.clientWidth,h=host.clientHeight;
- camera.aspect=w/h;camera.position.set(0,0,w<700?11.3:9.3);
+ camera.aspect=w/h;camera.position.set(0,0,w<700?12.8:10.2);
  camera.fov=w<700?39:32;camera.updateProjectionMatrix();
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
- tilt.position.set(w<700?-.12:-.25,w<700?-.30:-.1,0);
- tilt.scale.setScalar(w<700?1.03:1.13);
+ tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
+ tilt.scale.setScalar(w<700?1.00:1.15);
 }
 window.addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -205,18 +235,21 @@ function animate(now){
   diamond.rotation.x+=(spin+velocity)*dt;
   velocity*=Math.pow(.90,dt*60);
  }
- glints.forEach((g,i)=>{g.material.opacity=Math.max(0,Math.sin(now*.0021+i*1.81)*.8-.23)});
- // The current quarter is chosen by the facet facing the viewer, not by a timer.
-  const front=new THREE.Vector3(0,0,1);
-  let best=-Infinity,idx=0;
-  for(let i=0;i<4;i++){
-   const a=(i+.5)*TAU/4;
-   const normal=new THREE.Vector3(0,Math.cos(a),Math.sin(a)).applyQuaternion(diamond.quaternion).applyQuaternion(tilt.quaternion);
-   if(normal.dot(front)>best){best=normal.dot(front);idx=i;}
+ glints.forEach((g,i)=>{g.material.opacity=Math.max(0,Math.sin(now*.0021+i*1.81)*.74-.22)});
+ const angle=((diamond.rotation.x%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
+  const sector=Math.floor(((angle+Math.PI/4)%(Math.PI*2))/(Math.PI/2));
+  if(sector!==currentSector){
+    currentSector=sector;
+    const names=['ENDFIELD','ZENLESS ZONE ZERO','WUTHERING WAVES','THE ARCHIVE'];
+    const urls=['works.html','zzz.html','鳴潮.html',null];
+    activeTitle.textContent=names[sector];
+    activeNumber.textContent='0'+(sector+1)+' / 04';
+    activeKicker.textContent=sector===3?'CURATED COLLECTION':'EXPLORE THE WORLD';
+    activeLink.href=urls[sector]||'#';
+    activeLink.style.visibility=urls[sector]?'visible':'hidden';
+    document.documentElement.style.setProperty('--accent',['#b5e9ff','#e3cfff','#b5f9e5','#e8d5b8'][sector]);
   }
-  if(idx!==selected){selected=idx;editorialWord.textContent=sectors[idx].name;activeGame.textContent=sectors[idx].name;enterHint.textContent=sectors[idx].url?'TAP FACET TO EXPLORE ↗':'THE COMPLETE ARCHIVE';}
   renderer.render(scene,camera);requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
-</script><script>window.addEventListener('error',e=>{if(e.message&&e.message.includes('module'))document.getElementById('fallback').style.display='flex'});</script>
-</body></html>
+</script><script>window.addEventListener('error',e=>{if(e.message&&e.message.includes('module'))document.getElementById('fallback').style.display='flex'});</script></body></html>
