@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#05070b"><title>STUDIO — The Faceted Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"}}</script><style>
 :root{color-scheme:dark;--accent:#b5e9ff;--muted:#8b97a6}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden}
@@ -85,7 +85,7 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 <a class="enter" id="activeLink" href="works.html">EXPLORE <span class="circle">↗</span></a>
 <div class="fallback" id="fallback">3Dを表示できませんでした。<br><a href="works.html">ENDFIELD</a> / <a href="zzz.html">ZZZ</a> / <a href="鳴潮.html">鳴潮</a></div>
 </main><script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+import * as THREE from 'three';
 const host=document.getElementById('scene'), hoverName=document.getElementById('hoverName');
 const activeTitle=document.getElementById('activeTitle'),activeNumber=document.getElementById('activeNumber'),activeLink=document.getElementById('activeLink'),activeKicker=document.getElementById('activeKicker');
 let currentSector=-1;
@@ -95,7 +95,7 @@ const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreferenc
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.02;
+renderer.toneMappingExposure=1.28;
 host.appendChild(renderer.domElement);
 
 // Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
@@ -134,50 +134,36 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
 // Each cut face gets its own physically shaded surface: no white translucent overlay.
 // Restrained crystal optics: clear facets with a single off-axis key light.
 // Opacity is intentionally low: the dark background remains visible through the stone.
-const facetMaterials=Array.from({length:8},(_,i)=>new THREE.MeshPhysicalMaterial({
- color:0xeaf6ff,metalness:0,roughness:.045,transmission:.94,
- thickness:.48,ior:2.15,clearcoat:.75,clearcoatRoughness:.035,
- envMapIntensity:1.65,transparent:true,opacity:.30,
- side:THREE.DoubleSide,depthWrite:false,flatShading:true,
- specularIntensity:.95, specularColor:0xffffff
-}));
-const pickTargets=[];
-function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
-function meshOf(tris,mat){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(tris,3));geo.computeVertexNormals();return new THREE.Mesh(geo,mat)}
-for(let sector=0;sector<4;sector++){
- const triangles=[];
- for(let i=sector*4;i<(sector+1)*4;i++){
-  const a=i*TAU/N,b=(i+1)*TAU/N,m=(a+b)/2;
-  // Triangle subdivisions give the characteristic brilliant facets.
-  addTriangle(triangles,p(-2.65,0,a),p(-.42,radius,a),p(-.42,radius,m));
-  addTriangle(triangles,p(-2.65,0,a),p(-.42,radius,m),p(-.42,radius,b));
-  addTriangle(triangles,p(-.42,radius,a),p(-.25,radius,a),p(-.25,radius,b));
-  addTriangle(triangles,p(-.42,radius,a),p(-.25,radius,b),p(-.42,radius,b));
-  addTriangle(triangles,p(-.25,radius,a),p(.64,1.28,a),p(.64,1.28,m));
-  addTriangle(triangles,p(-.25,radius,a),p(.64,1.28,m),p(-.25,radius,m));
-  addTriangle(triangles,p(-.25,radius,m),p(.64,1.28,m),p(.64,1.28,b));
-  addTriangle(triangles,p(-.25,radius,m),p(.64,1.28,b),p(-.25,radius,b));
-  addTriangle(triangles,p(.64,1.28,a),p(.64,1.28,b),p(.64,0,a));
+
+ // Actual independent GLB mesh, with a single physically based diamond material.
+ const gemMaterial=new THREE.MeshPhysicalMaterial({
+   color:0xffffff,metalness:0,roughness:0.015,transmission:1,
+   thickness:1.9,ior:2.417,envMapIntensity:2.4,
+   clearcoat:0.15,clearcoatRoughness:0.012,
+   transparent:false,side:THREE.FrontSide,depthWrite:true
+ });
+ const pickTargets=[];
+ const {GLTFLoader}=await import('three/addons/loaders/GLTFLoader.js');
+ const loader=new GLTFLoader();
+ loader.load('data:model/gltf-binary;base64,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',gltf=>{
+   gltf.scene.traverse(o=>{if(o.isMesh){o.material=gemMaterial;o.castShadow=false;o.receiveShadow=false}});
+   diamond.add(gltf.scene);
+ },undefined,error=>{console.error('embedded diamond model could not load',error);
+   document.getElementById('fallback').style.display='flex';});
+ // Invisible, geometrically aligned hit zones keep the original four game destinations.
+ function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
+ for(let sector=0;sector<4;sector++){
+  const triangles=[];
+  for(let i=sector*4;i<(sector+1)*4;i++){
+   const a=i*TAU/N,b=(i+1)*TAU/N;
+   addTriangle(triangles,p(-2.45,0,a),p(-.40,2.05,a),p(-.40,2.05,b));
+   addTriangle(triangles,p(-.22,2.05,a),p(.64,1.18,a),p(.64,1.18,b));
+   addTriangle(triangles,p(-.22,2.05,a),p(.64,1.18,b),p(-.22,2.05,b));
+  }
+  const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(triangles,3));geo.computeVertexNormals();
+  const hit=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+  diamond.add(hit);pickTargets.push({object:hit,...sectors[sector]});
  }
- const surface=meshOf(triangles,facetMaterials[sector*2]);
- surface.renderOrder=2;
- // Independent triangle normals make the cut respond to light, not a cloudy shell.
- surface.geometry=surface.geometry.toNonIndexed?.()||surface.geometry;
- surface.geometry.computeVertexNormals();
- diamond.add(surface);pickTargets.push({object:surface,...sectors[sector]});
- // Only four extremely fine section boundaries, not a wireframe cage.
- const a=sector*TAU/4;
- const seam=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
-  p(-2.65,0,a),p(-.42,radius,a),p(-.25,radius,a),p(.64,1.28,a)
- ]),new THREE.LineBasicMaterial({color:0xa8d4f2,transparent:true,opacity:.075,depthWrite:false}));
- diamond.add(seam);
-}
-const rimPoints=[];
-for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
-diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
- new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.09,depthWrite:false})));
-// No additive wedges, dots or simulated sparkles: lighting comes from the key light.
-const glints=[];
 const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
 let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
 function pick(e){
@@ -215,7 +201,7 @@ function resize(){
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
  tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
- tilt.scale.setScalar(w<700?1.37:1.43);
+ tilt.scale.setScalar(w<700?1.43:1.48);
 }
 window.addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
