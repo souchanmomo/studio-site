@@ -611,6 +611,20 @@ opener.addEventListener('click',show);closer.addEventListener('click',hide);docu
 .skill-slide-status{display:inline-block;font-size:9px;letter-spacing:.08em;color:#a5e1f4;margin-bottom:5px}
 #dupeView.active:after{content:'左へスワイプ → SKILL DATA';position:fixed;right:15px;bottom:max(12px,env(safe-area-inset-bottom));z-index:8;font:600 9px 'Space Grotesk';letter-spacing:.1em;color:#fff;background:#0a3551dd;border:1px solid #75cde6;padding:9px 11px;pointer-events:none}
 @media(min-width:750px){.skill-slide-grid{padding:16px 28px 24px;gap:12px}.skill-slide-row{grid-template-columns:125px minmax(0,1fr)}.skill-slide-detail{padding:16px 22px}}
+/* 2026-10-14: skill page luxury gold treatment + non-overlapping controls; additive overrides only */
+#skillSlideAddon{background:radial-gradient(ellipse at 82% 12%,rgba(176,133,58,.14),transparent 48%),linear-gradient(145deg,#142b3b,#081b2c)}
+.skill-slide-head{background:linear-gradient(105deg,#182e3b,#28352f);border-bottom:1px solid rgba(218,180,104,.58)}
+.skill-slide-head small{color:#e8c98b}
+.skill-slide-back{border-color:#c5a36a;color:#f7e6c2;background:#b58b3c20}
+.skill-slide-note{color:#dbcaa9;border-bottom-color:#c9a66b35}
+.skill-slide-grid{gap:9px}
+.skill-slide-row{position:relative;border:1px solid rgba(215,176,103,.74);background:linear-gradient(115deg,rgba(150,111,53,.20),rgba(18,42,54,.96) 42%,rgba(16,35,48,.95));box-shadow:inset 0 0 0 1px rgba(255,236,182,.08),0 6px 18px #0002}
+.skill-slide-row:before{content:"";position:absolute;inset:5px;pointer-events:none;background:linear-gradient(#e5c783,#e5c783) left top/13px 1px no-repeat,linear-gradient(#e5c783,#e5c783) left top/1px 13px no-repeat,linear-gradient(#e5c783,#e5c783) right bottom/13px 1px no-repeat,linear-gradient(#e5c783,#e5c783) right bottom/1px 13px no-repeat;opacity:.8}
+.skill-slide-type{color:#f5dca6;border-right:1px solid #c6a36c80;background:linear-gradient(180deg,#c59d5728,#86632c12);text-shadow:0 1px 10px #d2a65022}
+.skill-slide-detail h3{color:#fff0cc}.skill-slide-status{color:#e4c388}.skill-slide-detail a{color:#f3d89f}
+/* Keep the existing performance button, but move the swipe hint away from it. */
+#dupeView.active:after{right:auto!important;left:15px!important;bottom:max(70px,calc(env(safe-area-inset-bottom) + 65px))!important;background:#142b3de8!important;border-color:#c6a36b!important;color:#f6dfb3!important}
+@media(max-width:700px){#dupeView.active:after{left:12px!important;bottom:max(70px,calc(env(safe-area-inset-bottom) + 65px))!important;font-size:8px!important;padding:7px 9px!important}.skill-slide-row{grid-template-columns:66px minmax(0,1fr)}.skill-slide-grid{gap:7px}}
 </style>
 <script id="skill-slide-addon-script">
 (()=>{
