@@ -595,6 +595,60 @@ const hide=()=>{panel.classList.remove('is-open');panel.setAttribute('aria-hidde
 opener.addEventListener('click',show);closer.addEventListener('click',hide);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel.classList.contains('is-open'))hide()});
 })();
 </script>
+
+<!-- ADDITIVE ONLY: Character skill page, original potential gallery unchanged -->
+<style id="skill-slide-addon">
+#skillSlideAddon{position:absolute;inset:0;z-index:12;display:none;background:linear-gradient(145deg,#102c48,#071b30);color:#ecf8ff;overflow:hidden}
+#skillSlideAddon.is-open{display:flex;flex-direction:column;animation:skillEnter .42s cubic-bezier(.22,1,.36,1)}
+@keyframes skillEnter{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.skill-slide-head{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:max(16px,env(safe-area-inset-top)) 18px 12px;border-bottom:1px solid #83c9e244;background:#123852}
+.skill-slide-head small{font:600 10px 'Space Grotesk';letter-spacing:.16em;color:#8cdaf1}.skill-slide-head h2{font-size:clamp(21px,4vw,32px);margin-top:5px}.skill-slide-back{border:1px solid #83c9e288;background:#ffffff10;color:#fff;padding:12px 15px;cursor:pointer;font-size:12px}
+.skill-slide-note{padding:10px 18px;font-size:10px;color:#b4d9e8;line-height:1.6;border-bottom:1px solid #ffffff18}
+.skill-slide-grid{flex:1;min-height:0;display:grid;grid-template-rows:repeat(4,minmax(0,1fr));gap:7px;padding:10px 12px max(12px,env(safe-area-inset-bottom));overflow:hidden}
+.skill-slide-row{min-height:0;overflow:auto;display:grid;grid-template-columns:68px minmax(0,1fr);border:1px solid #7bc9e24d;background:linear-gradient(100deg,#20496466,#ffffff05)}
+.skill-slide-type{display:flex;align-items:center;justify-content:center;text-align:center;padding:6px;border-right:1px solid #7bc9e24d;font-size:12px;font-weight:700;letter-spacing:.06em;color:#a8eaff}
+.skill-slide-detail{padding:10px 12px;align-self:center}.skill-slide-detail h3{font-size:clamp(12px,2.6vw,16px);margin-bottom:5px}.skill-slide-detail p{font-size:clamp(10px,2.1vw,12px);line-height:1.55;color:#d1e4f1}.skill-slide-detail a{display:inline-block;color:#8de5fa;font-size:10px;margin-top:5px;text-decoration:underline}
+.skill-slide-status{display:inline-block;font-size:9px;letter-spacing:.08em;color:#a5e1f4;margin-bottom:5px}
+#dupeView.active:after{content:'左へスワイプ → SKILL DATA';position:fixed;right:15px;bottom:max(12px,env(safe-area-inset-bottom));z-index:8;font:600 9px 'Space Grotesk';letter-spacing:.1em;color:#fff;background:#0a3551dd;border:1px solid #75cde6;padding:9px 11px;pointer-events:none}
+@media(min-width:750px){.skill-slide-grid{padding:16px 28px 24px;gap:12px}.skill-slide-row{grid-template-columns:125px minmax(0,1fr)}.skill-slide-detail{padding:16px 22px}}
+</style>
+<script id="skill-slide-addon-script">
+(()=>{
+const drawer=document.getElementById('charDrawer'),shell=drawer?.querySelector('.char-shell'),dupe=document.getElementById('dupeView'),dupeList=document.getElementById('dupeList');
+if(!shell||!dupe||!dupeList)return;
+const verified={
+'ペリカ':[
+['協約α：突破','最大4段の電磁ダメージ。操作中の重攻撃はブレイク値15を与え、終撃でSPを回復。','https://game8.jp/arknights-endfield/687525'],
+['協約ω：雷撃','範囲内の敵に電磁ダメージと電磁付着を与える。消費SP：100。','https://game8.jp/arknights-endfield/687525'],
+['即時協約：閃光鎖','操作中の味方の重攻撃で発動可能。敵に電磁ダメージを与え、短時間の感電状態にする。','https://game8.jp/arknights-endfield/687383'],
+['協約ε：70.41κ','指定した範囲に高い電磁ダメージを与える。','https://game8.jp/arknights-endfield/687525']
+],
+'ギルベルタ':[
+null,
+['秘杖・引力モード','周囲の敵を引き寄せ、継続的に自然ダメージを与える。終了時の爆発で自然付着を与える。','https://game8.jp/arknights-endfield/687523'],
+['秘杖・マトリックス転移','敵がアーツ異常になると発動可能。敵を引き寄せ、浮遊させる。','https://game8.jp/arknights-endfield/687523'],
+['秘杖・重力場','範囲内に自然付着を与え、スローとアーツ脆弱を付与。浮遊状態の維持にも利用できる。','https://gamesink.net/endfield/characters/7']
+]};
+const types=['通常攻撃','戦技','連携技','必殺技'];
+const panel=document.createElement('section');panel.id='skillSlideAddon';panel.setAttribute('aria-hidden','true');panel.innerHTML='<header class="skill-slide-head"><div><small>TALOS-II / VERIFIED SKILL ARCHIVE</small><h2 id="skillSlideName"></h2></div><button type="button" class="skill-slide-back" id="skillSlideBack">← 凸画像へ</button></header><p class="skill-slide-note">確認済みの性能のみ記載。未照合の技は推測せず「確認中」と表示します。右へスワイプで凸画像に戻れます。</p><div class="skill-slide-grid" id="skillSlideGrid"></div>';
+shell.appendChild(panel);
+let currentName='';
+function syncName(){const img=dupeList.querySelector('.dupe-card img');return img?.alt?.replace(/\s+(1凸|3凸|完凸).*$/,'').trim()||document.getElementById('charTitle')?.textContent?.trim()||''}
+function open(){if(!dupe.classList.contains('active'))return;currentName=syncName();document.getElementById('skillSlideName').textContent=currentName+' / PERFORMANCE';const grid=document.getElementById('skillSlideGrid');grid.replaceChildren();types.forEach((type,i)=>{const data=verified[currentName]?.[i];const row=document.createElement('article');row.className='skill-slide-row';const label=document.createElement('div');label.className='skill-slide-type';label.textContent=type;const detail=document.createElement('div');detail.className='skill-slide-detail';const status=document.createElement('span');status.className='skill-slide-status';status.textContent=data?'SOURCE CHECKED':'AWAITING VERIFICATION';const h=document.createElement('h3');h.textContent=data?data[0]:'性能確認中';const p=document.createElement('p');p.textContent=data?data[1]:'現行のゲーム内説明と照合できるまで、性能・数値を掲載しません。';detail.append(status,h,p);if(data){const a=document.createElement('a');a.href=data[2];a.target='_blank';a.rel='noopener noreferrer';a.textContent='参照元 ↗';detail.append(a)}row.append(label,detail);grid.append(row)});panel.classList.add('is-open');panel.setAttribute('aria-hidden','false')}
+function close(){panel.classList.remove('is-open');panel.setAttribute('aria-hidden','true')}
+panel.querySelector('#skillSlideBack').addEventListener('click',close);
+let start=null;
+drawer.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;if(panel.classList.contains('is-open')||dupe.classList.contains('active'))start={x:e.touches[0].clientX,y:e.touches[0].clientY}}, {passive:true});
+drawer.addEventListener('touchend',e=>{if(!start||!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-start.x,dy=e.changedTouches[0].clientY-start.y;start=null;if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.4)return;if(panel.classList.contains('is-open')){if(dx>0)close()}else if(dupe.classList.contains('active')&&dx<0)open()},{passive:true});
+// Desktop: horizontal trackpad scrolling on potential view, plus keyboard arrows.
+drawer.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<45||Math.abs(e.deltaX)<Math.abs(e.deltaY))return;if(panel.classList.contains('is-open')){if(e.deltaX<0)close()}else if(dupe.classList.contains('active')&&e.deltaX>0)open()},{passive:true});
+document.addEventListener('keydown',e=>{if(!drawer.classList.contains('open'))return;if(panel.classList.contains('is-open')){if(e.key==='ArrowRight'||e.key==='Escape'){e.stopImmediatePropagation();close()}}else if(dupe.classList.contains('active')&&e.key==='ArrowLeft')open()},true);
+const observer=new MutationObserver(()=>{if(!dupe.classList.contains('active')||!drawer.classList.contains('open'))close()});observer.observe(dupe,{attributes:true,attributeFilter:['class']});observer.observe(drawer,{attributes:true,attributeFilter:['class']});
+// Mouse/desktop access without modifying original gallery markup.
+const btn=document.createElement('button');btn.type='button';btn.textContent='性能を見る →';btn.setAttribute('aria-label','キャラクターの性能ページへ');btn.style.cssText='position:absolute;right:16px;bottom:14px;z-index:10;padding:11px 15px;background:#0c3a58;color:white;border:1px solid #7bd9ef;font:600 11px Manrope,sans-serif;cursor:pointer;display:none';shell.appendChild(btn);btn.onclick=open;
+const update=()=>{btn.style.display=dupe.classList.contains('active')&&!panel.classList.contains('is-open')?'block':'none'};new MutationObserver(update).observe(dupe,{attributes:true,attributeFilter:['class']});new MutationObserver(update).observe(panel,{attributes:true,attributeFilter:['class']});update();
+})();
+</script>
 </body></html>
 
 <style>
