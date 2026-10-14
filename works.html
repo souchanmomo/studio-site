@@ -337,6 +337,39 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 #operatorList .operator-copy h3 {display:inline-block!important;max-width:100%!important;}
 #charDrawer #charTitle {width:fit-content!important;max-width:100%!important;}
 </style>
+
+<style id="editorial-serif-type-2026">
+/* Match the refined editorial serif from index.html.
+   Preserve Japanese readability, layout, imagery and interactions. */
+:root{--editorial-serif:Georgia,'Times New Roman','Yu Mincho','Hiragino Mincho ProN',serif}
+.page-title,.hero h1,.intro h2,.feature-copy h2,
+.award-head h2,.char-head h2,.version-name,
+.menu-link,.menu-card-title,.tile>span,
+.performance-heading h2,.performance-tile-title,
+#operatorList .operator-copy h3,.operator-copy h3,
+.dupe-caption b,.operator-index{
+  font-family:var(--editorial-serif)!important;
+  font-weight:400!important;
+  letter-spacing:-.035em;
+}
+.page-title{font-size:clamp(13px,1.65vw,19px)!important;letter-spacing:.015em!important}
+.hero h1{letter-spacing:-.035em!important}
+.intro h2{letter-spacing:-.035em!important}
+.menu-link{letter-spacing:-.025em!important}
+.menu-card-title{letter-spacing:-.025em!important}
+#operatorList .operator-copy h3{letter-spacing:-.035em!important}
+.operator-card .operator-index{font-family:var(--editorial-serif)!important}
+.performance-tile-title{font-weight:400!important}
+.kicker,.menu-kicker,.menu-card-label,.operator-overline,.operator-sequence,
+.operator-action,.performance-eyebrow,.performance-tile-kicker,
+.tap,.award-foot,.version-no,.edition-index{
+  font-family:'Space Grotesk',sans-serif!important;
+}
+@media(max-width:700px){
+  .page-title{font-size:13px!important}
+  .menu-link{font-size:clamp(26px,6.5vw,38px)!important}
+}
+</style>
 </head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
