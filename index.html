@@ -80,13 +80,14 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .screen:before{opacity:.14!important}.screen:after{opacity:.10!important}.atmosphere{opacity:.12!important}
 @media(max-width:700px){.silk-photo{background-position:51% center}}
 /* Soft satin deformation and contact lighting, separate from the original silk photo. */
+.silk-overlap{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 .silk-contact{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;mix-blend-mode:normal}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
 <div class="silk" aria-hidden="true"><div class="silk-photo"></div></div><div class="atmosphere" aria-hidden="true"></div>
-<canvas class="silk-contact" id="silkContact" aria-hidden="true"></canvas><div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
+<canvas class="silk-contact" id="silkContact" aria-hidden="true"></canvas><canvas class="silk-overlap" id="silkOverlap" aria-hidden="true"></canvas><div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
 <h1 id="activeTitle">ENDFIELD</h1><div class="edition-index" id="activeNumber">01 / 04</div></section>
@@ -137,6 +138,59 @@ function drawSilkContact(w,h){
  contactCtx.save();contactCtx.scale(1,.58);contactCtx.fillStyle=shine;
  contactCtx.fillRect(-rx*1.5,-ry*2.5,rx*3,ry*5);contactCtx.restore();
  contactCtx.restore();
+}
+
+// Physically anchored contact: project the *actual* stone geometry onto the silk.
+// A foreground fabric lip overlaps the lower silhouette, removing the floating cut-out effect.
+const overlapCanvas=document.getElementById('silkOverlap');
+const overlapCtx=overlapCanvas.getContext('2d',{alpha:true});
+function drawEmbeddedContact(w,h){
+ if(!overlapCtx)return;
+ const dpr=Math.min(devicePixelRatio||1,1.6);
+ if(overlapCanvas.width!==Math.round(w*dpr)||overlapCanvas.height!==Math.round(h*dpr)){
+  overlapCanvas.width=Math.round(w*dpr);overlapCanvas.height=Math.round(h*dpr);
+ }
+ overlapCtx.setTransform(dpr,0,0,dpr,0,0);overlapCtx.clearRect(0,0,w,h);
+ tilt.updateMatrixWorld(true);camera.updateMatrixWorld(true);
+ const projected=[];
+ // The pavilion and girdle vertices define the actual on-screen lower boundary.
+ for(const face of faces){
+  const pos=face.geometry.attributes.position;
+  for(let i=0;i<pos.count;i++){
+   const v=new THREE.Vector3().fromBufferAttribute(pos,i).applyMatrix4(face.matrixWorld).project(camera);
+   if(v.z>-1&&v.z<1)projected.push({x:(v.x*.5+.5)*w,y:(.5-v.y*.5)*h});
+  }
+ }
+ if(!projected.length)return;
+ const minX=Math.min(...projected.map(p=>p.x)),maxX=Math.max(...projected.map(p=>p.x));
+ const maxY=Math.max(...projected.map(p=>p.y));
+ const width=maxX-minX;
+ // Contact is concentrated on the lower 10% of the diamond, not across its center.
+ const centerX=(minX+maxX)*.5,baseY=maxY-9;
+ const span=Math.min(width*.78,w*1.35),height=Math.max(16,Math.min(42,span*.07));
+ const ctx=overlapCtx;ctx.save();ctx.translate(centerX,baseY);ctx.rotate(-.095);
+ // A deep occlusion pocket immediately below the stone.
+ ctx.save();ctx.scale(1,.22);
+ let shadow=ctx.createRadialGradient(0,0,span*.07,0,0,span*.66);
+ shadow.addColorStop(0,'rgba(0,0,0,.94)');shadow.addColorStop(.38,'rgba(0,0,0,.78)');
+ shadow.addColorStop(.72,'rgba(0,0,0,.38)');shadow.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.fillStyle=shadow;ctx.beginPath();ctx.arc(0,0,span*.66,0,Math.PI*2);ctx.fill();ctx.restore();
+ // Raised satin edge, irregular and softly folded, sits in front of the gem.
+ const left=-span*.57,right=span*.55;
+ const fabric=ctx.createLinearGradient(0,-height*1.25,0,height*1.8);
+ fabric.addColorStop(0,'rgba(4,6,11,0)');fabric.addColorStop(.24,'rgba(5,8,14,.48)');
+ fabric.addColorStop(.47,'rgba(6,9,15,.88)');fabric.addColorStop(.73,'rgba(4,6,11,.82)');fabric.addColorStop(1,'rgba(3,4,8,0)');
+ ctx.fillStyle=fabric;ctx.beginPath();ctx.moveTo(left,height*.85);
+ ctx.bezierCurveTo(left+span*.16,-height*.65,-span*.24,-height*.88,-span*.12,-height*.42);
+ ctx.bezierCurveTo(span*.05,-height*1.08,span*.21,-height*.16,span*.34,-height*.60);
+ ctx.bezierCurveTo(span*.45,-height*.40,right,height*.38,right,height*1.4);
+ ctx.lineTo(left,height*1.65);ctx.closePath();ctx.fill();
+ // Single-source satin highlight grazing the compressed ridge, deliberately restrained.
+ ctx.beginPath();ctx.moveTo(left+span*.10,height*.01);
+ ctx.bezierCurveTo(-span*.28,-height*.76,-span*.20,-height*.57,-span*.09,-height*.40);
+ ctx.bezierCurveTo(span*.07,-height*.75,span*.17,-height*.19,span*.31,-height*.39);
+ ctx.strokeStyle='rgba(155,179,203,.16)';ctx.lineWidth=2.1;ctx.shadowColor='rgba(140,181,220,.17)';ctx.shadowBlur=9;ctx.stroke();
+ ctx.restore();
 }
 
 const activeTitle=document.getElementById('activeTitle'),activeNumber=document.getElementById('activeNumber'),activeLink=document.getElementById('activeLink'),activeKicker=document.getElementById('activeKicker');
@@ -214,7 +268,7 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    float panel=pow(a,18.0), core=pow(a,130.0), needle=pow(a,520.0);
    float edge=pow(1.0-abs(d.y),6.0);
    vec3 ambient=mix(vec3(.004,.008,.016),vec3(.025,.047,.072),sat(d.y*.5+.5));
-   return ambient+vec3(.045,.077,.11)*edge+vec3(.7,.86,1.0)*panel+vec3(3.8,4.1,4.3)*core+vec3(12.,11.7,11.2)*needle;
+   return ambient+vec3(.045,.077,.11)*edge+vec3(.82,1.00,1.16)*panel+vec3(3.8,4.1,4.3)*core+vec3(12.,11.7,11.2)*needle;
  }
  void main(){
    vec3 N=normalize(vNormal), V=normalize(uCamera-vWorld);
@@ -247,7 +301,7 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    col+=vec3(.13,.22,.29)*pow(1.0-ndv,2.7);
    vec3 L=normalize(uLight-vWorld),H=normalize(L+V);
    float flash=pow(sat(dot(N,H)),300.0);
-   col+=vec3(10.0,10.5,11.0)*flash;
+   col+=vec3(11.5,12.0,12.5)*flash;
    // A faint spectral edge only where a real highlight is present.
    float fire=pow(sat(dot(R,normalize(vec3(-.49,.72,.49)))),90.0);
    col+=vec3(.16,.08,.27)*fire;
@@ -284,7 +338,7 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    const hiA=p(-.36,1.80,a),hiB=p(-.36,1.80,b);
    const crA=p(.40,1.06,a),crB=p(.40,1.06,b);
    const center=new THREE.Vector3(.40,0,0);
-   subdivide(tip,loB,loA,group);
+   facet(tip,loB,loA,group); // Single uninterrupted pavilion face at the pointed apex
    subdivide(loA,loB,hiB,group);subdivide(loA,hiB,hiA,group);
    subdivide(hiA,hiB,crB,group);subdivide(hiA,crB,crA,group);
    subdivide(crA,crB,center,group);
@@ -367,7 +421,10 @@ function animate(now){
     activeLink.style.visibility=urls[sector]?'visible':'hidden';
     document.documentElement.style.setProperty('--accent',['#b5e9ff','#e3cfff','#b5f9e5','#e8d5b8'][sector]);
   }
-  renderer.render(scene,camera);requestAnimationFrame(animate);
+  renderer.render(scene,camera);
+  // Keep the silk indentation locked to the diamond during rotation.
+  if(!animate.contactFrame || ++animate.contactFrame%3===0)drawEmbeddedContact(host.clientWidth,host.clientHeight);
+  requestAnimationFrame(animate);
 }
 requestAnimationFrame(animate);
 </script><script>window.addEventListener('error',e=>{if(e.message&&e.message.includes('module'))document.getElementById('fallback').style.display='flex'});</script></body></html>
