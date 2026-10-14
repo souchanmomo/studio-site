@@ -14,28 +14,171 @@
 <body><main class="screen"><div class="noise"></div><nav class="links" aria-label="ゲームページ"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav><header class="brand"><div class="micro">CURATED DIGITAL GALLERY / 001</div><h1>STUDIO</h1><p>CREATIVE SOUND &amp; VISUAL PRODUCTION</p><div class="rule"></div></header><div class="scene" id="scene" aria-label="回転するダイヤモンド。ドラッグで回転し、ゲーム名の面をタップするとページを開きます"></div><div class="hover-name" id="hoverName"></div><div class="caption"><div class="overline">THE FACETED ARCHIVE</div><h2>Every facet, a world.</h2><p>光の断片に、異なる世界を映す。<br>宝石を回して、ゲームの面を選択。</p></div><div class="instructions">DRAG TO ROTATE / TAP TO ENTER<span>⟷</span></div><div class="fallback" id="fallback">3D表示を読み込めませんでした。<br><a href="works.html">ENDFIELD</a> / <a href="zzz.html">ZZZ</a> / <a href="鳴潮.html">鳴潮</a></div><div class="bottomline"></div></main>
 <script type="module">
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
-const host=document.getElementById('scene'),hoverName=document.getElementById('hoverName');
-const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(33,1,.1,100);camera.position.set(0,0,11.5);
-const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.65;host.appendChild(renderer.domElement);
-scene.add(new THREE.AmbientLight(0xe2f5ff,1.6));const light=(color,power,x,y,z)=>{const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)};light(0xffffff,3,-4,5,7);light(0x8acbff,3,5,-3,2);light(0xffe6b4,1.8,1,4,-5);
-// Actual brilliant-cut proportions: flat table on right, crown, girdle, pavilion and left culet.
-// The axis of symmetry runs from left to right along local X.
-const N=16,R=2.05;const rings=[{x:-2.85,r:0,offset:0},{x:-.25,r:R,offset:0},{x:.02,r:R,offset:0},{x:.83,r:1.19,offset:0}];
-const vertices=[],triangles=[];function v(x,r,a){return new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a))}
-const apex=v(-2.85,0,0);for(let j=0;j<N;j++){const a=2*Math.PI*j/N,b=2*Math.PI*(j+1)/N;triangles.push([apex,v(-.25,R,a),v(-.25,R,b)]);for(let k=1;k<rings.length-1;k++){const A=rings[k],B=rings[k+1];const p=v(A.x,A.r,a),q=v(A.x,A.r,b),r=v(B.x,B.r,a),s=v(B.x,B.r,b);triangles.push([p,q,r],[q,s,r])}triangles.push([v(.83,1.19,a),v(.83,1.19,b),v(.83,0,0)])}
-const positions=[];for(const tri of triangles)for(const p of tri)positions.push(p.x,p.y,p.z);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geo.computeVertexNormals();
-const diamondMat=new THREE.MeshPhysicalMaterial({color:0xd7f4ff,metalness:0,roughness:.035,transmission:.90,thickness:1.9,ior:2.42,transparent:true,opacity:.88,side:THREE.DoubleSide,flatShading:true,clearcoat:1,clearcoatRoughness:.02,depthWrite:false});
-const gem=new THREE.Group();scene.add(gem);const crystal=new THREE.Mesh(geo,diamondMat);gem.add(crystal);
-const edges=new THREE.LineSegments(new THREE.EdgesGeometry(geo,18),new THREE.LineBasicMaterial({color:0xc5f4ff,transparent:true,opacity:.33,depthWrite:false}));gem.add(edges);
-// Game links occupy separate crown facets, mounted to the same rotating geometry.
-const faces=[{name:'ENDFIELD',url:'works.html',index:1},{name:'ZZZ',url:'zzz.html',index:6},{name:'鳴潮',url:'鳴潮.html',index:11}];const targets=[];
-function labelTexture(text){const c=document.createElement('canvas');c.width=1024;c.height=256;const ctx=c.getContext('2d');ctx.clearRect(0,0,1024,256);ctx.font='600 92px Space Grotesk, Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='#051527';ctx.shadowBlur=25;ctx.fillStyle='#ffffff';ctx.fillText(text,512,130);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t}
-for(const f of faces){const a=2*Math.PI*(f.index+.5)/N;const x=.40,r=1.61;const pos=v(x,r,a);const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:labelTexture(f.name),transparent:true,depthTest:false,depthWrite:false,opacity:.95}));sprite.position.copy(pos);sprite.scale.set(f.name==='ENDFIELD'?1.23:.92,.30,1);sprite.renderOrder=5;gem.add(sprite);const hit=new THREE.Mesh(new THREE.SphereGeometry(.43,12,8),new THREE.MeshBasicMaterial({visible:false}));hit.position.copy(pos);gem.add(hit);targets.push({hit,sprite,...f})}
-// Three-quarter view: table on right, pavilion pointing toward the left.
-gem.rotation.set(.25,.45,-.17);let angle=0,drag=false,moved=false,startX=0,startY=0,lastX=0,lastY=0,vel=0;const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();let hover=null;
-function hitAt(e){const rect=host.getBoundingClientRect();pointer.x=((e.clientX-rect.left)/rect.width)*2-1;pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;ray.setFromCamera(pointer,camera);const hits=ray.intersectObjects(targets.map(t=>t.hit));return hits.length?targets.find(t=>t.hit===hits[0].object):null}
-host.addEventListener('pointerdown',e=>{drag=true;moved=false;startX=lastX=e.clientX;startY=lastY=e.clientY;vel=0;host.setPointerCapture(e.pointerId)});host.addEventListener('pointermove',e=>{if(drag){const dx=e.clientX-lastX,dy=e.clientY-lastY;if(Math.hypot(e.clientX-startX,e.clientY-startY)>8)moved=true;gem.rotation.x+=dy*.006;gem.rotation.y+=dx*.006;vel=dx*.002;lastX=e.clientX;lastY=e.clientY}else{hover=hitAt(e);hoverName.textContent=hover?hover.name+'  ↗':'';hoverName.classList.toggle('show',!!hover);host.style.cursor=hover?'pointer':'grab'}});host.addEventListener('pointerup',e=>{if(!moved){const item=hitAt(e);if(item)location.href=item.url}drag=false});host.addEventListener('pointercancel',()=>drag=false);
-function resize(){const w=host.clientWidth,h=host.clientHeight;camera.aspect=w/h;camera.position.z=w<700?15.7:11.5;camera.position.x=w<700?0.05:-.35;camera.updateProjectionMatrix();renderer.setSize(w,h,false)}window.addEventListener('resize',resize);resize();
-const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;let previous=performance.now();function frame(now){const dt=Math.min((now-previous)/1000,.05);previous=now;if(!drag&&!reduced){gem.rotation.x+=.095*dt;gem.rotation.y+=vel*dt;vel*=.97;gem.rotation.x+=.014*dt}renderer.render(scene,camera);requestAnimationFrame(frame)}requestAnimationFrame(frame);
+const host=document.getElementById('scene'), hoverName=document.getElementById('hoverName');
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(32,1,.1,100);
+const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.35;
+host.appendChild(renderer.domElement);
+
+// Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
+const studio=new THREE.Scene();studio.background=new THREE.Color('#070e17');
+function reflector(x,y,z,w,h,color,intensity,ry=0){
+ const mat=new THREE.MeshBasicMaterial({color:new THREE.Color(color).multiplyScalar(intensity),side:THREE.DoubleSide});
+ const panel=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);
+ panel.position.set(x,y,z);panel.rotation.y=ry;studio.add(panel);
+}
+reflector(-5,5,3,3,8,'#e9faff',3,.5);
+reflector(5,2,-3,2,7,'#b1dfff',3,-.7);
+reflector(0,-5,3,9,1.6,'#ffffff',2.4);
+reflector(3,4,4,2,1.2,'#fff0c7',3);
+reflector(-3,-1,-5,3,5,'#a1caff',1.8);
+const pmrem=new THREE.PMREMGenerator(renderer);
+scene.environment=pmrem.fromScene(studio,.045).texture;
+scene.add(new THREE.AmbientLight(0xffffff,1.1));
+function light(color,power,x,y,z){const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)}
+light(0xffffff,4,-4,6,6);light(0x9acbff,3,4,-2,4);light(0xffe5b3,1.3,0,5,-4);
+
+// True cut silhouette: left culet, pavilion, girdle, crown, right-hand flat table.
+// Four sectors, each comprising exactly four of the 16 radial facets.
+const N=16, TAU=Math.PI*2, radius=2.2;
+const sectors=[
+ {name:'ENDFIELD',url:'works.html',tint:0xd6f3ff},
+ {name:'ZZZ',url:'zzz.html',tint:0xd8d2ff},
+ {name:'鳴潮',url:'鳴潮.html',tint:0xc5fff1},
+ {name:'ARCHIVE',url:null,tint:0xffe8c4}
+];
+const diamond=new THREE.Group(), tilt=new THREE.Group();
+scene.add(tilt);tilt.add(diamond);
+// Tilt is static. Only the diamond spins around its own local X axis.
+tilt.rotation.set(.12,-.29,-.25);
+const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
+const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
+const facetMat=new THREE.MeshPhysicalMaterial({
+ color:0xffffff,roughness:.012,metalness:0,transmission:.98,
+ thickness:2.3,ior:2.42,clearcoat:1,clearcoatRoughness:0,
+ envMapIntensity:3.1,side:THREE.DoubleSide,flatShading:true,
+ transparent:true,opacity:.98,depthWrite:false
+});
+const pickTargets=[];
+function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
+function meshOf(tris,mat){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(tris,3));geo.computeVertexNormals();return new THREE.Mesh(geo,mat)}
+for(let sector=0;sector<4;sector++){
+ const triangles=[];
+ for(let i=sector*4;i<(sector+1)*4;i++){
+  const a=i*TAU/N,b=(i+1)*TAU/N,m=(a+b)/2;
+  // Triangle subdivisions give the characteristic brilliant facets.
+  addTriangle(triangles,p(-2.65,0,a),p(-.42,radius,a),p(-.42,radius,m));
+  addTriangle(triangles,p(-2.65,0,a),p(-.42,radius,m),p(-.42,radius,b));
+  addTriangle(triangles,p(-.42,radius,a),p(-.25,radius,a),p(-.25,radius,b));
+  addTriangle(triangles,p(-.42,radius,a),p(-.25,radius,b),p(-.42,radius,b));
+  addTriangle(triangles,p(-.25,radius,a),p(.64,1.28,a),p(.64,1.28,m));
+  addTriangle(triangles,p(-.25,radius,a),p(.64,1.28,m),p(-.25,radius,m));
+  addTriangle(triangles,p(-.25,radius,m),p(.64,1.28,m),p(.64,1.28,b));
+  addTriangle(triangles,p(-.25,radius,m),p(.64,1.28,b),p(-.25,radius,b));
+  addTriangle(triangles,p(.64,1.28,a),p(.64,1.28,b),p(.64,0,a));
+ }
+ const surface=meshOf(triangles,facetMat);
+ diamond.add(surface);pickTargets.push({object:surface,...sectors[sector]});
+ // A very subtle engraved arc delineates each four-facet region.
+ const a=sector*TAU/4, boundary=[];
+ for(let j=0;j<=20;j++)boundary.push(p(-.25,radius*1.006,a+j*0)); 
+ const seam=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
+  p(-2.65,0,a),p(-.42,radius,a),p(-.25,radius,a),p(.64,1.28,a)
+ ]),new THREE.LineBasicMaterial({color:0xe5faff,transparent:true,opacity:.58,depthWrite:false}));
+ diamond.add(seam);
+}
+const rimPoints=[];
+for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
+diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
+ new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.48,depthWrite:false})));
+// Labels: one label per quarter, rather than three arbitrary isolated facets.
+function labelTexture(name){
+ const c=document.createElement('canvas');c.width=1024;c.height=256;
+ const ctx=c.getContext('2d');ctx.font='600 78px Arial,sans-serif';
+ ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.shadowColor='#001524';ctx.shadowBlur=22;ctx.fillStyle='#ffffff';
+ ctx.fillText(name,512,132);
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
+}
+for(let i=0;i<4;i++){
+ const angle=(i+.5)*TAU/4;
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({
+  map:labelTexture(sectors[i].name),transparent:true,depthWrite:false,
+  depthTest:false,opacity:sectors[i].url?.92:.42
+ }));
+ sprite.position.copy(p(-.14,2.22,angle));
+ sprite.scale.set(sectors[i].name==='ENDFIELD'?1.24:.88,.26,1);
+ sprite.renderOrder=10;diamond.add(sprite);
+}
+// Controlled specular glints, following the facet edges.
+const glints=[];
+for(let i=0;i<16;i++){
+ const a=(i+.2)*TAU/N;
+ const star=new THREE.Sprite(new THREE.SpriteMaterial({map:(()=>{
+  const c=document.createElement('canvas');c.width=c.height=128;
+  const x=c.getContext('2d'),g=x.createRadialGradient(64,64,0,64,64,62);
+  g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.07,'rgba(255,255,255,.95)');
+  g.addColorStop(.22,'rgba(202,235,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');
+  x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
+ })(),transparent:true,depthWrite:false,depthTest:false,blending:THREE.AdditiveBlending,opacity:0}));
+ star.position.copy(p(-.27,radius*1.01,a));star.scale.set(.38,.38,1);star.renderOrder=12;
+ diamond.add(star);glints.push(star);
+}
+const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
+let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
+function pick(e){
+ const r=host.getBoundingClientRect();
+ pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height*2-1));
+ ray.setFromCamera(pointer,camera);
+ const hits=ray.intersectObjects(pickTargets.map(x=>x.object),false);
+ return hits.length?pickTargets.find(x=>x.object===hits[0].object):null;
+}
+host.addEventListener('pointerdown',e=>{
+ dragging=true;travel=0;startX=lastX=e.clientX;startY=e.clientY;velocity=0;
+ host.setPointerCapture(e.pointerId);
+});
+host.addEventListener('pointermove',e=>{
+ if(dragging){
+  const dx=e.clientX-lastX;
+  travel=Math.max(travel,Math.hypot(e.clientX-startX,e.clientY-startY));
+  diamond.rotation.x+=dx*.008;velocity=dx*.004;lastX=e.clientX;
+ }else{
+  const target=pick(e);
+  hoverName.textContent=target?.url?target.name+' ↗':'';
+  hoverName.classList.toggle('show',!!target?.url);
+  host.style.cursor=target?.url?'pointer':'grab';
+ }
+});
+host.addEventListener('pointerup',e=>{
+ if(travel<9){const target=pick(e);if(target?.url)window.location.href=target.url}
+ dragging=false;
+});
+host.addEventListener('pointercancel',()=>dragging=false);
+function resize(){
+ const w=host.clientWidth,h=host.clientHeight;
+ camera.aspect=w/h;camera.position.set(0,0,w<700?11.3:9.3);
+ camera.fov=w<700?39:32;camera.updateProjectionMatrix();
+ renderer.setSize(w,h,false);
+ // Larger than previous iteration; keep title and caption clear.
+ tilt.position.set(w<700?-.12:-.25,w<700?-.30:-.1,0);
+ tilt.scale.setScalar(w<700?1.03:1.13);
+}
+window.addEventListener('resize',resize);resize();
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let prev=performance.now();
+function animate(now){
+ const dt=Math.min((now-prev)/1000,.05);prev=now;
+ if(!dragging&&!reduced){
+  diamond.rotation.x+=(spin+velocity)*dt;
+  velocity*=Math.pow(.90,dt*60);
+ }
+ glints.forEach((g,i)=>{g.material.opacity=Math.max(0,Math.sin(now*.0016+i*1.81)*.6-.29)});
+ renderer.render(scene,camera);requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 </script><script>window.addEventListener('error',e=>{if(e.message&&e.message.includes('module'))document.getElementById('fallback').style.display='flex'});</script>
 </body></html>
