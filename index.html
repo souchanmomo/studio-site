@@ -72,11 +72,12 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .editorial h1{font-size:clamp(46px,8vw,125px);overflow-wrap:normal}
 .editorial h1.long{font-size:clamp(30px,5.7vw,90px);letter-spacing:-.065em}
 @media(max-width:700px){.nav a{font-size:12px!important}.editorial h1{font-size:clamp(43px,10.2vw,72px)}.editorial h1.long{font-size:clamp(29px,7vw,47px)}}
+.silk{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}.silk svg{width:100%;height:100%;display:block;opacity:.67;filter:contrast(1.1) saturate(.72)}.screen:before{z-index:1;opacity:.5}.screen:after{opacity:.28}.atmosphere{opacity:.30}.hero-word{z-index:2}@media(max-width:700px){.silk svg{opacity:.58}}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
-<div class="atmosphere" aria-hidden="true"></div><div class="hero-word" aria-hidden="true">STUDIO</div>
+<div class="silk" aria-hidden="true"><svg viewBox="0 0 800 1400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="s1" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#020409"/><stop offset=".26" stop-color="#101b2a"/><stop offset=".41" stop-color="#53677c"/><stop offset=".49" stop-color="#111c2b"/><stop offset=".7" stop-color="#03060d"/><stop offset="1" stop-color="#1b2637"/></linearGradient><linearGradient id="s2" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#02040a"/><stop offset=".24" stop-color="#253447"/><stop offset=".36" stop-color="#8a9caf"/><stop offset=".41" stop-color="#1d2c3f"/><stop offset=".62" stop-color="#04070d"/><stop offset=".82" stop-color="#43556c"/><stop offset="1" stop-color="#020409"/></linearGradient><linearGradient id="s3" x1="0" y1="0" x2="1" y2=".6"><stop stop-color="#050912"/><stop offset=".28" stop-color="#111c2c"/><stop offset=".47" stop-color="#78899e"/><stop offset=".51" stop-color="#1c293a"/><stop offset=".77" stop-color="#03050b"/><stop offset="1" stop-color="#1b2637"/></linearGradient><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".38" numOctaves="2" seed="9" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".055"/></feComponentTransfer></filter></defs><rect width="800" height="1400" fill="#05080e"/><path d="M-180 160 Q130 -120 390 170 T970 120 L960 700 Q580 550 340 690 T-180 780Z" fill="url(#s1)"/><path d="M-170 600 Q140 360 380 610 T960 560 L960 1210 Q610 1020 360 1170 T-170 1110Z" fill="url(#s2)"/><path d="M-160 1060 Q170 820 440 1070 T940 990 L940 1510 L-160 1510Z" fill="url(#s3)"/><path d="M-80 370 Q220 220 450 390 T880 330" stroke="#b5d4f1" stroke-opacity=".15" stroke-width="7" fill="none"/><path d="M-80 895 Q240 710 460 870 T900 800" stroke="#c1d9f1" stroke-opacity=".14" stroke-width="9" fill="none"/><rect width="800" height="1400" filter="url(#grain)" opacity=".35"/></svg></div><div class="atmosphere" aria-hidden="true"></div><div class="hero-word" aria-hidden="true">STUDIO</div>
 <div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
@@ -149,55 +150,56 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    gl_Position=projectionMatrix*viewMatrix*world;
  }`;
   const gemFragment=`
-  precision highp float;
-  varying vec3 vWorld; varying vec3 vNormal; varying vec3 vLocal;
-  uniform vec3 uCamera; uniform vec3 uLight; uniform float uSector;
-  float sat(float x){return clamp(x,0.0,1.0);}
-  vec3 source(vec3 d){
-    d=normalize(d);
-    // One fixed photographic softbox, with a narrow bright strip and a hot core.
-    vec3 key=normalize(vec3(-0.49,0.72,0.49));
-    float c=dot(d,key);
-    float rectangle=pow(sat(c),17.0);
-    float ribbon=pow(sat(c),85.0);
-    float core=pow(sat(c),410.0);
-    vec3 ambient=mix(vec3(0.014,0.027,0.044),vec3(0.12,0.19,0.26),sat(d.y*0.5+0.5));
-    return ambient+vec3(1.0,1.18,1.27)*rectangle+vec3(3.5,3.65,3.6)*ribbon+vec3(8.0,7.8,7.4)*core;
-  }
-  void main(){
-    vec3 N=normalize(vNormal);
-    vec3 V=normalize(uCamera-vWorld);
-    if(dot(N,V)<0.0)N=-N;
-    float ndv=sat(dot(N,V));
-    float f0=0.172;
-    float fres=f0+(1.0-f0)*pow(1.0-ndv,5.0);
-    vec3 incoming=-V;
-    vec3 refl=reflect(incoming,N);
-    vec3 spectral=vec3(0.0);
-    for(int k=0;k<3;k++){
-      float ior=2.398+float(k)*0.019;
-      vec3 entry=refract(incoming,N,1.0/ior);
-      vec3 inner=normalize(vec3(-0.69,-0.38,0.61)+0.26*N);
-      vec3 bounced=reflect(entry,inner);
-      vec3 exitRay=refract(bounced,-N,ior);
-      if(dot(exitRay,exitRay)<0.01)exitRay=reflect(bounced,-N);
-      vec3 sampleColor=source(exitRay)*0.82+source(bounced)*0.30+source(entry)*0.15;
-      if(k==0)spectral.r=sampleColor.r;
-      if(k==1)spectral.g=sampleColor.g;
-      if(k==2)spectral.b=sampleColor.b;
-    }
-    vec3 col=mix(spectral,source(refl),fres);
-    // Subtle neutral glass body rather than opaque navy.
-    col+=vec3(0.12,0.19,0.24)*pow(1.0-ndv,2.2);
-    vec3 L=normalize(uLight-vWorld);
-    vec3 H=normalize(L+V);
-    col+=vec3(5.2,5.1,4.9)*pow(sat(dot(N,H)),220.0);
-    // Angular dispersion at critical facet transitions.
-    float fire=pow(sat(dot(reflect(-V,N),normalize(vec3(-0.49,0.72,0.49)))),55.0);
-    col+=vec3(0.16,0.06,0.28)*fire;
-    col=vec3(1.0)-exp(-col*1.38);
-    gl_FragColor=vec4(pow(col,vec3(0.87)),1.0);
-  }`;
+ precision highp float;
+ varying vec3 vWorld; varying vec3 vNormal; varying vec3 vLocal;
+ uniform vec3 uCamera; uniform vec3 uLight; uniform float uSector;
+ float sat(float v){return clamp(v,0.0,1.0);}
+ // All studio highlights originate from one fixed luminous softbox.
+ vec3 studio(vec3 d){
+   d=normalize(d);
+   vec3 key=normalize(vec3(-0.49,0.72,0.49));
+   float a=dot(d,key);
+   float broad=pow(sat(a),5.0);
+   float panel=pow(sat(a),24.0);
+   float filament=pow(sat(a),140.0);
+   float hot=pow(sat(a),500.0);
+   float horizon=pow(1.0-abs(d.y),5.0);
+   vec3 base=mix(vec3(.009,.014,.022),vec3(.055,.080,.11),sat(d.y*.5+.5));
+   return base+vec3(.11,.17,.23)*horizon+vec3(.75,.90,1.0)*broad+vec3(2.0,2.15,2.2)*panel+vec3(5.5,5.4,5.1)*filament+vec3(12.0,11.3,10.4)*hot;
+ }
+ void main(){
+   vec3 N=normalize(vNormal), V=normalize(uCamera-vWorld);
+   if(dot(N,V)<0.0)N=-N;
+   vec3 incident=-V;
+   float ndv=sat(dot(N,V));
+   float fres=.172+.828*pow(1.0-ndv,5.0);
+   vec3 reflection=reflect(incident,N);
+   vec3 spectral=vec3(0.0);
+   // Approximate multiple internal bounces and wavelength-dependent dispersion.
+   for(int k=0;k<3;k++){
+     float ior=2.398+float(k)*.019;
+     vec3 entry=refract(incident,N,1.0/ior);
+     vec3 inner=normalize(vec3(-.64,-.38,.68)+.48*N+vec3(.15*sin(vLocal.y*3.1),.12*cos(vLocal.z*2.9),.0));
+     vec3 bounced=reflect(entry,inner);
+     vec3 inner2=normalize(vec3(.39,-.79,-.42)-.35*N);
+     vec3 bounced2=reflect(bounced,inner2);
+     vec3 exitRay=refract(bounced2,-N,ior);
+     if(dot(exitRay,exitRay)<.001)exitRay=reflect(bounced2,-N);
+     vec3 c=studio(exitRay)*.95+studio(bounced)*.48+studio(entry)*.22;
+     if(k==0)spectral.r=c.r;
+     if(k==1)spectral.g=c.g;
+     if(k==2)spectral.b=c.b;
+   }
+   vec3 col=mix(spectral,studio(reflection)*1.2,fres);
+   // Clear glass with deep contrast; no flat navy plastic tint.
+   col+=vec3(.08,.11,.13)*pow(1.0-ndv,2.0);
+   vec3 L=normalize(uLight-vWorld), H=normalize(L+V);
+   col+=vec3(8.0,8.2,8.1)*pow(sat(dot(N,H)),260.0);
+   float fire=pow(sat(dot(reflection,normalize(vec3(-.49,.72,.49)))),75.0);
+   col+=vec3(.28,.09,.37)*fire;
+   col=vec3(1.0)-exp(-col*1.42);
+   gl_FragColor=vec4(pow(col,vec3(.86)),1.0);
+ }`;
  const faces=[];
  function facet(a,b,c,group){
    const g=new THREE.BufferGeometry();
