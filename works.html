@@ -316,7 +316,28 @@ main{padding-top:60px}.hero{position:relative}.hero img{width:100%;display:block
 .attribute-legend-icons span{display:inline-flex;align-items:center;gap:4px}
 .attribute-legend-icons img{width:23px;height:23px;object-fit:contain}
 .attribute-cell-icon{width:27px;height:27px;object-fit:contain;display:block;margin:auto}
-</style></head>
+</style>
+<style id="character-name-pearl-gradient-refinement">
+/* Names only: restrained pearl/ice gradient, avoiding the abrupt cyan stripe. */
+#charDrawer #charTitle,
+#charDrawer .char-head #charTitle,
+#operatorList .operator-copy h3 {
+  color:#edf8ff!important;
+  background-image:linear-gradient(105deg,#ffffff 0%,#f7fcff 28%,#e0f3fc 64%,#b9e4f5 100%)!important;
+  background-color:transparent!important;
+  background-size:100% 100%!important;
+  background-repeat:no-repeat!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+/* Restrict the gradient to the glyph width, not the full-width heading container. */
+#operatorList .operator-copy h3 {display:inline-block!important;max-width:100%!important;}
+#charDrawer #charTitle {width:fit-content!important;max-width:100%!important;}
+</style>
+</head>
 <body><div class="bg"></div>
 <a class="top-logo intro-ui" href="index.html" aria-label="logo"><img src="images/y_623163b4dee06~2.jpg" alt="logo"></a>
 <button class="menu-toggle intro-ui" id="menuToggle" aria-label="menu"><div class="menu-icon"><span></span><span></span><span></span></div></button>
