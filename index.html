@@ -95,7 +95,7 @@ const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreferenc
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.12;
+renderer.toneMappingExposure=1.02;
 host.appendChild(renderer.domElement);
 
 // Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
@@ -105,7 +105,7 @@ function reflector(x,y,z,w,h,color,intensity,ry=0){
  const panel=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);
  panel.position.set(x,y,z);panel.rotation.y=ry;studio.add(panel);
 }
-reflector(-5,6,5,3.0,5.5,'#ffffff',3.4,.38);
+reflector(-5,6,5,2.2,4.2,'#ffffff',2.0,.38);
 
 
 
@@ -114,7 +114,7 @@ const pmrem=new THREE.PMREMGenerator(renderer);
 scene.environment=pmrem.fromScene(studio,.045).texture;
 scene.add(new THREE.AmbientLight(0xffffff,.10));
 function light(color,power,x,y,z){const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)}
-light(0xffffff,5.5,-4,7,6);
+light(0xffffff,3.0,-4,7,6);
 
 // True cut silhouette: left culet, pavilion, girdle, crown, right-hand flat table.
 // Four sectors, each comprising exactly four of the 16 radial facets.
@@ -132,11 +132,14 @@ tilt.rotation.set(.12,-.29,-.25);
 const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
 const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
 // Each cut face gets its own physically shaded surface: no white translucent overlay.
+// Restrained crystal optics: clear facets with a single off-axis key light.
+// Opacity is intentionally low: the dark background remains visible through the stone.
 const facetMaterials=Array.from({length:8},(_,i)=>new THREE.MeshPhysicalMaterial({
- color:new THREE.Color(['#f6fbff','#dceaf7','#9caec1','#e8f4ff','#a6b9ce','#f9fcff','#899caf','#d5e7f4'][i]),
- metalness:0,roughness:.018,transmission:.96,thickness:1.8,ior:2.42,
- clearcoat:1,clearcoatRoughness:.008,envMapIntensity:3.4,
- side:THREE.FrontSide,flatShading:true,depthWrite:true
+ color:0xeaf6ff,metalness:0,roughness:.045,transmission:.94,
+ thickness:.48,ior:2.15,clearcoat:.75,clearcoatRoughness:.035,
+ envMapIntensity:1.65,transparent:true,opacity:.30,
+ side:THREE.DoubleSide,depthWrite:false,flatShading:true,
+ specularIntensity:.95, specularColor:0xffffff
 }));
 const pickTargets=[];
 function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
@@ -157,6 +160,7 @@ for(let sector=0;sector<4;sector++){
   addTriangle(triangles,p(.64,1.28,a),p(.64,1.28,b),p(.64,0,a));
  }
  const surface=meshOf(triangles,facetMaterials[sector*2]);
+ surface.renderOrder=2;
  // Independent triangle normals make the cut respond to light, not a cloudy shell.
  surface.geometry=surface.geometry.toNonIndexed?.()||surface.geometry;
  surface.geometry.computeVertexNormals();
@@ -165,26 +169,15 @@ for(let sector=0;sector<4;sector++){
  const a=sector*TAU/4;
  const seam=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
   p(-2.65,0,a),p(-.42,radius,a),p(-.25,radius,a),p(.64,1.28,a)
- ]),new THREE.LineBasicMaterial({color:0xa8d4f2,transparent:true,opacity:.19,depthWrite:false}));
+ ]),new THREE.LineBasicMaterial({color:0xa8d4f2,transparent:true,opacity:.075,depthWrite:false}));
  diamond.add(seam);
 }
 const rimPoints=[];
 for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
 diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
- new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.15,depthWrite:false})));
-// Polished thin edges instead of bright circular sparkle sprites.
+ new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.09,depthWrite:false})));
+// No additive wedges, dots or simulated sparkles: lighting comes from the key light.
 const glints=[];
-// Tiny, directional spectral facets (not white circular sparkle sprites).
-for(let i=0;i<16;i++){
- const a=(i+.5)*TAU/N;
- const wedge=meshOf([],facetMaterials[i%8]); // geometry added below
- const verts=[];
- addTriangle(verts,p(-.28,2.205,a-.027),p(-.28,2.205,a+.027),p(.13,1.86,a));
- wedge.geometry.dispose();wedge.geometry=new THREE.BufferGeometry();
- wedge.geometry.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));wedge.geometry.computeVertexNormals();
- wedge.material=new THREE.MeshBasicMaterial({color:[0x8ddfff,0xffe6b9,0xc9b7ff,0xffffff][i%4],transparent:true,opacity:.10,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending});
- diamond.add(wedge);glints.push(wedge);
-}
 const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
 let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
 function pick(e){
@@ -222,7 +215,7 @@ function resize(){
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
  tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
- tilt.scale.setScalar(w<700?1.29:1.40);
+ tilt.scale.setScalar(w<700?1.37:1.43);
 }
 window.addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -233,7 +226,7 @@ function animate(now){
   diamond.rotation.x+=(spin+velocity)*dt;
   velocity*=Math.pow(.90,dt*60);
  }
- glints.forEach((g,i)=>{g.material.opacity=.035+.15*Math.pow(Math.max(0,Math.sin(now*.00085+i*2.1)),8)});
+ 
  const angle=((diamond.rotation.x%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
   const sector=Math.floor(((angle+Math.PI/4)%(Math.PI*2))/(Math.PI/2));
   if(sector!==currentSector){
