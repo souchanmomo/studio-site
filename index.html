@@ -136,7 +136,7 @@ const diamond=new THREE.Group(), tilt=new THREE.Group();
 scene.add(tilt);tilt.add(diamond);
 // Three-quarter presentation: midway between the prior side-on and front-on views.
 // Only the diamond rotates around its local X axis; the presentation axis stays fixed.
-tilt.rotation.set(.12,-.49,-.20);
+tilt.rotation.set(.12,-.55,-.20);
 const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
 const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
 // Each cut face gets its own physically shaded surface: no white translucent overlay.
@@ -223,9 +223,16 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
  // Watertight sixteen-wedge closed brilliant: each microfacet is a planar subdivision.
  // The earlier off-plane pavilion midpoint created openings that revealed rear faces.
  function subdivide(a,b,c,group){
-   const ab=a.clone().add(b).multiplyScalar(.5),bc=b.clone().add(c).multiplyScalar(.5),ca=c.clone().add(a).multiplyScalar(.5);
-   facet(a,ab,ca,group);facet(ab,b,bc,group);facet(ca,bc,c,group);facet(ab,bc,ca,group);
+   // A shallow, real micro-cut rather than coplanar triangles: crisp angular facets.
+   // Boundary edges remain untouched, so adjacent wedges stay watertight.
+   const mid=a.clone().add(b).add(c).multiplyScalar(1/3);
+   const normal=new THREE.Vector3().subVectors(b,a).cross(new THREE.Vector3().subVectors(c,a)).normalize();
+   const outward=mid.clone().sub(new THREE.Vector3(mid.x,0,0));
+   if(normal.dot(outward)<0)normal.negate();
+   mid.addScaledVector(normal,.055);
+   facet(a,b,mid,group);facet(b,c,mid,group);facet(c,a,mid,group);
  }
+
  for(let i=0;i<N;i++){
    const a=i*TAU/N,b=(i+1)*TAU/N,group=Math.floor(i/4);
    const tip=p(-2.62,0,a),loA=p(-.48,1.80,a),loB=p(-.48,1.80,b);
