@@ -148,66 +148,56 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    vNormal=normalize(mat3(modelMatrix)*normal);
    gl_Position=projectionMatrix*viewMatrix*world;
  }`;
- const gemFragment=`
- precision highp float;
- varying vec3 vWorld; varying vec3 vNormal; varying vec3 vLocal;
- uniform vec3 uCamera; uniform vec3 uLight; uniform float uSector;
- const float IOR=2.417;
- float sat(float v){return clamp(v,0.0,1.0);}
- // A single studio emitter: directional softbox and its sharp specular core.
- // Everything below derives from the same fixed light direction.
- vec3 studio(vec3 d){
-   d=normalize(d);
-   vec3 key=normalize(vec3(-0.49,0.72,0.49));
-   float axis=dot(d,key);
-   float soft=pow(sat(axis),9.0);
-   float strip=pow(sat(axis),46.0);
-   float pin=pow(sat(axis),240.0);
-   float horizon=pow(sat(1.0-abs(d.y)),3.0);
-   vec3 base=mix(vec3(0.005,0.013,0.024),vec3(0.030,0.063,0.096),sat(d.y*0.5+0.5));
-   base+=vec3(0.16,0.24,0.32)*horizon*0.22;
-   return base+vec3(0.48,0.68,0.86)*soft+vec3(1.4,1.65,1.8)*strip+vec3(4.0,3.8,3.4)*pin;
- }
- void main(){
-   vec3 N=normalize(vNormal);
-   vec3 V=normalize(uCamera-vWorld);
-   if(dot(N,V)<0.0) N=-N;
-   float ndv=sat(dot(N,V));
-   float f0=pow((IOR-1.0)/(IOR+1.0),2.0);
-   float fres=f0+(1.0-f0)*pow(1.0-ndv,5.0);
-   vec3 incoming=-V;
-   vec3 reflection=reflect(incoming,N);
-   // Entry refraction, a pavilion bounce, then exit refraction.
-   // The spectral IOR offsets reproduce subtle diamond fire without a rainbow overlay.
-   vec3 spectral=vec3(0.0);
-   for(int k=0;k<3;k++){
-     float ior=2.397+float(k)*0.022;
-     vec3 entry=refract(incoming,N,1.0/ior);
-     vec3 pavilion=normalize(vec3(-0.76,-0.29,0.58)+vec3(0.0,0.20*sin(vLocal.z*1.4),0.17*cos(vLocal.y*1.3)));
-     vec3 bounce=reflect(entry,pavilion);
-     vec3 exitRay=refract(bounce,-N,ior);
-     if(length(exitRay)<0.01) exitRay=reflect(bounce,-N);
-     vec3 sampleCol=studio(exitRay)*0.62+studio(bounce)*0.29+studio(entry)*0.16;
-     if(k==0) spectral.r=sampleCol.r;
-     if(k==1) spectral.g=sampleCol.g;
-     if(k==2) spectral.b=sampleCol.b;
-   }
-   vec3 reflected=studio(reflection);
-   vec3 col=mix(spectral,reflected,fres);
-   // Contrasting dark pavilion cuts and clear, intensely bright crown facets.
-   float cut=sat(dot(N,normalize(vec3(-0.53,0.72,0.45))));
-   float interior=0.66+0.34*cut;
-   col*=interior;
-   float rim=pow(1.0-ndv,3.0);
-   col+=vec3(0.19,0.38,0.52)*rim*0.68;
-   // Tight specular caustic from the one light, not random glitter.
-   vec3 L=normalize(uLight-vWorld);
-   vec3 H=normalize(L+V);
-   float sparkle=pow(sat(dot(N,H)),380.0);
-   col+=vec3(2.4,2.65,2.8)*sparkle;
-   col=vec3(1.0)-exp(-col*1.23);
-   gl_FragColor=vec4(pow(col,vec3(0.90)),1.0);
- }`;
+  const gemFragment=`
+  precision highp float;
+  varying vec3 vWorld; varying vec3 vNormal; varying vec3 vLocal;
+  uniform vec3 uCamera; uniform vec3 uLight; uniform float uSector;
+  float sat(float x){return clamp(x,0.0,1.0);}
+  vec3 source(vec3 d){
+    d=normalize(d);
+    // One fixed photographic softbox, with a narrow bright strip and a hot core.
+    vec3 key=normalize(vec3(-0.49,0.72,0.49));
+    float c=dot(d,key);
+    float rectangle=pow(sat(c),17.0);
+    float ribbon=pow(sat(c),85.0);
+    float core=pow(sat(c),410.0);
+    vec3 ambient=mix(vec3(0.014,0.027,0.044),vec3(0.12,0.19,0.26),sat(d.y*0.5+0.5));
+    return ambient+vec3(1.0,1.18,1.27)*rectangle+vec3(3.5,3.65,3.6)*ribbon+vec3(8.0,7.8,7.4)*core;
+  }
+  void main(){
+    vec3 N=normalize(vNormal);
+    vec3 V=normalize(uCamera-vWorld);
+    if(dot(N,V)<0.0)N=-N;
+    float ndv=sat(dot(N,V));
+    float f0=0.172;
+    float fres=f0+(1.0-f0)*pow(1.0-ndv,5.0);
+    vec3 incoming=-V;
+    vec3 refl=reflect(incoming,N);
+    vec3 spectral=vec3(0.0);
+    for(int k=0;k<3;k++){
+      float ior=2.398+float(k)*0.019;
+      vec3 entry=refract(incoming,N,1.0/ior);
+      vec3 inner=normalize(vec3(-0.69,-0.38,0.61)+0.26*N);
+      vec3 bounced=reflect(entry,inner);
+      vec3 exitRay=refract(bounced,-N,ior);
+      if(dot(exitRay,exitRay)<0.01)exitRay=reflect(bounced,-N);
+      vec3 sampleColor=source(exitRay)*0.82+source(bounced)*0.30+source(entry)*0.15;
+      if(k==0)spectral.r=sampleColor.r;
+      if(k==1)spectral.g=sampleColor.g;
+      if(k==2)spectral.b=sampleColor.b;
+    }
+    vec3 col=mix(spectral,source(refl),fres);
+    // Subtle neutral glass body rather than opaque navy.
+    col+=vec3(0.12,0.19,0.24)*pow(1.0-ndv,2.2);
+    vec3 L=normalize(uLight-vWorld);
+    vec3 H=normalize(L+V);
+    col+=vec3(5.2,5.1,4.9)*pow(sat(dot(N,H)),220.0);
+    // Angular dispersion at critical facet transitions.
+    float fire=pow(sat(dot(reflect(-V,N),normalize(vec3(-0.49,0.72,0.49)))),55.0);
+    col+=vec3(0.16,0.06,0.28)*fire;
+    col=vec3(1.0)-exp(-col*1.38);
+    gl_FragColor=vec4(pow(col,vec3(0.87)),1.0);
+  }`;
  const faces=[];
  function facet(a,b,c,group){
    const g=new THREE.BufferGeometry();
@@ -278,12 +268,12 @@ host.addEventListener('pointerup',e=>{
 host.addEventListener('pointercancel',()=>dragging=false);
 function resize(){
  const w=host.clientWidth,h=host.clientHeight;
- camera.aspect=w/h;camera.position.set(0,0,w<700?12.8:11.2);
+ camera.aspect=w/h;camera.position.set(0,0,w<700?10.5:10.4);
  camera.fov=w<700?39:32;camera.updateProjectionMatrix();
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
- tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
- tilt.scale.setScalar(w<700?0.99:1.22);
+ tilt.position.set(w<700?-.12:-.25,w<700?-.10:0,0);
+ tilt.scale.setScalar(w<700?1.55:1.55);
 }
 window.addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
