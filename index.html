@@ -88,26 +88,26 @@ const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreferenc
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.75;
+renderer.toneMappingExposure=1.12;
 host.appendChild(renderer.domElement);
 
 // Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
-const studio=new THREE.Scene();studio.background=new THREE.Color('#070e17');
+const studio=new THREE.Scene();studio.background=new THREE.Color('#020408');
 function reflector(x,y,z,w,h,color,intensity,ry=0){
  const mat=new THREE.MeshBasicMaterial({color:new THREE.Color(color).multiplyScalar(intensity),side:THREE.DoubleSide});
  const panel=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);
  panel.position.set(x,y,z);panel.rotation.y=ry;studio.add(panel);
 }
-reflector(-5,5,3,3,8,'#e9faff',3,.5);
-reflector(5,2,-3,2,7,'#b1dfff',3,-.7);
-reflector(0,-5,3,9,1.6,'#ffffff',2.4);
-reflector(3,4,4,2,1.2,'#fff0c7',3);
-reflector(-3,-1,-5,3,5,'#a1caff',1.8);
+reflector(-5,5,3,2,7,'#f1f8ff',2.1,.5);
+reflector(5,2,-3,1.4,6,'#9bc6ff',2.0,-.7);
+reflector(0,-5,3,7,.85,'#ffffff',1.5);
+reflector(3,4,4,1.3,.8,'#fff0d8',1.7);
+reflector(-3,-1,-5,2,4,'#a1caff',1.25);
 const pmrem=new THREE.PMREMGenerator(renderer);
 scene.environment=pmrem.fromScene(studio,.045).texture;
-scene.add(new THREE.AmbientLight(0xffffff,1.1));
+scene.add(new THREE.AmbientLight(0xffffff,.25));
 function light(color,power,x,y,z){const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)}
-light(0xffffff,4,-4,6,6);light(0x9acbff,3,4,-2,4);light(0xffe5b3,1.3,0,5,-4);
+light(0xffffff,2.2,-4,6,6);light(0x9acbff,1.4,4,-2,4);light(0xffe5b3,.8,0,5,-4);
 
 // True cut silhouette: left culet, pavilion, girdle, crown, right-hand flat table.
 // Four sectors, each comprising exactly four of the 16 radial facets.
@@ -124,12 +124,13 @@ scene.add(tilt);tilt.add(diamond);
 tilt.rotation.set(.12,-.29,-.25);
 const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
 const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
-const facetMat=new THREE.MeshPhysicalMaterial({
- color:0xffffff,roughness:.012,metalness:0,transmission:1,
- thickness:1.35,ior:2.42,clearcoat:1,clearcoatRoughness:0,
- envMapIntensity:5.0,side:THREE.DoubleSide,flatShading:true,
- transparent:true,opacity:.78,depthWrite:false
-});
+// Each cut face gets its own physically shaded surface: no white translucent overlay.
+const facetMaterials=Array.from({length:8},(_,i)=>new THREE.MeshPhysicalMaterial({
+ color:new THREE.Color(['#f6fbff','#dceaf7','#9caec1','#e8f4ff','#a6b9ce','#f9fcff','#899caf','#d5e7f4'][i]),
+ metalness:0,roughness:.018,transmission:.96,thickness:1.8,ior:2.42,
+ clearcoat:1,clearcoatRoughness:.008,envMapIntensity:2.6,
+ side:THREE.FrontSide,flatShading:true,depthWrite:true
+}));
 const pickTargets=[];
 function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
 function meshOf(tris,mat){const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(tris,3));geo.computeVertexNormals();return new THREE.Mesh(geo,mat)}
@@ -148,22 +149,35 @@ for(let sector=0;sector<4;sector++){
   addTriangle(triangles,p(-.25,radius,m),p(.64,1.28,b),p(-.25,radius,b));
   addTriangle(triangles,p(.64,1.28,a),p(.64,1.28,b),p(.64,0,a));
  }
- const surface=meshOf(triangles,facetMat);
+ const surface=meshOf(triangles,facetMaterials[sector*2]);
+ // Independent triangle normals make the cut respond to light, not a cloudy shell.
+ surface.geometry=surface.geometry.toNonIndexed?.()||surface.geometry;
+ surface.geometry.computeVertexNormals();
  diamond.add(surface);pickTargets.push({object:surface,...sectors[sector]});
- // A very subtle engraved arc delineates each four-facet region.
- const a=sector*TAU/4, boundary=[];
- for(let j=0;j<=20;j++)boundary.push(p(-.25,radius*1.006,a+j*0)); 
+ // Only four extremely fine section boundaries, not a wireframe cage.
+ const a=sector*TAU/4;
  const seam=new THREE.Line(new THREE.BufferGeometry().setFromPoints([
   p(-2.65,0,a),p(-.42,radius,a),p(-.25,radius,a),p(.64,1.28,a)
- ]),new THREE.LineBasicMaterial({color:0xe5faff,transparent:true,opacity:.76,depthWrite:false}));
+ ]),new THREE.LineBasicMaterial({color:0xa8d4f2,transparent:true,opacity:.19,depthWrite:false}));
  diamond.add(seam);
 }
 const rimPoints=[];
 for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
 diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
- new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.72,depthWrite:false})));
+ new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.15,depthWrite:false})));
 // Polished thin edges instead of bright circular sparkle sprites.
 const glints=[];
+// Tiny, directional spectral facets (not white circular sparkle sprites).
+for(let i=0;i<16;i++){
+ const a=(i+.5)*TAU/N;
+ const wedge=meshOf([],facetMaterials[i%8]); // geometry added below
+ const verts=[];
+ addTriangle(verts,p(-.28,2.205,a-.027),p(-.28,2.205,a+.027),p(.13,1.86,a));
+ wedge.geometry.dispose();wedge.geometry=new THREE.BufferGeometry();
+ wedge.geometry.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));wedge.geometry.computeVertexNormals();
+ wedge.material=new THREE.MeshBasicMaterial({color:[0x8ddfff,0xffe6b9,0xc9b7ff,0xffffff][i%4],transparent:true,opacity:.10,side:THREE.DoubleSide,depthWrite:false,blending:THREE.AdditiveBlending});
+ diamond.add(wedge);glints.push(wedge);
+}
 const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
 let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
 function pick(e){
@@ -212,6 +226,7 @@ function animate(now){
   diamond.rotation.x+=(spin+velocity)*dt;
   velocity*=Math.pow(.90,dt*60);
  }
+ glints.forEach((g,i)=>{g.material.opacity=.035+.15*Math.pow(Math.max(0,Math.sin(now*.00085+i*2.1)),8)});
  const angle=((diamond.rotation.x%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
   const sector=Math.floor(((angle+Math.PI/4)%(Math.PI*2))/(Math.PI/2));
   if(sector!==currentSector){
