@@ -129,7 +129,7 @@ const sectors=[
 const diamond=new THREE.Group(), tilt=new THREE.Group();
 scene.add(tilt);tilt.add(diamond);
 // Tilt is static. Only the diamond spins around its own local X axis.
-tilt.rotation.set(.12,-.29,-.25);
+tilt.rotation.set(.12,-.67,-.20);
 const p=(x,r,a)=>new THREE.Vector3(x,r*Math.cos(a),r*Math.sin(a));
 const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
 // Each cut face gets its own physically shaded surface: no white translucent overlay.
@@ -274,7 +274,7 @@ function resize(){
  camera.fov=w<700?39:32;camera.updateProjectionMatrix();
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
- tilt.position.set(w<700?1.05:.72,w<700?-.10:0,0);
+ tilt.position.set(w<700?.48:.25,w<700?-.10:0,0);
  tilt.scale.setScalar(w<700?1.55:1.55);
 }
 window.addEventListener('resize',resize);resize();
