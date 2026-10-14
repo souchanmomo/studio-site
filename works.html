@@ -791,3 +791,16 @@ const update=()=>{btn.style.display=dupe.classList.contains('active')&&!panel.cl
 main{padding-top:var(--topbar-h)!important}
 .hero{scroll-margin-top:var(--topbar-h)}
 </style>
+
+<style id="character-title-gradient-and-single-action-20261014">
+/* Character-name typography only; existing galleries and images are unchanged. */
+#charDrawer .char-head h2,
+#operatorList .operator-copy h3{
+  background:linear-gradient(112deg,#ffffff 4%,#e3f8ff 29%,#89d8f0 55%,#e9f8ff 78%,#ffffff 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  -webkit-text-fill-color:transparent!important;color:transparent!important;
+  filter:drop-shadow(0 1px 5px rgba(112,203,236,.18));
+}
+/* The existing bottom-right button is the only performance navigation hint. */
+#dupeView.active:after{content:none!important;display:none!important}
+</style>
