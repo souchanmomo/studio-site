@@ -13,6 +13,14 @@ background:radial-gradient(ellipse at 52% 54%,#18202a 0%,#0b1018 36%,#05070b 76%
 .screen:before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
 background:radial-gradient(ellipse at 52% 58%,rgba(186,220,255,.085),transparent 49%),
 linear-gradient(110deg,transparent 20%,rgba(255,255,255,.025) 50%,transparent 80%)}
+ .screen:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+background:radial-gradient(ellipse 48% 36% at 74% 35%,rgba(100,153,190,.14),transparent 85%),
+radial-gradient(ellipse 44% 32% at 20% 77%,rgba(123,99,150,.12),transparent 85%),
+repeating-linear-gradient(122deg,transparent 0px,transparent 115px,rgba(183,216,245,.027) 116px,transparent 117px);
+mask-image:linear-gradient(to bottom,transparent 4%,black 35%,black 85%,transparent)}
+.atmosphere{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.atmosphere:before{content:"";position:absolute;width:68vmax;height:68vmax;left:50%;top:45%;transform:translate(-50%,-50%);border:1px solid rgba(186,216,241,.09);border-radius:50%;box-shadow:0 0 0 90px rgba(200,230,255,.009),0 0 0 210px rgba(200,230,255,.008)}
+.atmosphere:after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 15%,rgba(206,228,255,.045) 48%,transparent 68%);opacity:.65}
 .topbar{position:absolute;top:clamp(26px,5vh,65px);left:clamp(23px,5vw,84px);right:clamp(23px,5vw,84px);z-index:12;
 display:flex;align-items:center;justify-content:space-between;gap:20px}
 .logo{font:500 clamp(24px,3vw,38px)/1 'Space Grotesk';letter-spacing:-.08em;text-decoration:none;color:#f2f5f8}
@@ -23,10 +31,10 @@ border-bottom:1px solid #66717c;padding-bottom:9px;transition:color .3s}
 .nav a:hover{color:white;border-color:var(--accent)}
 .edition{position:absolute;top:clamp(100px,16vh,170px);left:clamp(25px,5vw,84px);z-index:6;
 font:500 10px 'Space Grotesk';letter-spacing:.3em;color:#a3b0c0}
-.hero-word{position:absolute;z-index:1;top:44%;left:50%;transform:translate(-50%,-50%);
+.hero-word{position:absolute;z-index:1;top:39%;left:50%;transform:translate(-50%,-50%);
 width:100%;text-align:center;white-space:nowrap;pointer-events:none;
-font:400 clamp(100px,21vw,380px)/.8 Georgia,'Times New Roman',serif;letter-spacing:-.085em;
-color:rgba(221,235,246,.13);user-select:none}
+font:400 clamp(78px,16vw,245px)/.9 Georgia,'Times New Roman',serif;letter-spacing:-.085em;
+color:rgba(221,235,246,.16);user-select:none}
 .scene{position:absolute;inset:0;z-index:3;touch-action:none;cursor:grab}
 .scene:active{cursor:grabbing}.scene canvas{width:100%;height:100%;display:block}
 .editorial{position:absolute;z-index:7;bottom:clamp(90px,13vh,155px);left:clamp(25px,5vw,84px);
@@ -51,7 +59,7 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .fallback a{color:#b5e9ff}
 @media(max-width:700px){
 .topbar{top:30px}.logo{font-size:28px}.nav{gap:13px}.nav a{font-size:10px;letter-spacing:.02em}
-.edition{top:13%;font-size:8px}.hero-word{top:43%;font-size:39vw;opacity:.85}
+.edition{top:13%;font-size:8px}.hero-word{top:38%;font-size:clamp(76px,21vw,150px);opacity:.85;letter-spacing:-.07em}
 .editorial{bottom:18%;left:7%}.editorial h1{font-size:clamp(43px,10.2vw,72px);max-width:90vw}
 .editorial h1.long{font-size:clamp(38px,8vw,65px)}
 .hint{bottom:5%;left:7%;font-size:8px}.enter{bottom:4%;right:7%;font-size:10px;gap:9px}
@@ -61,7 +69,7 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
-<div class="hero-word" aria-hidden="true">STUDIO</div>
+<div class="atmosphere" aria-hidden="true"></div><div class="hero-word" aria-hidden="true">STUDIO</div>
 <div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
@@ -154,39 +162,8 @@ const rimPoints=[];
 for(let i=0;i<=N;i++)rimPoints.push(p(-.25,radius,TAU*i/N));
 diamond.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rimPoints),
  new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:.72,depthWrite:false})));
-// Labels: one label per quarter, rather than three arbitrary isolated facets.
-function labelTexture(name){
- const c=document.createElement('canvas');c.width=1024;c.height=256;
- const ctx=c.getContext('2d');ctx.font='700 92px Arial,sans-serif';
- ctx.textAlign='center';ctx.textBaseline='middle';
- ctx.shadowColor='#001524';ctx.shadowBlur=22;ctx.fillStyle='#ffffff';
- ctx.fillText(name,512,132);
- const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;
-}
-for(let i=0;i<4;i++){
- const angle=(i+.5)*TAU/4;
- const sprite=new THREE.Sprite(new THREE.SpriteMaterial({
-  map:labelTexture(sectors[i].name),transparent:true,depthWrite:false,
-  depthTest:false,opacity:sectors[i].url?.92:.42
- }));
- sprite.position.copy(p(-.14,2.22,angle));
- sprite.scale.set(sectors[i].name==='ENDFIELD'?1.45:1.03,.32,1);
- sprite.renderOrder=10;diamond.add(sprite);
-}
-// Controlled specular glints, following the facet edges.
+// Polished thin edges instead of bright circular sparkle sprites.
 const glints=[];
-for(let i=0;i<28;i++){
- const a=(i+.2)*TAU/28;
- const star=new THREE.Sprite(new THREE.SpriteMaterial({map:(()=>{
-  const c=document.createElement('canvas');c.width=c.height=128;
-  const x=c.getContext('2d'),g=x.createRadialGradient(64,64,0,64,64,62);
-  g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.07,'rgba(255,255,255,.95)');
-  g.addColorStop(.22,'rgba(202,235,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');
-  x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);
- })(),transparent:true,depthWrite:false,depthTest:false,blending:THREE.AdditiveBlending,opacity:0}));
- star.position.copy(p(-.27,radius*1.01,a));star.scale.set(.47,.47,1);star.renderOrder=12;
- diamond.add(star);glints.push(star);
-}
 const pointer=new THREE.Vector2(),ray=new THREE.Raycaster();
 let dragging=false,travel=0,lastX=0,startX=0,startY=0,velocity=0,spin=.13;
 function pick(e){
@@ -224,7 +201,7 @@ function resize(){
  renderer.setSize(w,h,false);
  // Larger than previous iteration; keep title and caption clear.
  tilt.position.set(w<700?0:-.25,w<700?-.05:0,0);
- tilt.scale.setScalar(w<700?1.00:1.15);
+ tilt.scale.setScalar(w<700?1.12:1.25);
 }
 window.addEventListener('resize',resize);resize();
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -235,7 +212,6 @@ function animate(now){
   diamond.rotation.x+=(spin+velocity)*dt;
   velocity*=Math.pow(.90,dt*60);
  }
- glints.forEach((g,i)=>{g.material.opacity=Math.max(0,Math.sin(now*.0021+i*1.81)*.74-.22)});
  const angle=((diamond.rotation.x%(Math.PI*2))+(Math.PI*2))%(Math.PI*2);
   const sector=Math.floor(((angle+Math.PI/4)%(Math.PI*2))/(Math.PI/2));
   if(sector!==currentSector){
