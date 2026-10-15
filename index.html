@@ -112,31 +112,31 @@ import * as THREE from 'three';
 // Procedural black silk. Actual flowing folds with curved ridges, not diagonal SVG bands.
 const silkFabric=document.getElementById('silkFabric');
 function drawSilkFabric(){
-  const w=innerWidth,h=innerHeight;
-  const scale=Math.min(1.0,900/Math.max(w,h));
+  const w=innerWidth,h=innerHeight,scale=Math.min(1,900/Math.max(w,h));
   const cw=Math.max(1,Math.round(w*scale)),ch=Math.max(1,Math.round(h*scale));
   silkFabric.width=cw;silkFabric.height=ch;
   const ctx=silkFabric.getContext('2d',{alpha:false});
   const im=ctx.createImageData(cw,ch),d=im.data;
-  const smooth=(a,b,x)=>{let t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t)};
+  const H=(u,v)=>{
+    // Broad flowing cloth with several smaller folds, continuous in both axes.
+    const t=v-.19*Math.sin(3.2*u+1.15*v)-.055*Math.sin(8.0*u-2.8*v);
+    return .34*Math.sin(9.4*t+1.6*u)+.16*Math.sin(19.2*t-2.2*u)
+      +.065*Math.sin(34.0*t+3.1*u)+.025*Math.sin(61.0*t-1.7*u);
+  };
+  const key=[-.40,-.72,.57];
   for(let y=0;y<ch;y++)for(let x=0;x<cw;x++){
-    const u=x/cw,v=y/ch;
-    // Three broad folded cloth ridges with varying curvature and width.
-    const f1=v-(.235+.17*Math.sin(u*3.65-1.10)+.07*u*u);
-    const f2=v-(.67-.11*Math.sin(u*4.25+.5)+.095*u);
-    const f3=v-(.92+.075*Math.sin(u*5.3-1.7));
-    const fold=(t,width)=>Math.exp(-Math.pow(t/width,2));
-    const ridge1=fold(f1,.029)*(1.0+.25*Math.sin(u*8.0));
-    const ridge2=fold(f2,.043)*(1.0+.22*Math.cos(u*6.0));
-    const ridge3=fold(f3,.035);
-    const valley=fold(f1-.080,.072)*.72+fold(f2+.090,.095)*.62;
-    const sheen=fold(f1+.038,.062)*.18+fold(f2-.043,.067)*.21;
-    const fine=Math.sin((u*1100+v*170)*.58)*.012+Math.sin((u*720-v*300)*.9)*.009;
-    const vignette=.72+.28*(1-Math.min(1,Math.hypot((u-.51)*.95,(v-.54)*.85)));
-    let lum=(.012+ridge1*.35+ridge2*.31+ridge3*.20+sheen-valley*.12+fine*(ridge1+ridge2+.25))*vignette;
-    lum=Math.max(.004,Math.min(.57,lum));
+    const u=x/cw,v=y/ch,e=.0025;
+    const dx=(H(u+e,v)-H(u-e,v))/(2*e),dy=(H(u,v+e)-H(u,v-e))/(2*e);
+    const nx=-dx*.085,ny=-dy*.085,nz=1;
+    const len=Math.hypot(nx,ny,nz), dot=Math.max(0,(nx*key[0]+ny*key[1]+nz*key[2])/len);
+    // Satin glints follow curved surface normals, not a painted diagonal beam.
+    const glint=Math.pow(dot,24)*.45+Math.pow(dot,75)*.23;
+    const trough=Math.max(0,-H(u,v))*.075;
+    const fine=(Math.sin(u*1840+v*260)+Math.sin(u*1210-v*520))*.003;
+    const vignette=.80-.25*Math.min(1,Math.hypot((u-.5)*1.1,(v-.52)*.9));
+    const lum=Math.max(.005,Math.min(.50,(.017+glint+trough+fine)*vignette));
     const i=(y*cw+x)*4;
-    d[i]=Math.round(3+lum*190);d[i+1]=Math.round(4+lum*199);d[i+2]=Math.round(8+lum*213);d[i+3]=255;
+    d[i]=Math.round(2+lum*183);d[i+1]=Math.round(3+lum*192);d[i+2]=Math.round(6+lum*207);d[i+3]=255;
   }
   ctx.putImageData(im,0,0);
 }
@@ -306,74 +306,59 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
  precision highp float;
  varying vec3 vWorld; varying vec3 vNormal; varying vec3 vLocal;
  uniform vec3 uCamera; uniform vec3 uLight; uniform float uSector;
- float sat(float x){return clamp(x,0.0,1.0);}
- // One stationary studio emitter, sampled through a narrow softbox and a bright core.
-  vec3 environment(vec3 d){
-    d=normalize(d);
-    vec3 key=normalize(vec3(-.49,.72,.49));
-    float a=sat(dot(d,key));
-    float strip=pow(a,24.0), core=pow(a,190.0);
-    float blade=pow(a,650.0);
-    float horizon=pow(1.0-abs(d.y),9.0);
-    vec3 ambient=mix(vec3(.022,.035,.057),vec3(.082,.124,.177),sat(d.y*.5+.5));
-    return ambient+vec3(.018,.030,.046)*horizon+vec3(.42,.57,.71)*strip+vec3(3.1,3.6,4.0)*core+vec3(9.5,10.3,11.0)*blade;
-  }
+ float sat(float x){return clamp(x,0.,1.);}
+ vec3 key=normalize(vec3(-.49,.72,.49));
+ vec3 env(vec3 d){
+   d=normalize(d);
+   float q=sat(dot(d,key));
+   float longPanel=pow(q,17.0),brightCore=pow(q,115.0);
+   float horizon=pow(1.-abs(d.y),7.0);
+   return vec3(.016,.029,.050)+vec3(.048,.069,.093)*sat(d.y*.5+.5)
+    +vec3(.055,.075,.095)*horizon
+    +vec3(.62,.77,.94)*longPanel+vec3(5.5,6.1,6.8)*brightCore;
+ }
  void main(){
-   vec3 N=normalize(vNormal), V=normalize(uCamera-vWorld);
-   if(dot(N,V)<0.0)N=-N;
-   vec3 I=-V;
-   float ndv=sat(dot(N,V));
-   float f0=pow((2.417-1.0)/(2.417+1.0),2.0);
-   float fres=f0+(1.0-f0)*pow(1.0-ndv,5.0);
-   vec3 R=reflect(I,N);
-   vec3 spectral=vec3(0.0);
-   // Three wavelength paths, with two virtual pavilion bounces.
+   vec3 N=normalize(vNormal),V=normalize(uCamera-vWorld);
+   if(dot(N,V)<0.)N=-N;
+   vec3 I=-V,R=reflect(I,N);
+   float nv=sat(dot(N,V));
+   float f0=.172;
+   float fres=f0+(1.-f0)*pow(1.-nv,5.);
+   vec3 inner=vec3(0.);
+   // Three dispersion samples, each with two simulated internal reflections.
    for(int k=0;k<3;k++){
-     float ior=2.393+float(k)*.024;
-     vec3 entry=refract(I,N,1.0/ior);
-     vec3 innerN=normalize(vec3(-.65,-.35,.69)+.38*N+vec3(.12*sin(vLocal.y*2.9),.10*cos(vLocal.z*3.3),0.));
-     vec3 bounce=reflect(entry,innerN);
-     vec3 secondN=normalize(vec3(.39,-.78,-.45)-.28*N);
-     vec3 bounce2=reflect(bounce,secondN);
-     vec3 exitRay=refract(bounce2,-N,ior);
+     float eta=2.393+float(k)*.024;
+     vec3 entry=refract(I,N,1./eta);
+     vec3 n1=normalize(vec3(-.64,-.32,.70)+.41*N+vec3(.14*sin(vLocal.y*3.1),.13*cos(vLocal.z*2.9),0.));
+     vec3 bounce=reflect(entry,n1);
+     vec3 n2=normalize(vec3(.42,-.73,-.50)-.30*N);
+     vec3 bounce2=reflect(bounce,n2);
+     vec3 exitRay=refract(bounce2,-N,eta);
      if(dot(exitRay,exitRay)<.001)exitRay=reflect(bounce2,-N);
-     vec3 c=environment(exitRay)*.92+environment(bounce)*.52+environment(entry)*.13;
-     if(k==0)spectral.r=c.r;
-     if(k==1)spectral.g=c.g;
-     if(k==2)spectral.b=c.b;
+     vec3 lightPath=env(exitRay)*1.20+env(bounce)*.80+env(bounce2)*.48;
+     if(k==0)inner.r=lightPath.r;
+     if(k==1)inner.g=lightPath.g;
+     if(k==2)inner.b=lightPath.b;
    }
-   vec3 col=mix(spectral,environment(R)*1.55,fres);
-   // Clear glass body with restrained silver-blue light transmission.
-   col+=vec3(.075,.115,.155)*pow(ndv,.8);
-   // Sharp facet-dependent contrast, with a cool neutral-metallic rim.
-   float facing=sat(dot(N,normalize(vec3(-.49,.72,.49))));
-   col*=mix(.88,1.28,pow(facing,.7));
-   col+=vec3(.16,.23,.29)*pow(1.0-ndv,2.7);
+   vec3 body=vec3(.010,.024,.045);
+   // Preserve deep navy in the unlit facets; reflections remain independent of pigment.
+   vec3 col=body+inner*.52+env(R)*(.35+fres*.78);
+   float face=sat(dot(N,key));
+   col*=mix(.66,1.25,pow(face,.85));
    vec3 L=normalize(uLight-vWorld),H=normalize(L+V);
-   float flash=pow(sat(dot(N,H)),110.0);
-   col+=vec3(12.8,13.2,13.5)*flash;
-   float broadFlash=pow(sat(dot(N,H)),18.0);
-   col+=vec3(.21,.26,.31)*broadFlash;
-   // A faint spectral edge only where a real highlight is present.
-   float fire=pow(sat(dot(R,normalize(vec3(-.49,.72,.49)))),90.0);
-   col+=vec3(.16,.08,.27)*fire;
-   col=vec3(1.0)-exp(-col*.82);
-    // Keep the original navy chroma; use normal-dependent reflection, not a pale blue base.
-    float faceKey=sat(dot(N,normalize(vec3(-.67,.64,.42))));
-    float faceSide=sat(dot(N,normalize(vec3(.38,-.24,.89))));
-    float faceBack=sat(dot(N,normalize(vec3(.20,.91,-.34))));
-    float facetContrast=pow(faceKey,2.8);
-    vec3 navy=vec3(.012,.025,.046);
-    col=mix(col,navy,.48);
-    col+=vec3(.065,.092,.132)*facetContrast;
-    col+=vec3(.018,.034,.056)*pow(faceSide,3.0);
-    col+=vec3(.024,.037,.052)*pow(faceBack,4.0);
-    // Crisp narrow glints are visible only at matching facet angles.
-    float sharp=pow(sat(dot(reflect(-V,N),normalize(vec3(-.49,.72,.49)))),72.0);
-    col+=vec3(.60,.72,.85)*sharp;
-    // Preserve darkness between illuminated facets for jewel-like contrast.
-    col=max(col,navy*.74);
-   gl_FragColor=vec4(pow(col,vec3(.96)),1.0);
+   float flash=pow(sat(dot(N,H)),125.);
+   col+=vec3(5.0,5.7,6.5)*flash;
+   // Small glints from virtual pavilion bounce paths: same physical emitter.
+   vec3 virtual1=reflect(key,normalize(vec3(-.65,-.35,.69)));
+   vec3 virtual2=reflect(key,normalize(vec3(.39,-.78,-.45)));
+   float glint1=pow(sat(dot(R,virtual1)),90.);
+   float glint2=pow(sat(dot(R,virtual2)),120.);
+   col+=vec3(.65,.83,1.05)*glint1+vec3(.40,.53,.72)*glint2;
+   // Thin silver-blue edge sheen without outlines or changing the geometry.
+   col+=vec3(.055,.081,.112)*pow(1.-nv,3.);
+   col=vec3(1.)-exp(-col*.90);
+   col=mix(body,col,.84);
+   gl_FragColor=vec4(pow(col,vec3(.96)),1.);
  }`;
  const faces=[];
  function facet(a,b,c,group){
