@@ -100,17 +100,18 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
 <div class="silk" aria-hidden="true"><svg viewBox="0 0 700 1500" preserveAspectRatio="xMidYMid slice"><defs>
-<linearGradient id="satinA" x1=".15" y1=".02" x2=".77" y2=".95"><stop stop-color="#020306"/><stop offset=".25" stop-color="#080b11"/><stop offset=".39" stop-color="#252b34"/><stop offset=".465" stop-color="#858b93"/><stop offset=".51" stop-color="#353b45"/><stop offset=".62" stop-color="#0c1018"/><stop offset="1" stop-color="#010205"/></linearGradient>
-<linearGradient id="satinB" x1=".12" y1=".92" x2=".85" y2=".13"><stop stop-color="#020306"/><stop offset=".27" stop-color="#11151d"/><stop offset=".42" stop-color="#4e5661"/><stop offset=".48" stop-color="#92969d"/><stop offset=".54" stop-color="#242b35"/><stop offset=".73" stop-color="#090c12"/><stop offset="1" stop-color="#010204"/></linearGradient>
-<linearGradient id="satinC" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#010204"/><stop offset=".3" stop-color="#151a22"/><stop offset=".47" stop-color="#626974"/><stop offset=".55" stop-color="#242a33"/><stop offset=".85" stop-color="#030408"/></linearGradient>
-<radialGradient id="silkFade"><stop stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".58"/></radialGradient>
-<filter id="silkSoft"><feGaussianBlur stdDeviation="17"/></filter><filter id="silkFiber"><feTurbulence type="fractalNoise" baseFrequency=".012 .19" numOctaves="2" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".065"/></feComponentTransfer></filter></defs>
-<rect width="700" height="1500" fill="#020307"/>
-<path d="M-180 480 C45 535 220 375 390 305 C540 240 645 260 850 180 L850 615 C610 425 500 460 345 575 C180 695 20 705 -180 660Z" fill="url(#satinA)"/>
-<path d="M-160 1030 C40 935 170 770 365 840 C555 900 635 750 850 680 L850 1190 C600 1320 445 1050 280 1170 C110 1270 -10 1410 -160 1390Z" fill="url(#satinB)"/>
-<path d="M-150 1450 C75 1190 245 1235 405 1285 C555 1340 690 1200 850 1140 L850 1590 L-150 1590Z" fill="url(#satinC)"/>
-<g filter="url(#silkSoft)" fill="none"><path d="M-120 495 C70 570 245 360 412 310 C590 255 700 280 840 215" stroke="#c2c6ce" stroke-opacity=".24" stroke-width="24"/><path d="M-100 1050 C120 850 205 815 360 860 C540 935 660 755 810 710" stroke="#d2d6df" stroke-opacity=".22" stroke-width="22"/><path d="M-80 1410 C120 1210 250 1255 400 1310 C550 1365 690 1205 810 1170" stroke="#b7c0cc" stroke-opacity=".18" stroke-width="16"/></g>
-<rect width="700" height="1500" filter="url(#silkFiber)" opacity=".4"/><rect width="700" height="1500" fill="url(#silkFade)"/></svg></div><div class="atmosphere" aria-hidden="true"></div>
+<linearGradient id="fold1" x1="0" y1="0" x2=".48" y2="1"><stop stop-color="#010204"/><stop offset=".27" stop-color="#06070a"/><stop offset=".42" stop-color="#252932"/><stop offset=".48" stop-color="#777a83"/><stop offset=".505" stop-color="#b0aeb1"/><stop offset=".54" stop-color="#31343e"/><stop offset=".67" stop-color="#080a0f"/><stop offset="1" stop-color="#010205"/></linearGradient>
+<linearGradient id="fold2" x1=".05" y1=".95" x2=".82" y2=".12"><stop stop-color="#010204"/><stop offset=".25" stop-color="#07080e"/><stop offset=".40" stop-color="#30323b"/><stop offset=".46" stop-color="#8a8b92"/><stop offset=".49" stop-color="#bbb8b8"/><stop offset=".525" stop-color="#3a3b46"/><stop offset=".67" stop-color="#090a11"/><stop offset="1" stop-color="#010205"/></linearGradient>
+<linearGradient id="fold3" x1="0" y1="0" x2="1" y2=".6"><stop stop-color="#020205"/><stop offset=".31" stop-color="#111219"/><stop offset=".44" stop-color="#5c606a"/><stop offset=".49" stop-color="#999aa2"/><stop offset=".54" stop-color="#292c35"/><stop offset=".78" stop-color="#030408"/></linearGradient>
+<radialGradient id="vignette"><stop stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".70"/></radialGradient>
+<filter id="softFold"><feGaussianBlur stdDeviation="12"/></filter><filter id="fiber"><feTurbulence type="fractalNoise" baseFrequency=".009 .23" numOctaves="3" seed="11"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".11"/></feComponentTransfer></filter></defs>
+<rect width="700" height="1500" fill="#010205"/>
+<!-- Large organic fabric folds: curved, tapered ridges instead of straight metallic ribbons. -->
+<path d="M-210 480 C-10 560 105 450 250 352 C370 270 480 315 575 267 C695 210 795 210 860 180 L860 670 C735 530 655 425 500 463 C355 499 276 640 104 683 C-40 723 -122 670 -210 705Z" fill="url(#fold1)"/>
+<path d="M-200 1010 C-38 970 95 827 230 826 C364 824 420 920 542 863 C664 810 743 716 860 735 L860 1225 C706 1325 565 1147 438 1140 C276 1128 172 1300 -30 1395 L-200 1430Z" fill="url(#fold2)"/>
+<path d="M-200 1485 C-28 1274 137 1233 277 1284 C414 1333 489 1392 618 1284 C732 1189 804 1196 860 1200 L860 1600 L-200 1600Z" fill="url(#fold3)"/>
+<g fill="none" filter="url(#softFold)"><path d="M-170 485 C-5 562 119 438 260 351 C374 282 470 313 576 267 C691 222 785 211 850 188" stroke="#dad8df" stroke-opacity=".31" stroke-width="19"/><path d="M-160 1020 C-14 965 100 835 231 832 C362 827 421 922 543 869 C659 815 761 721 850 742" stroke="#e1dce3" stroke-opacity=".28" stroke-width="17"/><path d="M-140 1453 C15 1280 140 1254 274 1291 C423 1342 483 1384 616 1292 C733 1202 797 1201 850 1207" stroke="#c4c1cb" stroke-opacity=".20" stroke-width="15"/></g>
+<rect width="700" height="1500" filter="url(#fiber)" opacity=".5"/><rect width="700" height="1500" fill="url(#vignette)"/></svg></div><div class="atmosphere" aria-hidden="true"></div>
 <canvas class="silk-contact" id="silkContact" aria-hidden="true"></canvas><canvas class="silk-overlap" id="silkOverlap" aria-hidden="true"></canvas><div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
@@ -337,12 +338,12 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    // Preserve the original deep navy hue; reveal cut planes through lighting only.
    // A restrained fill prevents the dark facets from merging into one silhouette.
    float facetFill=.065+.115*pow(sat(dot(N,normalize(vec3(-.42,.66,.62)))),1.5);
-   col=mix(col,vec3(.025,.050,.082),.26);
+   col=mix(col,vec3(.015,.031,.054),.33);
    col+=vec3(.035,.061,.085)*facetFill*2.0;
    // Angular studio reflections: luminance changes per planar facet, not pigment changes.
    float cutLight=pow(sat(dot(N,normalize(vec3(-.70,.48,.54)))),2.5);
    float cutShade=pow(sat(dot(N,normalize(vec3(.62,-.27,.74)))),2.0);
-   col+=vec3(.105,.155,.205)*cutLight+vec3(.035,.064,.097)*cutShade;
+   col+=vec3(.13,.18,.23)*cutLight+vec3(.028,.051,.080)*cutShade;
    // Directional glancing reflection, not an overall exposure or base-color change.
    float grazing=pow(sat(dot(reflect(-V,N),normalize(vec3(-.49,.72,.49)))),24.0);
    col+=vec3(.19,.24,.29)*grazing;
@@ -380,6 +381,9 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    const loA=p(-.48,1.80,a),loB=p(-.48,1.80,b);
    const hiA=p(-.36,1.80,a),hiB=p(-.36,1.80,b);
    const crA=p(.40,1.06,a),crB=p(.40,1.06,b);
+   // Close the missing pavilion wedge between adjacent rear-ring vertices.
+   // The former single triangle left a literal opening at the culet end.
+   subdivide(backA,backB,loB,group);
    subdivide(backA,loB,loA,group);
    facet(loA,loB,hiB,group);facet(loA,hiB,hiA,group);
    subdivide(hiA,hiB,crB,group);subdivide(hiA,crB,crA,group);
