@@ -95,11 +95,23 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .hero-word{color:rgba(214,231,248,.055)}
 /* Satin micro-sheen: applied to the background alone, not the diamond. */
 .silk canvas{display:block;width:100%;height:100%;opacity:1}.silk::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 11% at 44% 29%,rgba(178,188,207,.095),transparent 74%),radial-gradient(ellipse 75% 9% at 52% 82%,rgba(167,178,197,.075),transparent 78%);mix-blend-mode:screen}
+
+/* Architectural geometric background — isolated from the crystal and interface. */
+.silk,.silk-contact,.silk-overlap{display:none!important}
+.screen{background:#05090f!important}
+.screen:before,.screen:after,.atmosphere{display:none!important}
+.geo-backdrop{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 53% 47%,#25343e 0%,#121d28 19%,#080f19 44%,#03060a 82%)}
+.geo-grid{position:absolute;inset:-55%;transform:perspective(650px) rotateX(47deg) rotateZ(-33deg) scale(1.1);opacity:.65;background:repeating-linear-gradient(0deg,transparent 0 55px,rgba(154,192,207,.085) 56px,transparent 58px),repeating-linear-gradient(90deg,transparent 0 60px,rgba(154,192,207,.085) 61px,transparent 63px);mask-image:radial-gradient(ellipse at center,#000 8%,transparent 64%)}
+.geo-beam{position:absolute;inset:-20%;background:linear-gradient(110deg,transparent 26%,rgba(139,187,210,.05) 39%,rgba(219,242,255,.20) 41%,rgba(89,145,175,.045) 44%,transparent 55%);transform:rotate(-22deg)}
+.beam-b{transform:rotate(44deg) scaleX(.8);opacity:.48}
+.geo-aperture{position:absolute;width:90vmin;height:90vmin;left:50%;top:46%;transform:translate(-50%,-50%) rotate(-17deg);border:1px solid rgba(155,214,231,.23);border-radius:2%;box-shadow:0 0 90px rgba(70,134,160,.12),inset 0 0 75px rgba(133,184,209,.08);clip-path:polygon(50% 0,100% 22%,100% 77%,50% 100%,0 77%,0 22%);opacity:.8}
+.geo-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,transparent 18%,rgba(0,2,5,.12) 54%,rgba(0,0,0,.67) 100%)}
+@media(max-width:700px){.geo-aperture{width:125vw;height:125vw;top:48%}.geo-grid{opacity:.50}.geo-beam{opacity:.62}}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
-<div class="silk" aria-hidden="true"><canvas id="silkFabric"></canvas></div><div class="atmosphere" aria-hidden="true"></div>
+<div class="silk" aria-hidden="true"><canvas id="silkFabric"></canvas></div><div class="geo-backdrop" aria-hidden="true"><div class="geo-grid"></div><div class="geo-beam beam-a"></div><div class="geo-beam beam-b"></div><div class="geo-aperture"></div><div class="geo-vignette"></div></div><div class="atmosphere" aria-hidden="true"></div>
 <canvas class="silk-contact" id="silkContact" aria-hidden="true"></canvas><canvas class="silk-overlap" id="silkOverlap" aria-hidden="true"></canvas><div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
@@ -313,9 +325,9 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    float q=sat(dot(d,key));
    float longPanel=pow(q,17.0),brightCore=pow(q,115.0);
    float horizon=pow(1.-abs(d.y),7.0);
-   return vec3(.016,.029,.050)+vec3(.048,.069,.093)*sat(d.y*.5+.5)
+   return vec3(.038,.063,.094)+vec3(.085,.118,.157)*sat(d.y*.5+.5)
     +vec3(.055,.075,.095)*horizon
-    +vec3(.62,.77,.94)*longPanel+vec3(5.5,6.1,6.8)*brightCore;
+    +vec3(1.15,1.35,1.55)*longPanel+vec3(8.0,8.8,9.5)*brightCore;
  }
  void main(){
    vec3 N=normalize(vNormal),V=normalize(uCamera-vWorld);
@@ -342,22 +354,22 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    }
    vec3 body=vec3(.010,.024,.045);
    // Preserve deep navy in the unlit facets; reflections remain independent of pigment.
-   vec3 col=body+inner*.52+env(R)*(.35+fres*.78);
+   vec3 col=body+inner*.78+env(R)*(.64+fres*1.12);
    float face=sat(dot(N,key));
-   col*=mix(.66,1.25,pow(face,.85));
+   col*=mix(.78,1.55,pow(face,.85));
    vec3 L=normalize(uLight-vWorld),H=normalize(L+V);
    float flash=pow(sat(dot(N,H)),125.);
-   col+=vec3(5.0,5.7,6.5)*flash;
+   col+=vec3(9.0,10.1,11.4)*flash;
    // Small glints from virtual pavilion bounce paths: same physical emitter.
    vec3 virtual1=reflect(key,normalize(vec3(-.65,-.35,.69)));
    vec3 virtual2=reflect(key,normalize(vec3(.39,-.78,-.45)));
    float glint1=pow(sat(dot(R,virtual1)),90.);
    float glint2=pow(sat(dot(R,virtual2)),120.);
-   col+=vec3(.65,.83,1.05)*glint1+vec3(.40,.53,.72)*glint2;
+   col+=vec3(1.35,1.60,1.92)*glint1+vec3(.95,1.15,1.40)*glint2;
    // Thin silver-blue edge sheen without outlines or changing the geometry.
    col+=vec3(.055,.081,.112)*pow(1.-nv,3.);
    col=vec3(1.)-exp(-col*.90);
-   col=mix(body,col,.84);
+   col=mix(body,col,.94);
    gl_FragColor=vec4(pow(col,vec3(.96)),1.);
  }`;
  const faces=[];
