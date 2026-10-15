@@ -111,10 +111,10 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 /* Seamless, touch-controlled architectural rotation. */
 .silk,.geo-backdrop,.atmosphere,.scene,.silk-contact,.silk-overlap,.hero-word{display:none!important}
 .screen{background:#050910!important;isolation:isolate;overflow:hidden}
-.architecture{position:absolute;inset:0;z-index:2;overflow:hidden;touch-action:none;cursor:grab;background:#060b13}
+.architecture{position:absolute;inset:0;z-index:2;overflow:hidden;touch-action:none;cursor:grab;background:#02050a}
 .architecture:active{cursor:grabbing}
-.architecture img{position:absolute;left:50%;top:50%;width:max(160vw,160vh);height:max(160vw,160vh);object-fit:cover;max-width:none;transform:translate(-50%,-50%) rotate(0deg);transform-origin:center center;filter:none;will-change:transform;pointer-events:none;user-select:none;-webkit-user-drag:none}
-.architecture-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(2,5,11,.27),transparent 26%,transparent 65%,rgba(2,5,11,.39))}
+.architecture img{position:absolute;left:50%;top:50%;width:100%;height:100%;object-fit:contain;max-width:none;transform:translate(-50%,-50%) rotate(0deg);transform-origin:center center;filter:none;-webkit-mask-image:radial-gradient(ellipse 76% 76% at 50% 50%,#000 64%,rgba(0,0,0,.94) 76%,transparent 100%);mask-image:radial-gradient(ellipse 76% 76% at 50% 50%,#000 64%,rgba(0,0,0,.94) 76%,transparent 100%);will-change:transform;pointer-events:none;user-select:none;-webkit-user-drag:none}
+.architecture-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(2,5,11,.12),transparent 24%,transparent 75%,rgba(2,5,11,.22))}
 .topbar,.edition{z-index:9}.editorial,.hint,.enter{z-index:10}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
