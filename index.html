@@ -201,7 +201,7 @@ const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true,powerPreferenc
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.28;
+renderer.toneMappingExposure=1.10;
 host.appendChild(renderer.domElement);
 
 // Large, soft studio reflectors reflected in the crystal, not an opaque blue fill.
@@ -222,7 +222,7 @@ scene.add(new THREE.AmbientLight(0xffffff,.10));
 function light(color,power,x,y,z){const l=new THREE.DirectionalLight(color,power);l.position.set(x,y,z);scene.add(l)}
 light(0xffffff,3.0,-4,7,6);
 
-// True cut silhouette: left culet, pavilion, girdle, crown, right-hand flat table.
+// True cut silhouette: left culet, pavilion, girdle, crown, right-hand single flat table.
 // Four sectors, each comprising exactly four of the 16 radial facets.
 const N=16, TAU=Math.PI*2, radius=2.2;
 const sectors=[
@@ -267,8 +267,8 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    float a=sat(dot(d,key));
    float panel=pow(a,18.0), core=pow(a,130.0), needle=pow(a,520.0);
    float edge=pow(1.0-abs(d.y),6.0);
-   vec3 ambient=mix(vec3(.065,.082,.105),vec3(.14,.19,.23),sat(d.y*.5+.5));
-   return ambient+vec3(.13,.16,.20)*edge+vec3(.82,1.00,1.16)*panel+vec3(3.8,4.1,4.3)*core+vec3(12.,11.7,11.2)*needle;
+   vec3 ambient=mix(vec3(.009,.015,.024),vec3(.032,.050,.067),sat(d.y*.5+.5));
+   return ambient+vec3(.035,.048,.065)*edge+vec3(.82,1.00,1.16)*panel+vec3(3.8,4.1,4.3)*core+vec3(12.,11.7,11.2)*needle;
  }
  void main(){
    vec3 N=normalize(vNormal), V=normalize(uCamera-vWorld);
@@ -289,18 +289,18 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
      vec3 bounce2=reflect(bounce,secondN);
      vec3 exitRay=refract(bounce2,-N,ior);
      if(dot(exitRay,exitRay)<.001)exitRay=reflect(bounce2,-N);
-     vec3 c=environment(exitRay)*1.15+environment(bounce)*.70+environment(entry)*.25;
+     vec3 c=environment(exitRay)*.92+environment(bounce)*.52+environment(entry)*.13;
      if(k==0)spectral.r=c.r;
      if(k==1)spectral.g=c.g;
      if(k==2)spectral.b=c.b;
    }
-   vec3 col=mix(spectral,environment(R)*2.2,fres);
+   vec3 col=mix(spectral,environment(R)*1.55,fres);
    // Clear glass body with restrained silver-blue light transmission.
-   col+=vec3(.085,.12,.145)*pow(ndv,.8);
+   col+=vec3(.012,.022,.032)*pow(ndv,.8);
    // Sharp facet-dependent contrast, with a cool neutral-metallic rim.
    float facing=sat(dot(N,normalize(vec3(-.49,.72,.49))));
-   col*=mix(.88,1.24,pow(facing,.7));
-   col+=vec3(.13,.22,.29)*pow(1.0-ndv,2.7);
+   col*=mix(.76,1.15,pow(facing,.7));
+   col+=vec3(.055,.090,.12)*pow(1.0-ndv,2.7);
    vec3 L=normalize(uLight-vWorld),H=normalize(L+V);
    float flash=pow(sat(dot(N,H)),110.0);
    col+=vec3(12.8,13.2,13.5)*flash;
@@ -309,8 +309,8 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    // A faint spectral edge only where a real highlight is present.
    float fire=pow(sat(dot(R,normalize(vec3(-.49,.72,.49)))),90.0);
    col+=vec3(.16,.08,.27)*fire;
-   col=vec3(1.0)-exp(-col*1.85);
-   gl_FragColor=vec4(pow(col,vec3(.88)),1.0);
+   col=vec3(1.0)-exp(-col*1.22);
+   gl_FragColor=vec4(pow(col,vec3(.96)),1.0);
  }`;
  const faces=[];
  function facet(a,b,c,group){
@@ -336,24 +336,44 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    facet(a,b,mid,group);facet(b,c,mid,group);facet(c,a,mid,group);
  }
 
+ // A single planar table (one optical facet), NOT a fan of separately shaded triangles.
+ // The small rear culet is also planar; neither end comes to a sharp point.
  for(let i=0;i<N;i++){
    const a=i*TAU/N,b=(i+1)*TAU/N,group=Math.floor(i/4);
-   const tip=p(-2.62,0,a),loA=p(-.48,1.80,a),loB=p(-.48,1.80,b);
+   const backA=p(-2.48,.18,a),backB=p(-2.48,.18,b);
+   const loA=p(-.48,1.80,a),loB=p(-.48,1.80,b);
    const hiA=p(-.36,1.80,a),hiB=p(-.36,1.80,b);
    const crA=p(.40,1.06,a),crB=p(.40,1.06,b);
-   const center=new THREE.Vector3(.40,0,0);
-   facet(tip,loB,loA,group); // Single uninterrupted pavilion face at the pointed apex
+   facet(backA,loB,loA,group);
    facet(loA,loB,hiB,group);facet(loA,hiB,hiA,group);
    facet(hiA,hiB,crB,group);facet(hiA,crB,crA,group);
-   facet(crA,crB,center,group);
  }
+ function flatCap(x,r,reverse){
+   const vertices=[];
+   const center=p(x,0,0);
+   for(let i=0;i<N;i++){
+     const a=p(x,r,i*TAU/N),b=p(x,r,(i+1)*TAU/N);
+     const tri=reverse?[center,b,a]:[center,a,b];
+     for(const v of tri)vertices.push(...v.toArray());
+   }
+   const g=new THREE.BufferGeometry();
+   g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
+   g.computeVertexNormals();
+   // One material and one exactly coplanar normal over the whole table.
+   const material=new THREE.ShaderMaterial({vertexShader:gemVertex,fragmentShader:gemFragment,
+     uniforms:{uCamera:{value:camera.position},uLight:{value:new THREE.Vector3(-5,8,7)},uSector:{value:0}},
+     side:THREE.DoubleSide,depthWrite:true});
+   const mesh=new THREE.Mesh(g,material);diamond.add(mesh);faces.push(mesh);
+ }
+ flatCap(.40,1.06,false);
+ flatCap(-2.48,.18,true);
  // Invisible, geometrically aligned hit zones keep the original four game destinations.
  function addTriangle(arr,a,b,c){arr.push(...a.toArray(),...b.toArray(),...c.toArray())}
  for(let sector=0;sector<4;sector++){
   const triangles=[];
   for(let i=sector*4;i<(sector+1)*4;i++){
    const a=i*TAU/N,b=(i+1)*TAU/N;
-   addTriangle(triangles,p(-2.62,0,a),p(-.48,1.80,a),p(-.48,1.80,b));
+   addTriangle(triangles,p(-2.48,.18,a),p(-.48,1.80,a),p(-.48,1.80,b));
    addTriangle(triangles,p(-.36,1.80,a),p(.40,1.06,a),p(.40,1.06,b));
    addTriangle(triangles,p(-.36,1.80,a),p(.40,1.06,b),p(-.36,1.80,b));
   }
