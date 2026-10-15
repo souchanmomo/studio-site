@@ -93,11 +93,13 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .silk-contact{display:block!important}
 .silk-overlap{display:block!important}
 .hero-word{color:rgba(214,231,248,.055)}
+/* Satin micro-sheen: applied to the background alone, not the diamond. */
+.silk::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 11% at 44% 29%,rgba(178,188,207,.095),transparent 74%),radial-gradient(ellipse 75% 9% at 52% 82%,rgba(167,178,197,.075),transparent 78%);mix-blend-mode:screen}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
 <div class="edition">INDEPENDENT CREATIVE ARCHIVE — VOL. 001</div>
-<div class="silk" aria-hidden="true"><svg viewBox="0 0 700 1500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="fold1" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#010205"/><stop offset=".36" stop-color="#0b0e15"/><stop offset=".48" stop-color="#535b68"/><stop offset=".53" stop-color="#242b35"/><stop offset=".75" stop-color="#05070c"/><stop offset="1" stop-color="#010205"/></linearGradient><linearGradient id="fold2" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#020307"/><stop offset=".42" stop-color="#151b25"/><stop offset=".52" stop-color="#737a83"/><stop offset=".57" stop-color="#252b34"/><stop offset="1" stop-color="#010205"/></linearGradient><linearGradient id="fold3" x1="0" y1="0" x2=".9" y2=".8"><stop stop-color="#010206"/><stop offset=".45" stop-color="#080b11"/><stop offset=".55" stop-color="#333b49"/><stop offset=".61" stop-color="#0a0e16"/><stop offset="1" stop-color="#020307"/></linearGradient><radialGradient id="vignette"><stop stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".76"/></radialGradient></defs><rect width="700" height="1500" fill="#030408"/><path d="M-170 425 C100 540 290 215 780 210 L800 550 C470 400 235 750 -100 650Z" fill="url(#fold1)"/><path d="M-120 1020 C180 720 370 1090 780 700 L790 1170 C480 1360 200 1000 -90 1350Z" fill="url(#fold2)" opacity=".8"/><path d="M-120 1390 C190 1120 410 1300 780 1120 L780 1600 L-120 1600Z" fill="url(#fold3)"/><path d="M-100 510 C170 580 380 290 780 275" fill="none" stroke="#b2b9c1" stroke-opacity=".12" stroke-width="13"/><path d="M-100 1070 C190 770 360 1140 780 760" fill="none" stroke="#a5acb7" stroke-opacity=".11" stroke-width="16"/><rect width="700" height="1500" fill="url(#vignette)"/></svg></div><div class="atmosphere" aria-hidden="true"></div>
+<div class="silk" aria-hidden="true"><svg viewBox="0 0 700 1500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="fold1" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#010205"/><stop offset=".36" stop-color="#0b0e15"/><stop offset=".48" stop-color="#535b68"/><stop offset=".53" stop-color="#242b35"/><stop offset=".75" stop-color="#05070c"/><stop offset="1" stop-color="#010205"/></linearGradient><linearGradient id="fold2" x1="0" y1="0" x2="1" y2=".4"><stop stop-color="#020307"/><stop offset=".42" stop-color="#151b25"/><stop offset=".52" stop-color="#737a83"/><stop offset=".57" stop-color="#252b34"/><stop offset="1" stop-color="#010205"/></linearGradient><linearGradient id="fold3" x1="0" y1="0" x2=".9" y2=".8"><stop stop-color="#010206"/><stop offset=".45" stop-color="#080b11"/><stop offset=".55" stop-color="#333b49"/><stop offset=".61" stop-color="#0a0e16"/><stop offset="1" stop-color="#020307"/></linearGradient><radialGradient id="vignette"><stop stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".76"/></radialGradient></defs><rect width="700" height="1500" fill="#030408"/><path d="M-170 425 C100 540 290 215 780 210 L800 550 C470 400 235 750 -100 650Z" fill="url(#fold1)"/><path d="M-120 1020 C180 720 370 1090 780 700 L790 1170 C480 1360 200 1000 -90 1350Z" fill="url(#fold2)" opacity=".8"/><path d="M-120 1390 C190 1120 410 1300 780 1120 L780 1600 L-120 1600Z" fill="url(#fold3)"/><path d="M-100 510 C170 580 380 290 780 275" fill="none" stroke="#b2b9c1" stroke-opacity=".20" stroke-width="13"/><path d="M-100 1070 C190 770 360 1140 780 760" fill="none" stroke="#a5acb7" stroke-opacity=".19" stroke-width="16"/><rect width="700" height="1500" fill="url(#vignette)"/></svg></div><div class="atmosphere" aria-hidden="true"></div>
 <canvas class="silk-contact" id="silkContact" aria-hidden="true"></canvas><canvas class="silk-overlap" id="silkOverlap" aria-hidden="true"></canvas><div class="scene" id="scene" aria-label="宝石をスワイプして回転。各ゲームの面をタップすると移動できます"></div>
 <div class="hover-name" id="hoverName"></div>
 <section class="editorial"><div class="kicker" id="activeKicker">EXPLORE THE WORLD</div>
@@ -321,7 +323,14 @@ const rings=[[-2.65,0],[-.42,radius],[-.25,radius],[.64,1.28]];
    float fire=pow(sat(dot(R,normalize(vec3(-.49,.72,.49)))),90.0);
    col+=vec3(.16,.08,.27)*fire;
    col=vec3(1.0)-exp(-col*.82);
+   // Preserve the original deep navy hue; reveal cut planes through lighting only.
+   // A restrained fill prevents the dark facets from merging into one silhouette.
+   float facetFill=.065+.115*pow(sat(dot(N,normalize(vec3(-.42,.66,.62)))),1.5);
    col=mix(col,vec3(.025,.050,.082),.63);
+   col+=vec3(.035,.061,.085)*facetFill*2.0;
+   // Directional glancing reflection, not an overall exposure or base-color change.
+   float grazing=pow(sat(dot(reflect(-V,N),normalize(vec3(-.49,.72,.49)))),24.0);
+   col+=vec3(.055,.075,.092)*grazing;
    gl_FragColor=vec4(pow(col,vec3(.96)),1.0);
  }`;
  const faces=[];
