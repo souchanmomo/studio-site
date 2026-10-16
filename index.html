@@ -118,6 +118,27 @@ justify-content:center;text-align:center;padding:40px;line-height:2}
 .architecture img{position:absolute;left:50%;top:50%;width:145vw;height:145vw;max-width:none;object-fit:fill;transform:translate(-50%,-50%) rotate(0deg);transform-origin:center;filter:none;mask-image:radial-gradient(circle at center,#000 0%,#000 61%,rgba(0,0,0,.97) 70%,rgba(0,0,0,.77) 81%,rgba(0,0,0,.3) 94%,transparent 100%);-webkit-mask-image:radial-gradient(circle at center,#000 0%,#000 61%,rgba(0,0,0,.97) 70%,rgba(0,0,0,.77) 81%,rgba(0,0,0,.3) 94%,transparent 100%);user-select:none;-webkit-user-drag:none;pointer-events:none;will-change:transform}
 .architecture-shade{position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(180deg,rgba(2,5,11,.28),transparent 22%,transparent 75%,rgba(2,5,11,.34))}
 .topbar,.edition{z-index:9}.editorial,.hint,.enter{z-index:10}
+
+/* 2026-10-16: preserve the smaller architectural aperture / sky from the approved view.
+   Do not enlarge the photo to conceal corners: feather only the perimeter. */
+.architecture{background:#03070d}
+.architecture img{
+ width:100vw!important;height:100vw!important;
+ object-fit:fill!important;
+ mask-image:radial-gradient(circle at 50% 50%,#000 0%,#000 52%,rgba(0,0,0,.97) 62%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.35) 86%,transparent 99%)!important;
+ -webkit-mask-image:radial-gradient(circle at 50% 50%,#000 0%,#000 52%,rgba(0,0,0,.97) 62%,rgba(0,0,0,.76) 73%,rgba(0,0,0,.35) 86%,transparent 99%)!important;
+}
+/* A low-contrast, fixed ambient echo fills the outside during rotation without
+   creating a visible rectangular image boundary or changing the foreground scale. */
+.architecture-underlay{
+ inset:0!important;
+ background-size:cover!important;
+ background-position:center!important;
+ filter:blur(48px) brightness(.17) saturate(.7)!important;
+ transform:scale(1.12)!important;
+ opacity:.55;
+}
+.architecture-shade{background:linear-gradient(180deg,rgba(2,5,11,.10),transparent 24%,transparent 74%,rgba(2,5,11,.14))!important}
 </style></head><body><main class="screen">
 <header class="topbar"><a class="logo" href="index.html">S<span>✦</span></a>
 <nav class="nav"><a href="works.html">ENDFIELD ↗</a><a href="zzz.html">ZZZ ↗</a><a href="鳴潮.html">鳴潮 ↗</a></nav></header>
