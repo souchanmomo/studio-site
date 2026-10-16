@@ -173,24 +173,48 @@ let current=0;
 function showPanel(i){current=(i+panels.length)%panels.length;const p=panels[current];document.getElementById('activeTitle').textContent=p[0];document.getElementById('activeLink').href=p[1];document.getElementById('activeNumber').textContent=String(current+1).padStart(2,'0')+' / 04';document.documentElement.style.setProperty('--accent',p[2]);document.getElementById('activeKicker').textContent=current===3?'CURATED COLLECTION':'EXPLORE THE WORLD';}
 showPanel(0);setInterval(()=>showPanel(current+1),6500);
 </script><script>
-/* Four independent perspective walls. No flat photo rotation. */
+/* Stable architectural rotation: auto movement plus direct touch dragging. */
 (function(){
  const layer=document.querySelector('.architecture');
  const photo=document.getElementById('sourceArchitecture');
- const room=layer.querySelector('.architecture-room');
- const walls=[...room.querySelectorAll('.wall')];
- if(!photo||!room)return;
+ const room=layer?.querySelector('.architecture-room');
+ const visual=layer?.querySelector('.architecture-3d');
+ if(!layer||!photo||!room||!visual)return;
  const src=photo.src;
- walls.forEach((w,i)=>{w.style.backgroundImage=`linear-gradient(180deg,rgba(2,7,15,.04),rgba(1,5,12,.23)),url("${src}")`;w.style.backgroundPosition=['50% 8%','93% 50%','50% 93%','7% 50%'][i];});
+ [...room.querySelectorAll('.wall')].forEach((wall,i)=>{
+   wall.style.backgroundImage=`linear-gradient(180deg,rgba(2,7,15,.04),rgba(1,5,12,.23)),url("${src}")`;
+   wall.style.backgroundPosition=['50% 8%','93% 50%','50% 93%','7% 50%'][i];
+ });
  photo.style.display='none';
- let yaw=-17,pitch=0,drag=false,lastX=0,lastY=0,lastTime=performance.now();
- const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
- function draw(){room.style.transform=`translate3d(0,0,0) rotateX(${pitch.toFixed(2)}deg) rotateZ(${yaw.toFixed(2)}deg)`;}
- layer.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag=true;lastX=e.clientX;lastY=e.clientY;layer.setPointerCapture(e.pointerId);});
- layer.addEventListener('pointermove',e=>{if(!drag)return;yaw+=(e.clientX-lastX)*.32;pitch=Math.max(-12,Math.min(12,pitch+(e.clientY-lastY)*.10));lastX=e.clientX;lastY=e.clientY;draw();});
- function release(){drag=false;}
- layer.addEventListener('pointerup',release);layer.addEventListener('pointercancel',release);layer.addEventListener('lostpointercapture',release);
- function tick(t){const dt=Math.min((t-lastTime)/1000,.05);lastTime=t;if(!drag&&!reduced){yaw+=dt*2.3;pitch*=.995;draw();}requestAnimationFrame(tick);}
- draw();requestAnimationFrame(tick);
+ let angle=-17, dragging=false, lastX=0, lastY=0, lastTime=0;
+ let tiltX=0,tiltY=0;
+ const speed=5.5; // degrees per second, visible even on mobile
+ function draw(){
+   visual.style.transform=`rotate(${angle}deg)`;
+   room.style.transform=`rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+ }
+ layer.addEventListener('pointerdown',e=>{
+   if(e.pointerType==='mouse'&&e.button!==0)return;
+   dragging=true;lastX=e.clientX;lastY=e.clientY;
+   try{layer.setPointerCapture(e.pointerId)}catch(_){}
+ });
+ layer.addEventListener('pointermove',e=>{
+   if(!dragging)return;
+   angle+=(e.clientX-lastX)*.6;
+   tiltX=Math.max(-9,Math.min(9,tiltX-(e.clientY-lastY)*.09));
+   tiltY=Math.max(-9,Math.min(9,tiltY+(e.clientX-lastX)*.04));
+   lastX=e.clientX;lastY=e.clientY;draw();
+ });
+ const release=()=>{dragging=false};
+ layer.addEventListener('pointerup',release);
+ layer.addEventListener('pointercancel',release);
+ layer.addEventListener('lostpointercapture',release);
+ function frame(t){
+   if(lastTime){const dt=Math.min((t-lastTime)/1000,.1);
+     if(!dragging){angle+=dt*speed;tiltX*=.995;tiltY*=.995;draw();}
+   }
+   lastTime=t;requestAnimationFrame(frame);
+ }
+ draw();requestAnimationFrame(frame);
 })();
 </script></body></html>
